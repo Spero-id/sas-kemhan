@@ -1,0 +1,94 @@
+:root {
+  --warning-custom: #da7600;
+  --brown-custom: #553112;
+}
+
+.nav-link-custom,
+.nav-link-custom:hover,
+.nav-link-custom:focus,
+.nav-link-custom:active .nav-link-custom.active {
+  background: transparent !important;
+  padding: 0;
+}
+
+.nav-link-custom {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--brown-custom);
+}
+
+.nav-link-custom::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 4px;
+  position: absolute;
+  bottom: 12px;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+
+.nav-link-custom.active {
+  color: var(--warning-custom) !important;
+}
+
+.nav-link-custom:hover {
+  color: var(--warning-custom);
+}
+
+.nav-link-custom:hover::after {
+  width: 30%;
+  background: var(--warning-custom);
+}
+
+.nav-link-custom {
+  margin: 1rem;
+}
+
+.ellipse-1,
+.ellipse-1 * {
+  box-sizing: border-box;
+}
+.ellipse-1 {
+  background: var(--warning-custom);
+  border-radius: 50%;
+  width: 315px;
+  height: 315px;
+  position: absolute;
+  right: 0;
+  bottom: 33%;
+  filter: blur(183.8px);
+}
+
+/* ABOUT */
+
+.card-profile-about {
+  background: rgba(245, 245, 245, 0.5);
+}
+
+.section-2-shadow-1 {
+  background: rgba(172, 126, 57, 0.55);
+  border-radius: 6px;
+  width: 210px;
+  height: 116px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: blur(58.5px);
+}
+
+.section-2-shadow-2 {
+  background: rgba(172, 126, 57, 0.6);
+  border-radius: 6px;
+  width: 210px;
+  height: 116px;
+  position: absolute;
+  filter: blur(58.5px);
+  right: -6px;
+  bottom: -35px;
+}
+
+.step-warning-custom::after, .step-warning-custom::before{
+  background-color: var(--brown-custom) !important;
+  color: #fff !important;
+}
