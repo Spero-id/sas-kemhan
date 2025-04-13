@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (status !== "loading" && status !== "unauthenticated") {
-      router.push("/galery");
+      router.push("/dashboard");
     }
   }, [status]);
 
@@ -45,7 +45,7 @@ export default function LoginPage() {
         toast.error("Login failed");
       } else {
         toast.success("Login successful");
-        router.push("/galery");
+        router.push("/dashboard");
       }
     } catch (error) {
       setLoadingLogin(false);

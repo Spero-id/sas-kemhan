@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-const defaultTheme = require("tailwindcss/defaultTheme");
 
 const config: Config = {
   content: [
@@ -10,8 +9,19 @@ const config: Config = {
     "node_modules/react-daisyui/dist/**/*.js",
   ],
   plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["light"],
+  theme: {
+    extend: {
+      fontFamily: {
+        conthrax: ["Conthrax", "sans-serif"],
+      },
+      colors: {
+        "dark-ocean": "#00161D",
+        "cyan-neon": "#03FAFA"
+      },
+      backgroundImage: {
+        'header': "url('/images/bg-header.svg')",
+      }
+    }
   },
 };
 export default config;
