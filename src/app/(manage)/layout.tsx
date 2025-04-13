@@ -2,7 +2,6 @@
 
 import "./asset/css/main.css";
 import "./asset/css/data-tables-css.css";
-import "./asset/css/satoshi.css";
 import { useState, useEffect } from "react";
 import Loader from "@/components/common/Loader";
 import Sidebar from "@/components/Sidebar";
@@ -33,13 +32,13 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+    <div className="max-h-screen min-h-screen bg-dark-ocean p-8 overflow-hidden">
       {loading ? (
         <Loader />
       ) : (
         <div className="flex h-screen overflow-hidden">
           {/* <!-- ===== Sidebar Start ===== --> */}
-          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
           {/* <!-- ===== Sidebar End ===== --> */}
 
           {/* <!-- ===== Content Area Start ===== --> */}
