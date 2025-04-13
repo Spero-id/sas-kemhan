@@ -1,20 +1,8 @@
-import { AUTH_API } from "@/config/routes/auth";
-import { axiosClient } from "@/common/utils/AxiosClient";
+import prisma from './lib/prisma'
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-export interface LoginResponse {
-  message: string;
-  access_token: string;
-  token_type: string;
-  user : {
-    id: string;
-    name: string;
-    email: string;
-    email_verified_at: boolean | null;
-  }
-}
+import bcrypt from 'bcrypt';
 
 export const config = {
   pages: {
@@ -28,41 +16,48 @@ export const config = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-        try {
-          const response = await axiosClient.post<LoginResponse>(
-            AUTH_API.LOGIN,
-            {
-              email: credentials.email,
-              password: credentials.password,
-            }
-          );
-        
-          let token = response.data.access_token;
-
-          return {
-            id: response.data.user.id,
-            name: response.data.user.name,
-            email: response.data.user.email,
-            token
-          }
-        } catch (error) {
+        // Add null checks for credentials
+        if (!credentials?.email || !credentials?.password) {
           return null;
+        }
+
+        // Cek apakah email ada di database
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email }
+        })
+
+        // Verifikasi password (pastikan Anda meng-hash password di database)
+        if (user && await bcrypt.compare(credentials.password, user.password)) {
+          // Return only the necessary user information, excluding the password
+          return {
+            id: user.id.toString(),
+            name: user.name,
+            email: user.email,
+            role: user.role
+          }
+        } else {
+          return null // Jika tidak, login gagal
         }
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+  },
   callbacks: {
     async jwt({ token, user }: any) {
-      return {
-        ...token, 
-        ...user
-      };
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
     },
     async session({ session, token }: any) {
-      return {
-        ...session,
-        ...token,
-      };
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
+      return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
