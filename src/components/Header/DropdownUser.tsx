@@ -3,9 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BsBoxArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
-import { Button } from "react-daisyui";
 import { ButtonLogout } from "./ButtonLogout";
 
 const DropdownUser = () => {
