@@ -8,7 +8,6 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Navigation from "@/components/Navigation/Navigation";
 
 export default function RootLayout({
   children,
@@ -24,8 +23,6 @@ export default function RootLayout({
     }
   }, [status]);
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -33,24 +30,16 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="max-h-screen min-h-screen bg-dark-ocean p-8 overflow-hidden">
+    <div className="overflow-hidden">
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex h-screen overflow-hidden">
-          {/* <!-- ===== Sidebar Start ===== --> */}
-          {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
-          {/* <!-- ===== Sidebar End ===== --> */}
-
-          {/* <!-- ===== Content Area Start ===== --> */}
-          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <div className="drawer">
+          <input id="sidebar" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content bg-white min-h-screen">
             {/* <!-- ===== Header Start ===== --> */}
-            <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <Header />
             {/* <!-- ===== Header End ===== --> */}
-
-            {/* <!-- ===== Navigation Start ===== --> */}
-            <Navigation search="" />
-            {/* <!-- ===== Navigation End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
@@ -58,7 +47,7 @@ export default function RootLayout({
             </main>
             {/* <!-- ===== Main Content End ===== --> */}
           </div>
-          {/* <!-- ===== Content Area End ===== --> */}
+          <Sidebar />
         </div>
       )}
     </div>
