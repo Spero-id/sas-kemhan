@@ -16,7 +16,8 @@ const config: Config = {
       },
       colors: {
         "dark-ocean": "#00161D",
-        "cyan-neon": "#03FAFA"
+        "cyan-neon": "#03FAFA",
+        "deep-teal": "#006787"
       },
       backgroundImage: {
         'header': "url('/images/bg-header.svg')",

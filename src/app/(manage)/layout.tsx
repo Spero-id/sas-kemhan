@@ -8,6 +8,7 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Navigation from "@/components/Navigation/Navigation";
 
 export default function RootLayout({
   children,
@@ -47,11 +48,13 @@ export default function RootLayout({
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
             {/* <!-- ===== Header End ===== --> */}
 
+            {/* <!-- ===== Navigation Start ===== --> */}
+            <Navigation search="" />
+            {/* <!-- ===== Navigation End ===== --> */}
+
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
-              <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-                {children}
-              </div>
+              {children}
             </main>
             {/* <!-- ===== Main Content End ===== --> */}
           </div>
