@@ -36,7 +36,7 @@ export default function RootLayout({
       ) : (
         <div className="drawer">
           <input id="sidebar" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content bg-white min-h-screen">
+          <div className="drawer-content bg-slate-50 min-h-screen">
             {/* <!-- ===== Header Start ===== --> */}
             <Header />
             {/* <!-- ===== Header End ===== --> */}

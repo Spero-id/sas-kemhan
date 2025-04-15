@@ -1,23 +1,24 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import FormEditGalery from "@/module/user/Form/FormEdit";
+import FormEditUser from "@/module/user/Form/FormEdit";
 
-export default function EditGalery({ params }: { params: { id: string } }) {
+export default function EditUser({ params }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
   return (
-    <>
+    <div className="container mx-auto mt-5">
       <Breadcrumb
-        pageName="Edit Galery"
+        pageName="Edit User"
         linkPrevious={[
-          { href: "/galery", name: "Galery / " },
-          { href: "", name: "Edit", active: true },
+          { href: "/user", name: "User / " },
+          { href: "/user/edit", name: "Edit", active: true },
         ]}
       />
 
-      <div className="p-4 w-full bg-white rounded">
-        <FormEditGalery id={id}></FormEditGalery>
+      <div className="w-full shadow rounded bg-white p-6">
+        <h5 className="text-xl font-bold text-slate-600 mb-2">Edit User</h5>
+        <FormEditUser id={id}></FormEditUser>
       </div>
-    </>
+    </div>
   );
 }
