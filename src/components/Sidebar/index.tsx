@@ -14,10 +14,14 @@ const Sidebar = () => {
       <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
         {/* Sidebar content here */}
         <li>
-          <a>Sidebar Item 1</a>
-        </li>
-        <li>
-          <a>Sidebar Item 2</a>
+          <Link
+            href="/user"
+            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+              pathname.includes("user") && "bg-graydark dark:bg-meta-4"
+            }`}
+          >
+            User
+          </Link>
         </li>
       </ul>
     </div>

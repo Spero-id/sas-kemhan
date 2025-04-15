@@ -1,7 +1,7 @@
 import prisma from "../lib/prisma"
 import bcrypt from 'bcrypt'
 
-const saltRounds = 10
+const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
 
 async function main() {
   const password = await bcrypt.hash("123456", saltRounds)

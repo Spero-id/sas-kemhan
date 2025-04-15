@@ -29,6 +29,14 @@ export const config = {
         // Verifikasi password (pastikan Anda meng-hash password di database)
         if (user && await bcrypt.compare(credentials.password, user.password)) {
           // Return only the necessary user information, excluding the password
+
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              last_login: new Date()
+            }
+          })
+
           return {
             id: user.id.toString(),
             name: user.name,
