@@ -4,7 +4,14 @@ import { useAllUser } from "@/services/api/user/get/get.hooks";
 import { User as UserType } from "@/types/User/TypeUser";
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
+import { useAtom } from "jotai";
+import {
+  isConfirmDeleteAtom,
+  paramsDeleteAtom,
+} from "@/common/module/SettingsJotai";
 import { Button } from "react-daisyui";
+import { useDeleteUser } from "@/services/api/user/delete/delete.hooks";
+import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
 
 export default function TableUser() {
   const { isLoading, data, refetch } = useAllUser();
@@ -44,8 +51,15 @@ export default function TableUser() {
     }),
   ];
 
+  const [isConfirmDelete, setIsConfirmDelete] = useAtom(isConfirmDeleteAtom);
+  const [paramsDelete, setParamsDelete] = useAtom(paramsDeleteAtom);
+  const deleteHooks = useDeleteUser(paramsDelete);
+
   const handleDelete = (id: string) => {
-    console.log('id')
+    setIsConfirmDelete(true);
+    setParamsDelete({
+      id: id,
+    });
   };
 
   return (
@@ -54,6 +68,10 @@ export default function TableUser() {
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data} columns={columns}></TableCustom>
+      )}
+
+      {isConfirmDelete && (
+        <ConfirmDeleteModal hooks={deleteHooks} refetch={refetch} />
       )}
     </>
   );

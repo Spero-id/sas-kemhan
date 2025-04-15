@@ -6,7 +6,11 @@ const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
 
 export async function GET() {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      where: {
+        role: "public"
+      }
+    });
     return NextResponse.json({
       status: true,
       data: users

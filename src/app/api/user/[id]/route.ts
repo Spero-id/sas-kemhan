@@ -57,3 +57,23 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  try {
+    await prisma.user.delete({
+      where: {
+        id: parseInt(params.id)
+      },
+    });
+
+    return NextResponse.json({
+      status: true,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({
+      status: false,
+      message: 'Internal server error'
+    }, { status: 500 });
+  }
+}
