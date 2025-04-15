@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteGalery } from "./delete.service";
+import { deleteUser } from "./delete.service";
 
-export const useDeleteGalery = ({id}: {id: string}) => {
+export const useDeleteUser = ({id}: {id: string}) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteGalery,
+    mutationFn: deleteUser,
     onSuccess: () => {
       queryClient.invalidateQueries(["all"]);
     },
