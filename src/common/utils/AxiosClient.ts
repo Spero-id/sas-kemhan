@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
 import { clientEnv } from "@/env/client.environment";
-import fetchCsrfToken from "./GetCsrf";
 
 const ApiClient = () => {
   const instance = axios.create({

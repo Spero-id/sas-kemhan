@@ -5,35 +5,35 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { PostGaleryFunction } from "@/services/api/galery/post/PostGaleryFunction";
+import { PostUserFunction } from "@/services/api/user/post/PostUserFunction";
 import {
-  GaleryPostSchema,
-  GaleryPostValidation,
+  UserValidation,
+  UserValidationSchema
 } from "../Validation";
 import FormElement from "./FormElement";
 
-export default function FormPostGalery() {
+export default function FormPostUser() {
   const router = useRouter();
 
-  const postGalery = useMutation({
-    mutationFn: PostGaleryFunction,
+  const postUser = useMutation({
+    mutationFn: PostUserFunction,
     onError() {
       toast.error("Telah terjadi kesalahan!");
     },
   });
 
-  const { control, handleSubmit } = useForm<GaleryPostSchema>({
-    resolver: zodResolver(GaleryPostValidation),
+  const { control, handleSubmit } = useForm<UserValidationSchema>({
+    resolver: zodResolver(UserValidation),
   });
 
-  const onSubmit: SubmitHandler<GaleryPostSchema> = (
-    values: GaleryPostSchema
+  const onSubmit: SubmitHandler<UserValidationSchema> = (
+    values: UserValidationSchema
   ) => {
-    postGalery.mutate(values, {
+    postUser.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
-        router.push(`/galery`);
-      },
+        router.push(`/user`);
+      }
     });
   };
 

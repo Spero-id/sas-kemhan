@@ -1,47 +1,39 @@
-export type ResponseAllGalery = {
+export type ResponseAllUser = {
   status: boolean;
-  data: Galery[];
+  data: User[];
 };
 
-export type ResponseDetailGalery = {
+export type ResponseDetailUser = {
   status: boolean;
   data: {
     id: string;
     name: string;
-    ket: string;
-    publish: boolean;
+    email: string;
+    password: string;
+    role: string;
+    last_login: string;
     created_at: string;
     updated_at: string;
-    photos: GaleryPhoto[];
   };
 };
 
-export type ResponseAllPhotosGalery = GaleryPhoto[];
-
-export type GaleryRequest = Partial<{
+export type UserRequest = Partial<{
   name: string;
-  publish: boolean;
-  ket: string;
-  file: File[] | undefined | null;
+  email: string;
+  password: string;
 }>;
 
-export type GaleryResponse = {
+export type UserResponse = {
   message: string;
 };
 
-export type Galery = Partial<{
+export type User = Partial<{
   id: string;
   name: string;
-  ket: string;
-  publish: boolean;
-  created_at: string;
-  updated_at: string;
-}>;
-
-export type GaleryPhoto = Partial<{
-  id: string;
-  path: string;
-  galery_id: string;
+  email: string;
+  password: string;
+  role: string;
+  last_login: string;
   created_at: string;
   updated_at: string;
 }>;
