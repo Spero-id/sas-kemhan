@@ -137,7 +137,7 @@ exports.Prisma.ChatScalarFieldEnum = {
 
 exports.Prisma.CctvScalarFieldEnum = {
   id: 'id',
-  nama: 'nama',
+  name: 'name',
   path_slug: 'path_slug',
   rtsp_url: 'rtsp_url',
   status: 'status',

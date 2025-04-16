@@ -38,7 +38,7 @@ model chat {
 
 model cctv {
   id         Int       @id @default(autoincrement())
-  nama       String
+  name       String
   path_slug  String
   rtsp_url   String
   status     Boolean
