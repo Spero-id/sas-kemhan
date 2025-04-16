@@ -3346,7 +3346,7 @@ export namespace Prisma {
 
   export type CctvMinAggregateOutputType = {
     id: number | null
-    nama: string | null
+    name: string | null
     path_slug: string | null
     rtsp_url: string | null
     status: boolean | null
@@ -3356,7 +3356,7 @@ export namespace Prisma {
 
   export type CctvMaxAggregateOutputType = {
     id: number | null
-    nama: string | null
+    name: string | null
     path_slug: string | null
     rtsp_url: string | null
     status: boolean | null
@@ -3366,7 +3366,7 @@ export namespace Prisma {
 
   export type CctvCountAggregateOutputType = {
     id: number
-    nama: number
+    name: number
     path_slug: number
     rtsp_url: number
     status: number
@@ -3386,7 +3386,7 @@ export namespace Prisma {
 
   export type CctvMinAggregateInputType = {
     id?: true
-    nama?: true
+    name?: true
     path_slug?: true
     rtsp_url?: true
     status?: true
@@ -3396,7 +3396,7 @@ export namespace Prisma {
 
   export type CctvMaxAggregateInputType = {
     id?: true
-    nama?: true
+    name?: true
     path_slug?: true
     rtsp_url?: true
     status?: true
@@ -3406,7 +3406,7 @@ export namespace Prisma {
 
   export type CctvCountAggregateInputType = {
     id?: true
-    nama?: true
+    name?: true
     path_slug?: true
     rtsp_url?: true
     status?: true
@@ -3503,7 +3503,7 @@ export namespace Prisma {
 
   export type CctvGroupByOutputType = {
     id: number
-    nama: string
+    name: string
     path_slug: string
     rtsp_url: string
     status: boolean
@@ -3532,7 +3532,7 @@ export namespace Prisma {
 
   export type cctvSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nama?: boolean
+    name?: boolean
     path_slug?: boolean
     rtsp_url?: boolean
     status?: boolean
@@ -3542,7 +3542,7 @@ export namespace Prisma {
 
   export type cctvSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nama?: boolean
+    name?: boolean
     path_slug?: boolean
     rtsp_url?: boolean
     status?: boolean
@@ -3552,7 +3552,7 @@ export namespace Prisma {
 
   export type cctvSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nama?: boolean
+    name?: boolean
     path_slug?: boolean
     rtsp_url?: boolean
     status?: boolean
@@ -3562,7 +3562,7 @@ export namespace Prisma {
 
   export type cctvSelectScalar = {
     id?: boolean
-    nama?: boolean
+    name?: boolean
     path_slug?: boolean
     rtsp_url?: boolean
     status?: boolean
@@ -3570,14 +3570,14 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type cctvOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama" | "path_slug" | "rtsp_url" | "status" | "created_at" | "updated_at", ExtArgs["result"]["cctv"]>
+  export type cctvOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "path_slug" | "rtsp_url" | "status" | "created_at" | "updated_at", ExtArgs["result"]["cctv"]>
 
   export type $cctvPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "cctv"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      nama: string
+      name: string
       path_slug: string
       rtsp_url: string
       status: boolean
@@ -4007,7 +4007,7 @@ export namespace Prisma {
    */
   interface cctvFieldRefs {
     readonly id: FieldRef<"cctv", 'Int'>
-    readonly nama: FieldRef<"cctv", 'String'>
+    readonly name: FieldRef<"cctv", 'String'>
     readonly path_slug: FieldRef<"cctv", 'String'>
     readonly rtsp_url: FieldRef<"cctv", 'String'>
     readonly status: FieldRef<"cctv", 'Boolean'>
@@ -4419,7 +4419,7 @@ export namespace Prisma {
 
   export const CctvScalarFieldEnum: {
     id: 'id',
-    nama: 'nama',
+    name: 'name',
     path_slug: 'path_slug',
     rtsp_url: 'rtsp_url',
     status: 'status',
@@ -4668,7 +4668,7 @@ export namespace Prisma {
     OR?: cctvWhereInput[]
     NOT?: cctvWhereInput | cctvWhereInput[]
     id?: IntFilter<"cctv"> | number
-    nama?: StringFilter<"cctv"> | string
+    name?: StringFilter<"cctv"> | string
     path_slug?: StringFilter<"cctv"> | string
     rtsp_url?: StringFilter<"cctv"> | string
     status?: BoolFilter<"cctv"> | boolean
@@ -4678,7 +4678,7 @@ export namespace Prisma {
 
   export type cctvOrderByWithRelationInput = {
     id?: SortOrder
-    nama?: SortOrder
+    name?: SortOrder
     path_slug?: SortOrder
     rtsp_url?: SortOrder
     status?: SortOrder
@@ -4691,7 +4691,7 @@ export namespace Prisma {
     AND?: cctvWhereInput | cctvWhereInput[]
     OR?: cctvWhereInput[]
     NOT?: cctvWhereInput | cctvWhereInput[]
-    nama?: StringFilter<"cctv"> | string
+    name?: StringFilter<"cctv"> | string
     path_slug?: StringFilter<"cctv"> | string
     rtsp_url?: StringFilter<"cctv"> | string
     status?: BoolFilter<"cctv"> | boolean
@@ -4701,7 +4701,7 @@ export namespace Prisma {
 
   export type cctvOrderByWithAggregationInput = {
     id?: SortOrder
-    nama?: SortOrder
+    name?: SortOrder
     path_slug?: SortOrder
     rtsp_url?: SortOrder
     status?: SortOrder
@@ -4719,7 +4719,7 @@ export namespace Prisma {
     OR?: cctvScalarWhereWithAggregatesInput[]
     NOT?: cctvScalarWhereWithAggregatesInput | cctvScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"cctv"> | number
-    nama?: StringWithAggregatesFilter<"cctv"> | string
+    name?: StringWithAggregatesFilter<"cctv"> | string
     path_slug?: StringWithAggregatesFilter<"cctv"> | string
     rtsp_url?: StringWithAggregatesFilter<"cctv"> | string
     status?: BoolWithAggregatesFilter<"cctv"> | boolean
@@ -4851,7 +4851,7 @@ export namespace Prisma {
   }
 
   export type cctvCreateInput = {
-    nama: string
+    name: string
     path_slug: string
     rtsp_url: string
     status: boolean
@@ -4861,7 +4861,7 @@ export namespace Prisma {
 
   export type cctvUncheckedCreateInput = {
     id?: number
-    nama: string
+    name: string
     path_slug: string
     rtsp_url: string
     status: boolean
@@ -4870,7 +4870,7 @@ export namespace Prisma {
   }
 
   export type cctvUpdateInput = {
-    nama?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     path_slug?: StringFieldUpdateOperationsInput | string
     rtsp_url?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
@@ -4880,7 +4880,7 @@ export namespace Prisma {
 
   export type cctvUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nama?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     path_slug?: StringFieldUpdateOperationsInput | string
     rtsp_url?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
@@ -4890,7 +4890,7 @@ export namespace Prisma {
 
   export type cctvCreateManyInput = {
     id?: number
-    nama: string
+    name: string
     path_slug: string
     rtsp_url: string
     status: boolean
@@ -4899,7 +4899,7 @@ export namespace Prisma {
   }
 
   export type cctvUpdateManyMutationInput = {
-    nama?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     path_slug?: StringFieldUpdateOperationsInput | string
     rtsp_url?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
@@ -4909,7 +4909,7 @@ export namespace Prisma {
 
   export type cctvUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nama?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     path_slug?: StringFieldUpdateOperationsInput | string
     rtsp_url?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
@@ -5143,7 +5143,7 @@ export namespace Prisma {
 
   export type cctvCountOrderByAggregateInput = {
     id?: SortOrder
-    nama?: SortOrder
+    name?: SortOrder
     path_slug?: SortOrder
     rtsp_url?: SortOrder
     status?: SortOrder
@@ -5157,7 +5157,7 @@ export namespace Prisma {
 
   export type cctvMaxOrderByAggregateInput = {
     id?: SortOrder
-    nama?: SortOrder
+    name?: SortOrder
     path_slug?: SortOrder
     rtsp_url?: SortOrder
     status?: SortOrder
@@ -5167,7 +5167,7 @@ export namespace Prisma {
 
   export type cctvMinOrderByAggregateInput = {
     id?: SortOrder
-    nama?: SortOrder
+    name?: SortOrder
     path_slug?: SortOrder
     rtsp_url?: SortOrder
     status?: SortOrder
