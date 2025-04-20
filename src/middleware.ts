@@ -8,8 +8,6 @@ export async function middleware(req: NextRequest) {
     secret: process.env.AUTH_SECRET,
   });
 
-  console.log(token)
-
   if (!token) {
     return NextResponse.json(
       { message: "Unauthorized" },
