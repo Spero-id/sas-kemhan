@@ -8,6 +8,6 @@ export const UpdateCctvFunction = async ({
   id: string;
   data: CCTVRequest;
 }) => {
-  const response = await axiosClient.put<CCTVResponse>(`/cctv/${id}`, data);
+  const response = await axiosClient.put<CCTVResponse>(`/secure/cctv/${id}`, data);
   return response;
 };

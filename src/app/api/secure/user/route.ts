@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../../../lib/prisma';
 import bcrypt from 'bcrypt'
 
 const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
