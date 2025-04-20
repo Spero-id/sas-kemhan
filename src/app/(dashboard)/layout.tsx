@@ -19,7 +19,7 @@ export default function RootLayout({
     if (status !== "loading" && status !== "authenticated") {
       router.push("/api/auth/signin");
     }
-  }, [status]);
+  }, [status, router]);
 
   const [loading, setLoading] = useState<boolean>(true);
 

@@ -56,7 +56,7 @@ export default function ConfirmDeleteModal({ hooks, refetch = () => {} }: any) {
             Are you sure?
           </h2>
           <p className="text-gray-500 mb-6 text-center">
-            You won't be able to revert this!
+            You won&apos;t t be able to revert this!
           </p>
           <div className="flex justify-center gap-4">
             <button

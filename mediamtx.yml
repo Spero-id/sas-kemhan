@@ -1,0 +1,5 @@
+paths:
+  all:
+    source: rtmp://127.0.0.1:1935/live
+    sourceProtocol: rtmp
+    runOnReady: ffmpeg -i rtsp://localhost:8554/stream -c copy -f hls ./public/stream.m3u8

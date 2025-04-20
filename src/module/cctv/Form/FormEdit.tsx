@@ -16,7 +16,7 @@ import { UpdateCctvFunction } from "@/services/api/cctv/update/UpdateCctvFunctio
 import { CctvValidation, CctvValidationSchema } from "../Validation";
 
 interface FormCctvProps {
-  id?: string;
+  id: string;
 }
 
 export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {

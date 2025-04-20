@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/common/utils/Provider";
-import AuthWrapper from "@/common/utils/AuthWrapper";
 import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,9 +20,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <SessionProvider>
-          <AuthWrapper>
-            <Providers>{children}</Providers>
-          </AuthWrapper>
+          <Providers>{children}</Providers>
         </SessionProvider>
       </body>
     </html>
