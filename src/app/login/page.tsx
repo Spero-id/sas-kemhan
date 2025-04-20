@@ -18,18 +18,18 @@ type LoginSchemaType = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const { status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (status !== "loading" && status !== "unauthenticated") {
-      router.push("/dashboard");
+      router.push("/");
     }
-  }, [status]);
+  }, [status, router]);
 
   const { control, handleSubmit } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
 
-  const router = useRouter();
   const [loadingLogin, setLoadingLogin] = useState(false);
 
   const onSubmit: SubmitHandler<LoginSchemaType> = async (values) => {
@@ -45,7 +45,7 @@ export default function LoginPage() {
         toast.error("Login failed");
       } else {
         toast.success("Login successful");
-        router.push("/dashboard");
+        router.push("/");
       }
     } catch (error) {
       setLoadingLogin(false);

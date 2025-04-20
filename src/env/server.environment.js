@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable */
 const { serverSchema } = require('./schema.environment');
 
 const serverEnvironment = serverSchema.parse({

@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable */
 const zod = require('zod');
 
 const serverSchema = zod.object({

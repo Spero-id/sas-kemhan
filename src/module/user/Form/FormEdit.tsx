@@ -16,7 +16,7 @@ import { UpdateUserFunction } from "@/services/api/user/update/UpdateUserFunctio
 import { UserValidation, UserValidationSchema } from "../Validation";
 
 interface FormUserProps {
-  id?: string;
+  id: string;
 }
 
 export default function FormEditUser({ id }: Readonly<FormUserProps>) {
