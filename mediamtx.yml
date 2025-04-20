@@ -1,5 +1,15 @@
+server:
+  logLevel: info
+
+rtmp:
+  enabled: yes
+
+hls:
+  enabled: yes
+  segmentCount: 3
+
 paths:
   all:
-    source: rtmp://127.0.0.1:1935/live
-    sourceProtocol: rtmp
-    runOnReady: ffmpeg -i rtsp://localhost:8554/stream -c copy -f hls ./public/stream.m3u8
+    # source: rtmp://192.168.57.44:1935/live -> diisi ip cctv
+    # sourceProtocol: rtmp
+    # runOnReady: ffmpeg -i rtsp://localhost:8554/stream -c copy -f hls ./public/stream.m3u8

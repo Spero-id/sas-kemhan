@@ -153,7 +153,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\next_js\\sas-kemhan\\src\\generated\\prisma",
+      "value": "/home/rafi/next_js/rafi-dev/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -162,16 +162,24 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "linux-musl-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\next_js\\sas-kemhan\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/rafi/next_js/rafi-dev/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -190,8 +198,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel user {\n  id         Int       @id @default(autoincrement())\n  name       String\n  email      String    @unique\n  password   String\n  role       Role\n  last_login DateTime?\n  created_at DateTime  @default(now())\n  updated_at DateTime  @updatedAt\n\n  chats chat[]\n}\n\nmodel chat {\n  id         Int      @id @default(autoincrement())\n  user_id    Int\n  content    String\n  created_at DateTime @default(now())\n\n  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)\n}\n\nmodel cctv {\n  id         Int      @id @default(autoincrement())\n  name       String\n  path_slug  String\n  rtsp_url   String\n  status     Boolean\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n}\n\nenum Role {\n  admin\n  public\n}\n",
-  "inlineSchemaHash": "4137aa88ea21080ac6f289eac17ab46d897b1279fc8a24547d0d48a8181c8ebc",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\", \"linux-musl-openssl-3.0.x\"]\n  output        = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel user {\n  id         Int       @id @default(autoincrement())\n  name       String\n  email      String    @unique\n  password   String\n  role       Role\n  last_login DateTime?\n  created_at DateTime  @default(now())\n  updated_at DateTime  @updatedAt\n\n  chats chat[]\n}\n\nmodel chat {\n  id         Int      @id @default(autoincrement())\n  user_id    Int\n  content    String\n  created_at DateTime @default(now())\n\n  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)\n}\n\nmodel cctv {\n  id         Int      @id @default(autoincrement())\n  name       String\n  path_slug  String\n  rtsp_url   String\n  status     Boolean\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n}\n\nenum Role {\n  admin\n  public\n}\n",
+  "inlineSchemaHash": "c920bdeb60d167c1da352016dee7164ee3d88ef3a192bdd375bf0ae2a2b59be9",
   "copyEngine": true
 }
 
@@ -230,8 +238,12 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-linux-musl-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")
