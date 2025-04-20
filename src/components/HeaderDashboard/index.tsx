@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Header = () => {
+const HeaderDashboard = () => {
   return (
     <header className="h-[7.4rem] bg-header bg-cover bg-center bg-no-repeat font-conthrax flex flex-nowrap justify-between items-center px-8">
       <div>
@@ -33,4 +33,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderDashboard;
