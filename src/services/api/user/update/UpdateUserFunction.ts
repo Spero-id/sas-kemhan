@@ -8,6 +8,6 @@ export const UpdateUserFunction = async ({
   id: string;
   data: UserRequest;
 }) => {
-  const response = await axiosClient.put<UserResponse>(`/user/${id}`, data);
+  const response = await axiosClient.put<UserResponse>(`/secure/user/${id}`, data);
   return response;
 };
