@@ -26,7 +26,7 @@ const Navigation = ({ search }: NavigationProps) => {
         <Link
           href="/sensor-gerak"
           className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
-            pathname.includes("sensor-gerak") ? "border-cyan-neon" : "border-transparent opacity-50"
+            pathname?.includes("sensor-gerak") ? "border-cyan-neon" : "border-transparent opacity-50"
           }`}
         >
           <MdSensorOccupied />
@@ -35,7 +35,7 @@ const Navigation = ({ search }: NavigationProps) => {
         <Link
           href="/body-worn"
           className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
-            pathname.includes("body-worn") ? "border-cyan-neon" : "border-transparent opacity-50"
+            pathname?.includes("body-worn") ? "border-cyan-neon" : "border-transparent opacity-50"
           }`}
         >
           <MdCamera />

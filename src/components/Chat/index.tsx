@@ -6,7 +6,7 @@ import { MdMessage } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import { IoSend } from "react-icons/io5";
 
-export default function ChatClient() {
+export default function Chat() {
   const [socket, setSocket] = useState<any>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");

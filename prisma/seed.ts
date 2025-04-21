@@ -1,6 +1,7 @@
-import prisma from "../lib/prisma"
-import bcrypt from 'bcrypt'
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
+const prisma = new PrismaClient()
 const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
 
 async function main() {
