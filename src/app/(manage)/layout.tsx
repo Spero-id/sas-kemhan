@@ -2,7 +2,6 @@
 
 import "./asset/css/main.css";
 import "./asset/css/data-tables-css.css";
-import "./asset/css/satoshi.css";
 import { useState, useEffect } from "react";
 import Loader from "@/components/common/Loader";
 import Sidebar from "@/components/Sidebar";
@@ -22,9 +21,7 @@ export default function RootLayout({
     if (status !== "loading" && status !== "authenticated") {
       router.push("/api/auth/signin");
     }
-  }, [status]);
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  }, [status, router]);
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -33,30 +30,24 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+    <div className="overflow-hidden">
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex h-screen overflow-hidden">
-          {/* <!-- ===== Sidebar Start ===== --> */}
-          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          {/* <!-- ===== Sidebar End ===== --> */}
-
-          {/* <!-- ===== Content Area Start ===== --> */}
-          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <div className="drawer">
+          <input id="sidebar" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content bg-slate-50 min-h-screen">
             {/* <!-- ===== Header Start ===== --> */}
-            <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <Header />
             {/* <!-- ===== Header End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
-              <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-                {children}
-              </div>
+              {children}
             </main>
             {/* <!-- ===== Main Content End ===== --> */}
           </div>
-          {/* <!-- ===== Content Area End ===== --> */}
+          <Sidebar />
         </div>
       )}
     </div>

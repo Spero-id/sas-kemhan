@@ -36,6 +36,7 @@ export default function InputForm<T extends {}>({
 							</span>
 						</label>
 						<Input
+							className="bg-white"
 							onChange={(event) =>
 								onChange(
 									event.target.value === '' ? undefined : event.target.value

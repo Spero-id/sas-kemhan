@@ -15,6 +15,7 @@ import {
   isConfirmDeleteAtom,
   paramsDeleteAtom,
 } from "@/common/module/SettingsJotai";
+import Image from "next/image";
 
 registerPlugin(
   FilePondPluginImagePreview,
@@ -110,7 +111,7 @@ export default function FilePondInput<T extends {}>({
                             >
                               <FaRegTrashCan />
                             </Button>
-                            <img
+                            <Image
                               src={file.path}
                               alt=""
                               className="w-full h-full object-contain bg-gray"
