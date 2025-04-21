@@ -57,7 +57,7 @@ const HeaderDashboard = () => {
         </div>
         <div className="flex flex-col justify-center">
           <h3 className="text-3xl font-semibold text-cyan-neon">{session?.user?.name}</h3>
-          <p className="text-lg text-white">{session?.user?.role}</p>
+          {/* <p className="text-lg text-white">{session?.user?.role}</p> */}
         </div>
       </div>
     </header>
