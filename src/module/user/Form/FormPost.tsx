@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { PostUserFunction } from "@/services/api/user/post/PostUserFunction";
 import {
-  UserValidation,
-  UserValidationSchema
+  UserPostValidation,
+  UserPostSchema
 } from "../Validation";
 import FormElement from "./FormElement";
 
@@ -22,18 +22,21 @@ export default function FormPostUser() {
     },
   });
 
-  const { control, handleSubmit } = useForm<UserValidationSchema>({
-    resolver: zodResolver(UserValidation),
+  const { control, handleSubmit } = useForm<UserPostSchema>({
+    resolver: zodResolver(UserPostValidation),
   });
 
-  const onSubmit: SubmitHandler<UserValidationSchema> = (
-    values: UserValidationSchema
+  const onSubmit: SubmitHandler<UserPostSchema> = (
+    values: UserPostSchema
   ) => {
     postUser.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
         router.push(`/user`);
-      }
+      },
+      onError() {
+        toast.error("Telah terjadi kesalahan!");
+      },
     });
   };
 

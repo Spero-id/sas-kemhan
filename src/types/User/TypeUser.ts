@@ -9,6 +9,7 @@ export type ResponseDetailUser = {
     id: string;
     name: string;
     email: string;
+    image: string;
     password: string;
     role: string;
     last_login: string;
@@ -31,6 +32,7 @@ export type User = Partial<{
   id: string;
   name: string;
   email: string;
+  image: string;
   password: string;
   role: string;
   last_login: string;

@@ -42,7 +42,7 @@ export default function TableCCTV() {
           {info.getValue() ? (
             <FaCheck className="text-green-500" />
           ) : (
-            <FaXmark className="text-danger" />
+            <FaXmark className="text-red-400" />
           )}
         </i>
       ),

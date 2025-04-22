@@ -3,7 +3,7 @@ import { BsBoxArrowLeft } from "react-icons/bs";
 
 export function ButtonLogout() {
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/" });
+    await signOut({ callbackUrl: "/login" });
   };
   return (
     <button

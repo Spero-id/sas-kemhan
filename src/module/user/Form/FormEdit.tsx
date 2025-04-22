@@ -8,12 +8,13 @@ import { useRouter } from "next/navigation";
 import {
   useDetailUser,
 } from "@/services/api/user/get/get.hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FormElement from "./FormElement";
 import { Alert } from "react-daisyui";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import { UpdateUserFunction } from "@/services/api/user/update/UpdateUserFunction";
-import { UserValidation, UserValidationSchema } from "../Validation";
+import { UserEditValidation, UserEditSchema } from "../Validation";
+import { FileUploaded } from "@/types/FilePond.type";
 
 interface FormUserProps {
   id: string;
@@ -21,6 +22,7 @@ interface FormUserProps {
 
 export default function FormEditUser({ id }: Readonly<FormUserProps>) {
   const router = useRouter();
+  const [valuePhotos, setValuePhotos] = useState<FileUploaded[]>([]);
 
   const updateUser = useMutation({
     mutationFn: UpdateUserFunction,
@@ -29,8 +31,8 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
     },
   });
 
-  const { control, handleSubmit, reset } = useForm<UserValidationSchema>({
-    resolver: zodResolver(UserValidation),
+  const { control, handleSubmit, reset } = useForm<UserEditSchema>({
+    resolver: zodResolver(UserEditValidation(id)),
   });
 
   const { data, isLoading, error } = useDetailUser({
@@ -39,6 +41,13 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
 
   useEffect(() => {
     if (!isLoading) {
+      setValuePhotos([
+        {
+          id: id,
+          path: String(data?.data.image),
+        },
+      ]);
+
       reset({
         name: data?.data.name,
         email: data?.data.email,
@@ -46,8 +55,8 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
     }
   }, [data, isLoading, reset]);
 
-  const onSubmit: SubmitHandler<UserValidationSchema> = (
-    values: UserValidationSchema
+  const onSubmit: SubmitHandler<UserEditSchema> = (
+    values: UserEditSchema
   ) => {
     updateUser.mutate(
       {
@@ -77,6 +86,7 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
           control={control}
           onSubmit={onSubmit}
           handleSubmit={handleSubmit}
+          valuePhotos={valuePhotos}
         ></FormElement>
       );
     }

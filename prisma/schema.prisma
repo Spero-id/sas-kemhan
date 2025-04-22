@@ -21,6 +21,7 @@ model user {
   email       String    @unique
   password    String
   role        Role
+  image       String?
   last_login  DateTime?
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
