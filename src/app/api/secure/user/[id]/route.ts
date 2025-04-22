@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../../../lib/prisma';
+import bcrypt from 'bcryptjs';
+import { saveFileToDisk, deleteFileFromDisk } from '@/utils/file';
+
+const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
@@ -31,18 +38,46 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
-    const body = await request.json();
-    const { name, email, password } = body;
+    const formData = await request.formData();
+
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const image = formData.get('image') as File;
+
+    const data = await prisma.user.findFirst({
+      where: {
+        id: parseInt(params.id)
+      }
+    });
+
+    const req: {
+      name: string;
+      email: string;
+      password?: string;
+      image?: string;
+    } = {
+      name,
+      email,
+    };
+
+    if (password) {
+      req['password'] = await bcrypt.hash(password, saltRounds);
+    }
+
+    if (image) {
+      if (data?.image) {
+        deleteFileFromDisk(data.image);
+      }
+      const fileUrl = await saveFileToDisk(image);
+      req['image'] = fileUrl;
+    }
 
     const user = await prisma.user.update({
       where: {
         id: parseInt(params.id)
       },
-      data: {
-        name,
-        email,
-        password
-      }
+      data: req
     });
 
     return NextResponse.json({
@@ -60,6 +95,16 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
+    const data = await prisma.user.findFirst({
+      where: {
+        id: parseInt(params.id)
+      }
+    });
+
+    if (data?.image) {
+      deleteFileFromDisk(data.image);
+    }
+
     await prisma.user.delete({
       where: {
         id: parseInt(params.id)

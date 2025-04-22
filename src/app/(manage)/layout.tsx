@@ -22,7 +22,7 @@ export default function RootLayout({
       router.push("/api/auth/signin");
     }
 
-    if (data?.user?.role !== "admin") {
+    if (data?.user?.role && data?.user?.role !== "admin") {
       router.push("/");
     }
   }, [status, router]);
@@ -34,13 +34,13 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="overflow-hidden">
+    <div>
       {loading ? (
         <Loader />
       ) : (
         <div className="drawer">
           <input id="sidebar" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content bg-slate-50 min-h-screen">
+          <div className="drawer-content bg-slate-50 min-h-screen pb-10">
             {/* <!-- ===== Header Start ===== --> */}
             <Header />
             {/* <!-- ===== Header End ===== --> */}

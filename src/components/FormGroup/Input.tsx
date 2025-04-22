@@ -32,7 +32,7 @@ export default function InputForm<T extends {}>({
 						<label className="label">
 							<span className="label-text">
 								{label}{' '}
-								<span className="text-danger">{isRequired && '*'}</span>
+								<span className="text-red-400">{isRequired && '*'}</span>
 							</span>
 						</label>
 						<Input
@@ -49,7 +49,7 @@ export default function InputForm<T extends {}>({
 						/>
 
 						{error && (
-							<p className="text-xs text-danger mt-2">
+							<p className="text-xs text-red-400 mt-2">
 								* {error?.message?.toString()}
 							</p>
 						)}
