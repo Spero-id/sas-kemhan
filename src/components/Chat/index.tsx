@@ -67,7 +67,7 @@ export default function Chat() {
   return (
     <>
       <button
-        className="border border-cyan-neon rounded-md p-3 w-fit fixed bottom-3 right-3 z-50 cursor-pointer shadow-md"
+        className="border border-cyan-neon rounded-md p-3 w-fit fixed bottom-3 right-3 z-50 cursor-pointer shadow-md bg-dark-ocean"
         type="button"
         onClick={() => setModalChat(true)}
       >
