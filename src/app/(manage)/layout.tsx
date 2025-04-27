@@ -25,7 +25,7 @@ export default function RootLayout({
     if (data?.user?.role && data?.user?.role !== "admin") {
       router.push("/");
     }
-  }, [status, router]);
+  }, [status, router, data?.user?.role]);
 
   const [loading, setLoading] = useState<boolean>(true);
 

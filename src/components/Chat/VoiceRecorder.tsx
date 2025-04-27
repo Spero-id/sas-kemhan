@@ -24,10 +24,9 @@ export default function VoiceRecorder() {
             // Kirim ke server
             const formData = new FormData();
             formData.append("file", audioBlob, "recording.webm");
-            formData.append("type", "audio");
 
             try {
-              const res = await fetch("/api/secure/chat/upload-file", {
+              const res = await fetch("/api/secure/chat/upload-audio", {
                 method: "POST",
                 body: formData,
               });
@@ -69,13 +68,13 @@ export default function VoiceRecorder() {
   };
 
   return (
-    <div className="flex flex-col gap-3 p-4">
+    <div className="p-2 box-border">
       {!isRecording ? (
         <button onClick={startRecording} className="text-white text-lg">
           <FaMicrophone />
         </button>
       ) : (
-        <button onClick={stopRecording} className="text-red-500">
+        <button onClick={stopRecording} className="text-red-500 text-lg">
           <FaMicrophoneSlash />
         </button>
       )}

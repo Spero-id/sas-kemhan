@@ -32,12 +32,12 @@ export default async function handler(
   }
 
   try {
-    const { fields, file } = await buildFormDataBuffered(req);
+    const { file } = await buildFormDataBuffered(req);
 
     const fileUrl = await saveFileToDiskBuffered(
       file.buffer,
       file.filename,
-      "uploads/chat"
+      "uploads/chat/audio"
     );
 
     const chat = await prisma.chat.create({
