@@ -11,6 +11,9 @@ export type ResponseDetailUser = {
     email: string;
     image: string;
     password: string;
+    body_warm: string;
+    cctv: string;
+    sensor_gerak: string;
     role: string;
     last_login: string;
     created_at: string;

@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const image = formData.get('image') as File;
     
     const passwordHash = await bcrypt.hash(password, saltRounds)
-    const fileUrl = await saveFileToDisk(image); 
+    const fileUrl = await saveFileToDisk(image, "uploads/profile"); 
     
     const user = await prisma.user.create({
       data: {

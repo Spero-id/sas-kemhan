@@ -50,18 +50,21 @@ export default async function handler(
         
         // Simpan ke DB
         try {
-          await prisma.chat.create({
+          const newChat = await prisma.chat.create({
             data: {
               user_id: parseInt(socket.data.user.id),
-              content: msg,
+              content: typeof msg === "string" ? msg : msg.content, // pastikan string
               created_at: new Date(),
             },
+            include: {
+              user: true, // kalau mau sekalian ada user info
+            },
           });
+          io.emit("chat:message", newChat);
+
         } catch (error) {
           console.error("Gagal menyimpan pesan ke DB:", error);
         }
-
-        io.emit("chat:message", msg);
       });
     });
 
