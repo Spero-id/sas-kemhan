@@ -21,11 +21,11 @@ model user {
   last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
-  cctv          String?
-  sensor_gerak  String?
-  body_worm     String?
 
   chats         chat[]
+  cctv          cctv?
+  body_worm     body_worm?
+  sensor_gerak  sensor_gerak?
 }
 
 model chat {
@@ -35,7 +35,41 @@ model chat {
   created_at DateTime  @default(now())
   type       ChatType  @default(TEXT)
 
-  user       user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user       user @relation(fields: [user_id], references: [id])
+}
+
+model cctv {
+  user_id    Int     @id
+  name       String
+  path_slug  String
+  rtsp_url   String
+  status     Boolean
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  user       user @relation(fields: [user_id], references: [id])
+}
+
+model body_worm {
+  user_id    Int     @id
+  name       String
+  path_slug  String
+  rtsp_url   String
+  status     Boolean
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  user       user @relation(fields: [user_id], references: [id])
+}
+
+model sensor_gerak {
+  user_id    Int     @id
+  name       String
+  status     Boolean
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  user       user @relation(fields: [user_id], references: [id])
 }
 
 // Enum role tetap

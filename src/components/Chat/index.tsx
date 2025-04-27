@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import Message from "./Message";
 import VoiceRecorder from "./VoiceRecorder";
 import { useSession } from "next-auth/react";
+import VideoUpload from "./VideoUpload";
 
 export default function Chat() {
   const { data: session } = useSession();
@@ -44,7 +45,6 @@ export default function Chat() {
 
     const res = await fetch(`/api/secure/chat?page=${pageToFetch}`);
     const { data, hasMore: more } = await res.json();
-    console.log(data);
 
     setMessages((prev) => [...data, ...prev]);
     setPage(pageToFetch + 1);
@@ -110,6 +110,7 @@ export default function Chat() {
         </div>
 
         <div className="flex mt-2 p-2">
+          <VideoUpload />
           <VoiceRecorder />
           <Message socket={socket} />
         </div>
@@ -119,6 +120,11 @@ export default function Chat() {
 }
 
 const messageContent = (msg: any) => {
+  const date = new Date(msg.created_at);
+  const hours = date.getUTCHours().toString().padStart(2, "0");
+  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+  const timeOnly = `${hours}:${minutes}`;
+
   if (msg.type === "AUDIO") {
     return (
       <audio controls>
@@ -131,6 +137,7 @@ const messageContent = (msg: any) => {
     return (
       <div className="bg-deep-teal text-white p-3 rounded-md max-w-[70%] break-all bg-opacity-50">
         {msg.content}
+        <p className="text-xs text-right">{timeOnly}</p>
       </div>
     );
   }
