@@ -94,7 +94,7 @@ export default function Chat() {
                 className="flex items-end flex-col gap-2 text-cyan-neon"
                 key={i}
               >
-                <p>{msg.user.name}</p>
+                <p>{msg?.user?.name}</p>
                 {messageContent(msg)}
               </div>
             ) : (
@@ -102,7 +102,7 @@ export default function Chat() {
                 className="flex items-start flex-col gap-2 text-cyan-neon"
                 key={i}
               >
-                <p>{msg.user.name}</p>
+                <p>{msg?.user?.name}</p>
                 {messageContent(msg)}
               </div>
             )
@@ -132,7 +132,11 @@ const messageContent = (msg: any) => {
       </audio>
     );
   } else if (msg.type === "VIDEO") {
-    return <p>video</p>;
+    return (
+      <video controls>
+        <source src={msg.content} type="video/mp4" />
+      </video>
+    );
   } else {
     return (
       <div className="bg-deep-teal text-white p-3 rounded-md max-w-[70%] break-all bg-opacity-50">

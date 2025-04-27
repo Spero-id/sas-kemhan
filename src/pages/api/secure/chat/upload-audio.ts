@@ -46,6 +46,9 @@ export default async function handler(
         content: fileUrl,
         user_id: 1,
       },
+      include: {
+        user: true,
+      },
     });
 
     res.socket.server.io?.emit("chat:message", chat);
