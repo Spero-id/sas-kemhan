@@ -5,6 +5,7 @@ import { IncomingForm } from "formidable";
 import fs from "fs";
 import crypto from "crypto";
 import prisma from "../../../../../lib/prisma";
+import { getToken } from "next-auth/jwt";
 
 type NextApiResponseServerIO = NextApiResponse & {
   socket: {
@@ -30,6 +31,8 @@ export default async function handler(
       .json({ status: false, message: "Method not allowed" });
   }
 
+  const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+  
   // Membuat instance form untuk menangani upload
   const form = new IncomingForm({
     maxFileSize: 10 * 1024 * 1024, // Maksimum file size 10MB
@@ -62,7 +65,7 @@ export default async function handler(
         data: {
           type: "VIDEO",
           content: `/uploads/chat/video/${randomName}.${fileExtension}`,
-          user_id: 1,
+          user_id: parseInt(session?.id as string),
         },
         include: {
           user: true,

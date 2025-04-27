@@ -6,6 +6,7 @@ import { Server as IOServer } from "socket.io";
 import { Server as HTTPServer } from "http";
 import { saveFileToDiskBuffered } from "@/utils/fileBuffered";
 import { buildFormDataBuffered } from "@/utils/formData";
+import { getToken } from "next-auth/jwt";
 
 type NextApiResponseServerIO = NextApiResponse & {
   socket: {
@@ -31,6 +32,8 @@ export default async function handler(
       .json({ status: false, message: "Method not allowed" });
   }
 
+  const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+
   try {
     const { file } = await buildFormDataBuffered(req);
 
@@ -44,7 +47,7 @@ export default async function handler(
       data: {
         type: "AUDIO",
         content: fileUrl,
-        user_id: 1,
+        user_id: parseInt(session?.id as string),
       },
       include: {
         user: true,
