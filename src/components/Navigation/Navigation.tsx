@@ -4,13 +4,16 @@ import { MdCamera, MdSensorOccupied } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-interface NavigationProps {
-  search: string;
-}
-
-const Navigation = ({ search }: NavigationProps) => {
+const Navigation = () => {
+  const [search, setSearch] = useState<string>("");
   const pathname = usePathname();
+
+  useEffect(() => {
+    console.log(search)
+  }, [search]);
+
   return (
     <div className="flex justify-between my-4">
       <div className="flex gap-3">
@@ -53,7 +56,7 @@ const Navigation = ({ search }: NavigationProps) => {
           <option>Velvet</option>
         </select>
         <label className="input input-bordered flex items-center gap-2 bg-deep-teal bg-opacity-50 rounded text-white">
-          <input type="text" className="grow" placeholder="Cari" />
+          <input type="text" className="grow" placeholder="Cari" onChange={(e) => setSearch(e.target.value)} />
           <CiSearch />
         </label>
         <div className="bg-deep-teal bg-opacity-50 rounded text-white flex items-center justify-center p-3">

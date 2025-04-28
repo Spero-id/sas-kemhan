@@ -1,12 +1,7 @@
 import { axiosClient } from "@/common/utils/AxiosClient";
-import { ResponseAllCCTV, ResponseDetailCCTV } from "@/types/CCTV/TypeCCTV";
+import { ResponseAllCctv } from "@/types/Cctv/TypeCctv";
 
-export const getAllCCTV = async () => {
-  const response = await axiosClient.get<ResponseAllCCTV>("/secure/cctv");
-  return response.data;
-};
-
-export const getDetailCCTV = async (id: string) => {
-  const response = await axiosClient.get<ResponseDetailCCTV>(`/secure/cctv/${id}`);
+export const getAllCctv = async () => {
+  const response = await axiosClient.get<ResponseAllCctv>("/secure/cctv");
   return response.data;
 };

@@ -1,16 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllCCTV, getDetailCCTV } from "./get.service";
+import { getAllCctv } from "./get.service";
 
-export const useAllCCTV = () => {
+export const useAllCctv = () => {
   return useQuery({
-    queryFn: () => getAllCCTV(),
+    queryFn: () => getAllCctv(),
     queryKey: ["all"],
-  });
-};
-
-export const useDetailCCTV = ({ id }: { id: string }) => {
-  return useQuery({
-    queryFn: () => getDetailCCTV(id),
-    queryKey: ["detail", id],
   });
 };
