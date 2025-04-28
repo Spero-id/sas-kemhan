@@ -41,7 +41,7 @@ export default function RootLayout({
             {/* <!-- ===== Header End ===== --> */}
 
             {/* <!-- ===== Navigation Start ===== --> */}
-            <Navigation search="" />
+            <Navigation />
             {/* <!-- ===== Navigation End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
