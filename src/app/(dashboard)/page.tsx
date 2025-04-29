@@ -1,24 +1,20 @@
 "use client";
 
+import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
-import { useState } from "react";
+import { useAtom } from "jotai";
 import { IoMdQrScanner } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
 import { TfiTarget } from "react-icons/tfi";
 
 export default function Home() {
-  const [search, setSearch] = useState<string>("");
+  const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllCctv();
 
   return (
     <>
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
       {isLoading ? (
         <LoadingGetData />
       ) : (
@@ -26,7 +22,7 @@ export default function Home() {
           {data?.data.map((item: Cctv, i: number) => (
             <div
               className={`relative rounded-md overflow-hidden border-2 border-cyan-neon h-48 ${
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.name.toLowerCase().includes(searchDashboard.toLowerCase())
                   ? ""
                   : "hidden"
               }`}
