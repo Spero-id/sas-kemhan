@@ -7,3 +7,8 @@ export type BodyWorm = {
   created_at: string;
   updated_at: string;
 };
+
+export type ResponseAllBodyWorm = {
+  status: boolean;
+  data: BodyWorm[];
+}
