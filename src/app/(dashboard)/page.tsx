@@ -2,9 +2,11 @@
 
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
+import Navigation from "@/components/Navigation/Navigation";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
 import { useAtom } from "jotai";
+import Link from "next/link";
 import { IoMdQrScanner } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
 import { TfiTarget } from "react-icons/tfi";
@@ -15,6 +17,7 @@ export default function Home() {
 
   return (
     <>
+      <Navigation />
       {isLoading ? (
         <LoadingGetData />
       ) : (
@@ -60,9 +63,9 @@ export default function Home() {
                 <button className="p-1 rounded text-white text-lg">
                   <TfiTarget />
                 </button>
-                <button className="p-1 rounded text-white text-lg">
+                <Link href={`/cctv/${item.user_id}`} className="p-1 rounded text-white text-lg">
                   <MdPushPin />
-                </button>
+                </Link>
                 <button className="p-1 rounded text-white text-lg">
                   <IoMdQrScanner />
                 </button>

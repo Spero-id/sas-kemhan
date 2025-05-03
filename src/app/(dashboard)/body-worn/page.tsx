@@ -2,6 +2,7 @@
 
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
+import Navigation from "@/components/Navigation/Navigation";
 import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
 import { useAtom } from "jotai";
 import { IoMdQrScanner } from "react-icons/io";
@@ -14,6 +15,7 @@ export default function BodyWorm() {
 
   return (
     <>
+      <Navigation />
       {isLoading ? (
         <LoadingGetData />
       ) : (

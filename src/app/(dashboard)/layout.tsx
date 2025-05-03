@@ -5,7 +5,6 @@ import Loader from "@/components/common/Loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import HeaderDashboard from "@/components/HeaderDashboard";
-import Navigation from "@/components/Navigation/Navigation";
 import Chat from "@/components/Chat";
 
 export default function RootLayout({
@@ -39,10 +38,6 @@ export default function RootLayout({
             {/* <!-- ===== Header Start ===== --> */}
             <HeaderDashboard />
             {/* <!-- ===== Header End ===== --> */}
-
-            {/* <!-- ===== Navigation Start ===== --> */}
-            <Navigation />
-            {/* <!-- ===== Navigation End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
