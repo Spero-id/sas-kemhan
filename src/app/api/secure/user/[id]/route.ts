@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../../../../lib/prisma";
+import { getPrismaClient } from "../../../../../../lib/prisma";
 import bcrypt from "bcryptjs";
 import { saveFileToDisk, deleteFileFromDisk } from "@/utils/file";
 
@@ -12,6 +12,7 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const prisma = getPrismaClient();
   try {
     const user = await prisma.user.findFirst({
       where: {
@@ -84,6 +85,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const prisma = getPrismaClient();
   try {
     const formData = await request.formData();
 
@@ -202,6 +204,7 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const prisma = getPrismaClient();
   try {
     await prisma.$transaction(async (tx) => {
       const data = await tx.user.findFirst({
