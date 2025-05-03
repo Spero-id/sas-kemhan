@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../../lib/prisma";
+import { getPrismaClient } from "../../../../lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const prisma = getPrismaClient();
   const page = parseInt(req.query.page as string) || 1;
   const limit = 30;
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../../../lib/prisma";
+import { getPrismaClient } from "../../../../../lib/prisma";
 import bcrypt from "bcryptjs";
 import { saveFileToDisk } from "@/utils/file";
 
@@ -9,6 +9,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const prisma = getPrismaClient();
   try {
     const users = await prisma.user.findMany({
       where: {
@@ -33,6 +34,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const prisma = getPrismaClient();
   try {
     const formData = await request.formData();
     

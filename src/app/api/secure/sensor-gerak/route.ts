@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../../../lib/prisma";
+import { getPrismaClient } from "../../../../../lib/prisma";
 
 export async function GET() {
+  const prisma = getPrismaClient();
   try {
     const data = await prisma.sensor_gerak.findMany();
     return NextResponse.json({

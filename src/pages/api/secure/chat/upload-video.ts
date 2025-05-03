@@ -4,7 +4,7 @@ import { Server as HTTPServer } from "http";
 import { IncomingForm } from "formidable";
 import fs from "fs";
 import crypto from "crypto";
-import prisma from "../../../../../lib/prisma";
+import { getPrismaClient } from "../../../../../lib/prisma";
 import { getToken } from "next-auth/jwt";
 
 type NextApiResponseServerIO = NextApiResponse & {
@@ -32,6 +32,7 @@ export default async function handler(
   }
 
   const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+  const prisma = getPrismaClient();
   
   // Membuat instance form untuk menangani upload
   const form = new IncomingForm({

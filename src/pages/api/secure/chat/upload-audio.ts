@@ -1,7 +1,7 @@
 // pages/api/upload.ts
 
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../../../lib/prisma";
+import { getPrismaClient } from "../../../../../lib/prisma";
 import { Server as IOServer } from "socket.io";
 import { Server as HTTPServer } from "http";
 import { saveFileToDiskBuffered } from "@/utils/fileBuffered";
@@ -33,6 +33,7 @@ export default async function handler(
   }
 
   const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+  const prisma = getPrismaClient();
 
   try {
     const { file } = await buildFormDataBuffered(req);
