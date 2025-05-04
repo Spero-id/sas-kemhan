@@ -15,9 +15,7 @@ services:
       - ./mediamtx.yml:/mediamtx.yml
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: codingrafi/sas:latest
     container_name: app
     restart: always
     ports:
