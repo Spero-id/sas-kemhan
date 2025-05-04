@@ -1,6 +1,7 @@
 "use client";
 
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
+import HLSPlayer from "@/components/HLSPlayer";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
@@ -77,6 +78,7 @@ export default function Home() {
               </div>
             </div>
           ))}
+          <HLSPlayer src="http://localhost:8888/live/stream/index.m3u8" />
         </div>
       )}
     </>

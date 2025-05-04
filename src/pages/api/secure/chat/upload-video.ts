@@ -60,7 +60,8 @@ export default async function handler(
     const newPath = `./public/uploads/chat/video/${randomName}.${fileExtension}`;
 
     try {
-      fs.renameSync(oldPath, newPath);
+      fs.copyFileSync(oldPath, newPath);
+      fs.unlinkSync(oldPath);
 
       const chat = await prisma.chat.create({
         data: {
