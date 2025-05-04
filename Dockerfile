@@ -8,8 +8,6 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npx prisma generate
-RUN npm run build
 
 # Jalankan server Next.js
 FROM base AS runner
