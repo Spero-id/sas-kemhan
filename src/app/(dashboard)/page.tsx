@@ -1,5 +1,6 @@
 "use client";
 
+import HLSPlayer from "@/components/HLSPlayer";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
@@ -78,6 +79,7 @@ export default function Home() {
               </div>
             </div>
           ))}
+          <HLSPlayer src="http://localhost:8888/live/stream/index.m3u8" />
         </div>
       )}
     </>

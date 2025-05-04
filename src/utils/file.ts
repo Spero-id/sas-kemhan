@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 
 export async function saveFileToDisk(file: File, folderName: string = 'uploads') {
-  console.log(file)
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
