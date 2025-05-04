@@ -8,6 +8,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
+RUN npm run build
 
 # Jalankan server Next.js
 FROM base AS runner
