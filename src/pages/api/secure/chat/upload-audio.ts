@@ -6,8 +6,8 @@ import { Server as IOServer } from "socket.io";
 import { Server as HTTPServer } from "http";
 import { getToken } from "next-auth/jwt";
 import { IncomingForm } from "formidable";
-import fs from 'fs';
-import crypto from "crypto";
+import fs from "fs";
+import { getMinioFileUrl, uploadToMinio } from "@/utils/minio";
 
 type NextApiResponseServerIO = NextApiResponse & {
   socket: {
@@ -33,7 +33,10 @@ export default async function handler(
       .json({ status: false, message: "Method not allowed" });
   }
 
-  const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+  const session = await getToken({
+    req: req as unknown as Request,
+    secret: process.env.AUTH_SECRET!,
+  });
   const prisma = getPrismaClient();
 
   const form = new IncomingForm({
@@ -47,33 +50,32 @@ export default async function handler(
       return res.status(500).json({ status: false, message: "Upload error" });
     }
 
-    const audioFile = files.file;
-    console.log(audioFile)
-
-    if (!audioFile) {
+    const fileAudio = files.file?.[0];
+    if (!fileAudio) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    const oldPath = audioFile[0].filepath;
+    const buffer = fs.readFileSync(fileAudio.filepath); // baca file dari disk
+    const filename = fileAudio.originalFilename ?? "audio.webm";
+    const mimetype = fileAudio.mimetype ?? "audio/webm";
 
-    const randomName = crypto.randomBytes(16).toString("hex");
-    const fileExtension = (audioFile[0].originalFilename ?? "").split(".").pop();
-    const newPath = `./public/uploads/chat/audio/${randomName}.${fileExtension}`;
-    
+    const file = new File([buffer], filename, { type: mimetype });
+
+    const uploadedPath = await uploadToMinio(file, "uploads/chat/audio");
+
     try {
-      fs.copyFileSync(oldPath, newPath);
-      fs.unlinkSync(oldPath);
-      
       const chat = await prisma.chat.create({
         data: {
           type: "AUDIO",
-          content: newPath,
+          content: uploadedPath,
           user_id: parseInt(session?.id as string),
         },
         include: {
           user: true,
         },
       });
+
+      chat.content = await getMinioFileUrl(chat.content);
 
       res.socket.server.io?.emit("chat:message", chat);
 
@@ -82,10 +84,10 @@ export default async function handler(
         data: chat,
       });
 
-      res.status(200).json({ message: 'File uploaded successfully' });
+      res.status(200).json({ message: "File uploaded successfully" });
     } catch (error) {
-      console.error('Error saving file:', error);
-      res.status(500).json({ error: 'Error saving file' });
+      console.error("Error saving file:", error);
+      res.status(500).json({ error: "Error saving file" });
     }
   });
 }

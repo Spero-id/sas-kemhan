@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../lib/prisma";
 import bcrypt from "bcryptjs";
-import { saveFileToDisk } from "@/utils/file";
+import { uploadToMinio } from "@/utils/minio";
 
 const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
 
@@ -37,15 +37,15 @@ export async function POST(request: Request) {
   const prisma = getPrismaClient();
   try {
     const formData = await request.formData();
-    
+
     const result = await prisma.$transaction(async (tx) => {
       const name = formData.get("name") as string;
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
       const image = formData.get("image") as File;
-  
+
       const passwordHash = await bcrypt.hash(password, saltRounds);
-      const fileUrl = await saveFileToDisk(image, "uploads/profile");
+      const fileUrl = await uploadToMinio(image, 'uploads/profile');
 
       // 1. user
       const user = await tx.user.create({
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
             connect: {
               id: user.id,
             },
-          }
+          },
         },
       });
 
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
             connect: {
               id: user.id,
             },
-          }
+          },
         },
       });
 
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
             connect: {
               id: user.id,
             },
-          }
+          },
         },
       });
 

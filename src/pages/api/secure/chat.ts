@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getPrismaClient } from "../../../../lib/prisma";
+import { getMinioFileUrl } from "@/utils/minio";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const prisma = getPrismaClient();
   const page = parseInt(req.query.page as string) || 1;
   const limit = 30;
@@ -11,9 +15,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     skip: (page - 1) * limit,
     take: limit,
     include: {
-      user: true // kalau kamu punya relasi user, ini opsional
-    }
+      user: true, // kalau kamu punya relasi user, ini opsional
+    },
   });
+
+  for (const chat of chats) {
+    if (chat.type !== "TEXT") {
+      chat.content = await getMinioFileUrl(chat.content);
+    }
+  }
 
   res.json({
     data: chats.toReversed(), // dibalik supaya lama → baru di UI

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../lib/prisma";
 import bcrypt from "bcryptjs";
-import { saveFileToDisk, deleteFileFromDisk } from "@/utils/file";
+import { deleteMinioFile, getMinioFileUrl, uploadToMinio } from "@/utils/minio";
 
 const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10);
 
@@ -65,6 +65,8 @@ export async function GET(
       );
     }
 
+    user.image = await getMinioFileUrl(user.image);
+
     return NextResponse.json({
       status: true,
       data: user,
@@ -117,9 +119,9 @@ export async function PUT(
 
       if (image) {
         if (data?.image) {
-          deleteFileFromDisk(data.image);
+          deleteMinioFile(data.image);
         }
-        const fileUrl = await saveFileToDisk(image);
+        const fileUrl = await uploadToMinio(image, "uploads/profile");
         req["image"] = fileUrl;
       }
 
@@ -214,7 +216,7 @@ export async function DELETE(
       });
   
       if (data?.image) {
-        deleteFileFromDisk(data.image);
+        deleteMinioFile(data.image);
       }
   
       await tx.cctv.delete({

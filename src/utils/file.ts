@@ -13,8 +13,7 @@ export async function saveFileToDisk(file: File, folderName: string = 'uploads')
   fs.writeFileSync(filePath, buffer);
 
   return `/` + path.join(folderName, file.name).replace(/\\/g, '/'); // Untuk Windows
-} 
-
+}
 
 export function deleteFileFromDisk(fileUrl: string) {
   try {
