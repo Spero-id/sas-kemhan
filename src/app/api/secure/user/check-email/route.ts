@@ -1,8 +1,9 @@
-import prisma from "../../../../../../lib/prisma";
+import { getPrismaClient } from "../../../../../../lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    const prisma = getPrismaClient();
     const body = await request.json();
     const { email, userId } = body;
     const id : number = userId && parseInt(userId);

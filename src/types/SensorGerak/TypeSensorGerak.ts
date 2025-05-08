@@ -5,3 +5,8 @@ export type SensorGerak = {
   created_at: string;
   updated_at: string;
 }
+
+export type ResponseAllSensorGerak = {
+  status: boolean;
+  data: SensorGerak[];
+}

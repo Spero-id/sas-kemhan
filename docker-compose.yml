@@ -11,8 +11,8 @@ services:
       - "8888:8888"
       - "8889:8889"
       - "8189:8189/udp"
-    volumes:
-      - ./mediamtx.yml:/mediamtx.yml
+    # volumes:
+    #   - ./mediamtx.yml:/mediamtx.yml
 
   app:
     build:
@@ -29,6 +29,28 @@ services:
       BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
       DATABASE_URL: ${DATABASE_URL}
       NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_PUBLIC_URL: ${MINIO_PUBLIC_URL}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./public/uploads:/app/public/uploads
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"  # Port akses S3 API
+      - "9001:9001"  # Port akses web UI
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server --console-address ":9001" /data
+    restart: unless-stopped
+
+volumes:
+  minio-data:

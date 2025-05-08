@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server as IOServer, Socket } from "socket.io";
 import { Server as HTTPServer } from "http";
-import prisma from '../../../lib/prisma';
+import { getPrismaClient } from '../../../lib/prisma';
 import { getToken } from "next-auth/jwt";
 
 const secret = process.env.AUTH_SECRET;
+const prisma = getPrismaClient();
 
 // Ini untuk meng-extend properti io ke server
 type NextApiResponseServerIO = NextApiResponse & {

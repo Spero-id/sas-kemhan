@@ -1,4 +1,4 @@
-import prisma from './lib/prisma'
+import { getPrismaClient } from './lib/prisma'
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -20,6 +20,8 @@ export const config = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
+
+        const prisma = getPrismaClient();
 
         // Cek apakah email ada di database
         const user = await prisma.user.findUnique({
