@@ -11,23 +11,35 @@ services:
       - "8189:8189/udp"    
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.constraint-label=traefik-public"
       - "traefik.http.routers.mediamtx.rule=Host(`mediamtx.spero-lab.id`)"
-      - "traefik.http.routers.mediamtx.entrypoints=websecure"
-      - "traefik.http.routers.mediamtx.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.mediamtx.entrypoints=http"
+      - "traefik.http.routers.mediamtx-https.rule=Host(`mediamtx.spero-lab.id`)"
+      - "traefik.http.routers.mediamtx-https.entrypoints=https"
+      - "traefik.http.routers.mediamtx-https.tls.certresolver=le"
+      - "traefik.http.routers.mediamtx-https.tls=true"
+      - "traefik.http.services.mediamtx-https.loadbalancer.server.port=3001"
     networks:
-      - coolify
+      - traefik-public
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: app
+    container_name: sas
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`sas-kemhan.spero-lab.id`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.constraint-label=traefik-public"
+      - "traefik.http.routers.sas.rule=Host(`sas-kemhan.spero-lab.id`)"
+      - "traefik.http.routers.sas.entrypoints=http"
+      - "traefik.http.routers.sas-https.rule=Host(`sas-kemhan.spero-lab.id`)"
+      - "traefik.http.routers.sas-https.entrypoints=https"
+      - "traefik.http.routers.sas-https.tls.certresolver=le"
+      - "traefik.http.routers.sas-https.tls=true"
+      - "traefik.http.services.sas-https.loadbalancer.server.port=3001"
     environment:
       NODE_ENV: ${NODE_ENV}
       AUTH_URL: ${AUTH_URL}
@@ -44,8 +56,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./public/uploads:/app/public/uploads
     networks:
-      - coolify
+      - traefik-public
 
 networks:
-  coolify:
+  traefik-public:
     external: true
