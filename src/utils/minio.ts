@@ -35,7 +35,7 @@ export async function uploadToMinio(
 
   await s3.send(new PutObjectCommand(uploadParams));
 
-  return `/${newPath}`;
+  return `${newPath}`;
 }
 
 export async function getMinioFileUrl(key: string | null): Promise<string> {
