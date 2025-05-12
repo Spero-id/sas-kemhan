@@ -13,12 +13,13 @@ import { IoMdQrScanner } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
 import { TfiTarget } from "react-icons/tfi";
 
-const MEDIAMTX_URL = process.env.MEDIAMTX_URL;
+const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllCctv();
 
+  console.log(`${MEDIAMTX_URL}/live/stream/index.m3u8`)
   return (
     <>
       <Navigation />
