@@ -1,13 +1,10 @@
-# Aktifkan RTMP input
-rtmp:
-  enabled: yes
+rtmp: yes
+rtmpAddress: :1935
 
-# Aktifkan HLS output
-hls:
-  enabled: yes
-  alwaysRemux: yes  # agar HLS tetap dibuat meskipun source tidak RTSP
+hls: yes
+hlsAddress: :8888
+hlsAllowOrigin: '*'
 
-# Konfigurasi path agar bisa publish stream bebas (default path)
 paths:
   all:
-    source: publisher  # izinkan publish dari encoder seperti OBS
+    source: publisher
