@@ -24,6 +24,7 @@ services:
       - "traefik.http.routers.mediamtx-https.entrypoints=https"
       - "traefik.http.routers.mediamtx-https.tls=true"
       - "traefik.http.routers.mediamtx-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.mediamtx.loadbalancer.server.port=8888"
 
 networks:
   coolify:
