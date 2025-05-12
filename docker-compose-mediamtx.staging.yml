@@ -5,6 +5,8 @@ services:
     image: aler9/rtsp-simple-server:v1.12.0
     container_name: mediamtx
     restart: always
+    networks:
+      - coolify
     ports:
       - "1935:1935"
       - "8554:8554"
@@ -24,3 +26,7 @@ services:
       - "traefik.http.routers.mediamtx-https.tls.certresolver=le"
       - "traefik.http.routers.mediamtx-https.tls=true"
       - "traefik.http.services.mediamtx-https.loadbalancer.server.port=3001"
+
+networks:
+  coolify:
+    external: true
