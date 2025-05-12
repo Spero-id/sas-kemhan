@@ -12,7 +12,7 @@ services:
       - "8889:8889"
       - "8189:8189/udp"
     volumes:
-      - ./mediamtx.yml:/mediamtx.yml
+      - ./mediamtx-config/mediamtx.yml:/mediamtx.yml
 
   app:
     build:
