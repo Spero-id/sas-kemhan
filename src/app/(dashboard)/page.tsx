@@ -13,7 +13,7 @@ import { IoMdQrScanner } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
 import { TfiTarget } from "react-icons/tfi";
 
-const NEXT_PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const MEDIAMTX_URL = process.env.MEDIAMTX_URL;
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
@@ -83,7 +83,7 @@ export default function Home() {
           ))}
         </div>
       )}
-      <HLSPlayer src="http://localhost:8888/live/stream/index.m3u8" />
+      <HLSPlayer src={`${MEDIAMTX_URL}/live/stream/index.m3u8`} />
     </>
   );
 }
