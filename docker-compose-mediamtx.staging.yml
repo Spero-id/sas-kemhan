@@ -17,15 +17,13 @@ services:
       - ./mediamtx.yml:/mediamtx.yml   
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=traefik-public"
-      - "traefik.constraint-label=traefik-public"
+      - "traefik.docker.network=coolify"
       - "traefik.http.routers.mediamtx.rule=Host(`mediamtx.spero-lab.id`)"
       - "traefik.http.routers.mediamtx.entrypoints=http"
       - "traefik.http.routers.mediamtx-https.rule=Host(`mediamtx.spero-lab.id`)"
       - "traefik.http.routers.mediamtx-https.entrypoints=https"
-      - "traefik.http.routers.mediamtx-https.tls.certresolver=le"
       - "traefik.http.routers.mediamtx-https.tls=true"
-      - "traefik.http.services.mediamtx-https.loadbalancer.server.port=3001"
+      - "traefik.http.routers.mediamtx-https.tls.certresolver=letsencrypt"
 
 networks:
   coolify:
