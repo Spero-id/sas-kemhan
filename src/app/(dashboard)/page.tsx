@@ -13,6 +13,8 @@ import { IoMdQrScanner } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
 import { TfiTarget } from "react-icons/tfi";
 
+const NEXT_PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllCctv();
@@ -79,9 +81,9 @@ export default function Home() {
               </div>
             </div>
           ))}
-          <HLSPlayer src="http://localhost:8888/live/stream/index.m3u8" />
         </div>
       )}
+      <HLSPlayer src="http://localhost:8888/live/stream/index.m3u8" />
     </>
   );
 }
