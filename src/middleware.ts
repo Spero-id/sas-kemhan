@@ -5,12 +5,12 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(req: NextRequest) {
   const token = await getToken({
     req,
-    secret: process.env.AUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
   });
 
   console.log(token)
   console.log(req.headers.get('cookie'))
-  console.log(process.env.AUTH_SECRET)
+  console.log(process.env.NEXTAUTH_SECRET)
 
   if (!token) {
     return NextResponse.json(
