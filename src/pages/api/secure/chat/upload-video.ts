@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
     return res.status(405).json({ status: false, message: "Method not allowed" });
   }
 
-  const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+  const session = await getToken({ req: req as unknown as Request, secret: process.env.NEXTAUTH_SECRET! });
   const prisma = getPrismaClient();
 
   const form = new IncomingForm({

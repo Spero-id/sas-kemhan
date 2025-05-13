@@ -35,7 +35,7 @@ export default async function handler(
 
   const session = await getToken({
     req: req as unknown as Request,
-    secret: process.env.AUTH_SECRET!,
+    secret: process.env.NEXTAUTH_SECRET!,
   });
   const prisma = getPrismaClient();
 

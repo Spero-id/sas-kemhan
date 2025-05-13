@@ -16,6 +16,7 @@ export const config = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
+        console.log(process.env.NEXTAUTH_SECRET)
         // Add null checks for credentials
         if (!credentials?.email || !credentials?.password) {
           return null;
@@ -70,7 +71,7 @@ export const config = {
       return session;
     },
   },
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 } satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
