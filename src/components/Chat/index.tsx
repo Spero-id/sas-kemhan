@@ -60,6 +60,24 @@ export default function Chat() {
     }
   };
 
+  const scrollToBottom = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    if (modalChat) {
+      setTimeout(scrollToBottom, 100);
+    }
+  }, [modalChat]);
+
+  useEffect(() => {
+    if (modalChat) {
+      scrollToBottom();
+    }
+  }, [messages]);
+
   return (
     <>
       <button

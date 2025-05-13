@@ -28,7 +28,7 @@ const HLSPlayer = ({ src }: Props) => {
       controls
       autoPlay
       muted
-      className="w-full max-w-xl rounded-lg shadow-lg"
+      className="w-full max-w-xl rounded-lg shadow-lg absolute"
     />
   );
 };
