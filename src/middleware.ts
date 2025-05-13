@@ -9,6 +9,8 @@ export async function middleware(req: NextRequest) {
   });
 
   console.log(token)
+  console.log(req.headers.get('cookie'))
+  console.log(process.env.AUTH_SECRET)
 
   if (!token) {
     return NextResponse.json(
