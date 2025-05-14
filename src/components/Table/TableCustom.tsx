@@ -53,7 +53,7 @@ export default function TableCustom({ data, columns }: Readonly<TableProps>) {
       />
       <div className="overflow-x-auto mt-3">
         <table className="table">
-          <thead>
+          <thead className="text-slate-800">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -69,7 +69,7 @@ export default function TableCustom({ data, columns }: Readonly<TableProps>) {
               </tr>
             ))}
           </thead>
-          <tbody>
+          <tbody className="text-slate-600">
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
@@ -82,7 +82,7 @@ export default function TableCustom({ data, columns }: Readonly<TableProps>) {
           </tbody>
         </table>
       </div>
-      <div className="flex items-center gap-3 mt-3">
+      <div className="flex items-center gap-3 mt-3 text-slate-600">
         <Pagination>
           <Button
             className="join-item"
