@@ -4,7 +4,7 @@ import { Server as HTTPServer } from "http";
 import { getPrismaClient } from '../../../lib/prisma';
 import { getToken } from "next-auth/jwt";
 
-const secret = process.env.NEXTAUTH_SECRET;
+const secret = process.env.AUTH_SECRET;
 const prisma = getPrismaClient();
 
 // Ini untuk meng-extend properti io ke server
