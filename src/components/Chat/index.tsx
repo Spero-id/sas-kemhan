@@ -26,7 +26,9 @@ export default function Chat() {
     })();
 
     fetch("/api/socket");
-    const newSocket = io();
+    const newSocket = io({
+      withCredentials: true,
+    });
 
     newSocket.on("chat:message", (msg: string) => {
       setMessages((prev) => [...prev, msg]);
