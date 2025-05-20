@@ -35,13 +35,13 @@ export default function Home() {
               }`}
               key={i}
             >
-              {/* <Image
-                src=""
+              <Image
+                src="/images/preview.png"
                 alt="CCTV"
-                className=" h-auto"
+                className="w-full h-full object-cover absolute"
                 width={300}
                 height={200}
-              /> */}
+              />
               <Image
                 src="/images/frame.png"
                 alt="frame"
@@ -56,7 +56,7 @@ export default function Home() {
               />
               <div className="relative h-full border border-dark-ocean">
                 <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  {item.name}
+                  {item.user.name} - {item.name}
                 </div>
 
                 {item.status ? (
@@ -86,11 +86,6 @@ export default function Home() {
                   <button className="p-1 rounded text-white text-lg">
                     <IoMdQrScanner />
                   </button>
-                </div>
-
-                <div className="absolute bottom-3 left-12 text-white text-sm">
-                  <div className="font-bold">John Doe</div>
-                  <div className="text-xs">12/02/2025, 07:45</div>
                 </div>
               </div>
             </div>
