@@ -22,9 +22,9 @@ export default async function handler(
 ) {
   if (!res.socket.server.io) {
     console.log("Socket.IO server starting...");
-    
+
     const io = new IOServer(res.socket.server);
-    
+
     io.use(async (socket, next) => {
       console.log("debug socket: " + socket.request)
       console.log("secret: " + secret)
@@ -57,7 +57,7 @@ export default async function handler(
           const newChat = await prisma.chat.create({
             data: {
               user_id: parseInt(socket.data.user.id),
-              content: typeof msg === "string" ? msg : msg.content, // pastikan string
+              content: typeof msg === "string" ? msg : msg.content,
               created_at: new Date(),
             },
             include: {
