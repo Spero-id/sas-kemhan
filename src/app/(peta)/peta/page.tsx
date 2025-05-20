@@ -7,6 +7,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
+import { useAllPeople } from "@/services/api/maps/get/get.hooks";
 
 export default function Peta() {
   const MapComponent = useMemo(
@@ -18,6 +19,8 @@ export default function Peta() {
     []
   );
 
+  const { isLoading, data } = useAllPeople();
+
   return (
     <>
       <Link
@@ -28,7 +31,7 @@ export default function Peta() {
         Back
       </Link>
       <div style={{ height: "100vh", width: "100%" }}>
-        <MapComponent />
+        {isLoading ? <LoadingGetData /> : <MapComponent data={data} />}
       </div>
       <Chat />
     </>
