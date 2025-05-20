@@ -7,8 +7,8 @@ export type People = {
   data: {
     id: number;
     address: string;
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
     temperature: number;
     humidity: number;
     pressure: number;
