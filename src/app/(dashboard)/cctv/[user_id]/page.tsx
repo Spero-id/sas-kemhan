@@ -45,7 +45,7 @@ export default function DetailCctv() {
             <button className="p-1 rounded text-white text-2xl">
               <TfiTarget />
             </button>
-            <Link href={`/cctv`} className="p-1 rounded text-white text-2xl">
+            <Link href={`/cctv`} className="p-1 rounded text-yellow-500 text-2xl">
               <MdPushPin />
             </Link>
             <button className="p-1 rounded text-white text-2xl">
