@@ -90,9 +90,7 @@ export default function Home() {
               </div>
             </div>
           ))}
-          <div
-            className={`group relative overflow-hidden h-56`}
-          >
+          <div className={`group relative overflow-hidden h-56`}>
             <HLSPlayer src={`${MEDIAMTX_URL}/live/stream/index.m3u8`} />
             <Image
               src="/images/frame.png"
@@ -123,10 +121,7 @@ export default function Home() {
                 <button className="p-1 rounded text-white text-lg">
                   <TfiTarget />
                 </button>
-                <Link
-                  href={`/cctv`}
-                  className="p-1 rounded text-white text-lg"
-                >
+                <Link href={`/cctv`} className="p-1 rounded text-white text-lg">
                   <MdPushPin />
                 </Link>
               </div>

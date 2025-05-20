@@ -8,6 +8,11 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import { useEffect } from "react";
+import Image from "next/image";
+import { TbDeviceCctvFilled } from "react-icons/tb";
+import { SlPicture } from "react-icons/sl";
+import { MdMessage } from "react-icons/md";
+import { RiCameraLensFill } from "react-icons/ri";
 
 // Biasakan inisialisasi tipe koordinat
 const center: [number, number] = [-0.385, 113.885];
@@ -80,7 +85,64 @@ export default function MapComponent() {
           iconUrl: "/images/map/cctv.png",
           iconSize: [200, 200],
         })}
-      />
+      >
+        <Tooltip
+          direction="top"
+          offset={[0, -30]}
+          opacity={1}
+          permanent={false}
+          sticky
+        >
+          <div
+            style={{
+              backgroundColor: "#00161D",
+              width: "400px",
+              border: "1px solid #03FAFA",
+            }}
+            className="p-5"
+          >
+            <div className="relative h-48">
+              <Image
+                src="/images/preview.png"
+                alt="CCTV"
+                className="w-full h-full object-cover absolute"
+                width={75}
+                height={50}
+              />
+              <Image
+                src="/images/frame-detail.png"
+                alt="frame-detail"
+                fill
+                className="z-10 pointer-events-none"
+              />
+              <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 rounded text-base">
+                John Doe - CCTV 1
+              </div>
+              <div className="absolute top-4 right-4 bg-green-500 text-white px-4 py-1 rounded text-base">
+                ONLINE
+              </div>
+
+              <div className="absolute top-14 left-4 text-white text-base">
+                00:15:145
+              </div>
+            </div>
+            <div className="flex mt-4 justify-between">
+              <p className="text-yellow-400 font-semibold text-lg">
+                Informasi CCTV
+              </p>
+              <div className="flex gap-2">
+                <div className="flex items-center justify-center bg-deep-teal text-white px-3 py-1 rounded gap-2">
+                  <TbDeviceCctvFilled />
+                  Lihat CCTV
+                </div>
+                <div className="flex items-center justify-center bg-deep-teal text-white text-opacity-50 py-2 px-2 rounded">
+                  <SlPicture />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Tooltip>
+      </Marker>
 
       <Marker
         position={[-0.385, 113.883]}
@@ -98,7 +160,7 @@ export default function MapComponent() {
         >
           <div
             style={{
-              backgroundColor: "#00293B",
+              backgroundColor: "#00161D",
               width: "400px",
               border: "1px solid #03FAFA",
             }}
@@ -133,6 +195,7 @@ export default function MapComponent() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  fontSize: "16px",
                 }}
               >
                 Penjaga Pos 2
@@ -140,18 +203,66 @@ export default function MapComponent() {
             </div>
             <div
               style={{
-                backgroundColor: "#00161D",
+                display: "flex",
+                alignItems: "center",
+                padding: "10px 20px",
+                gap: "1rem",
               }}
             >
               <div
                 style={{
                   width: "30%",
                 }}
-              ></div>
-              <div>
-                <h1>KOPDA. JOHN DOE</h1>
-                <span>Sniper | Regu Alfa</span>
-                <div></div>
+              >
+                <div className="p-1 relative flex items-center justify-center">
+                  <Image
+                    src="/images/profile.png"
+                    alt="avatar"
+                    width={90}
+                    height={90}
+                    className="object-cover absolute"
+                  />
+                  <Image
+                    src="/images/frame-profile.png"
+                    alt="avatar"
+                    width={100}
+                    height={100}
+                    className="z-10 relative"
+                  />
+                </div>
+              </div>
+              <div style={{ 
+                width: "70%",
+               }}>
+                <h1
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    color: "#fff",
+                  }}
+                >
+                  KOPDA. JOHN DOE
+                </h1>
+                <span
+                  style={{
+                    fontSize: "17px",
+                    color: "#FFFFFF",
+                    fontWeight: "300",
+                  }}
+                >
+                  Sniper | Regu Alfa
+                </span>
+                <div className="flex justify-end gap-2 w-full mt-2">
+                  <div className="flex items-center justify-center bg-deep-teal text-white text-opacity-50 py-2 px-2 rounded">
+                    <SlPicture />
+                  </div>
+                  <div className="flex items-center justify-center bg-deep-teal text-white text-opacity-50 py-2 px-2 rounded">
+                    <MdMessage />
+                  </div>
+                  <div className="flex items-center justify-center bg-red-500 text-white py-2 px-2 rounded gap-1">
+                    <RiCameraLensFill /> ON
+                  </div>
+                </div>
               </div>
             </div>
           </div>
