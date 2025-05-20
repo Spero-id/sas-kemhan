@@ -27,10 +27,12 @@ export default async function handler(
     
     io.use(async (socket, next) => {
       console.log("debug socket: " + socket.request)
+      console.log("secret: " + secret)
       const token = await getToken({
         req: socket.request as any,
         secret,
       });
+      console.log(token)
 
       if (token) {
         socket.data.user = {
