@@ -13,9 +13,7 @@ import { TbDeviceCctvFilled } from "react-icons/tb";
 import { SlPicture } from "react-icons/sl";
 import { MdMessage } from "react-icons/md";
 import { RiCameraLensFill } from "react-icons/ri";
-import { useAllPeople } from "@/services/api/maps/get/get.hooks";
-import LoadingTableCustom from "../Loading/LoadingTableCustom";
-import { People } from "@/types/Maps/TypeMaps";
+import { People, ResponseAllPeople } from "@/types/Maps/TypeMaps";
 
 // Biasakan inisialisasi tipe koordinat
 const center: [number, number] = [-6.705974, 106.994278];
@@ -34,17 +32,17 @@ const SetView = ({
   return null;
 };
 
-export default async function MapComponent() {
-  const { isLoading, data } = useAllPeople();
+type MapProps = {
+  data: ResponseAllPeople|undefined;
+};
 
+export default async function MapComponent({ data }: Readonly<MapProps>) {
   const circleOptions = [
     { radius: 100, color: "#F9E400" }, // kuning
     { radius: 200, color: "#B96600" }, // coklat
     { radius: 300, color: "#06B500" }, // hijau
     { radius: 400, color: "#005F3F" }, // hijau tua
   ];
-
-  if (isLoading) return <LoadingTableCustom />;
 
   return (
     <MapContainer
