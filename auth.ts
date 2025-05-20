@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export const config = {
   pages: {
@@ -67,6 +68,14 @@ export const config = {
         session.user.id = token.id;
         session.user.role = token.role;
       }
+
+      const customAccessToken = jwt.sign(
+          session.user,
+          process.env.AUTH_SECRET as string,
+      );
+
+      session.access_token = customAccessToken    
+
       return session;
     },
   },

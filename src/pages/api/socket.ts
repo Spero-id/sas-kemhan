@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server as IOServer, Socket } from "socket.io";
 import { Server as HTTPServer } from "http";
-import { getPrismaClient } from '../../../lib/prisma';
-import { getToken } from "next-auth/jwt";
+import { getPrismaClient } from "../../../lib/prisma";
+import jwt from "jsonwebtoken";
 
 const secret = process.env.AUTH_SECRET;
 const prisma = getPrismaClient();
@@ -26,24 +26,29 @@ export default async function handler(
     const io = new IOServer(res.socket.server);
 
     io.use(async (socket, next) => {
-      console.log("debug socket: " + socket.request)
-      console.log("secret: " + secret)
-      const token = await getToken({
-        req: socket.request as any,
-        secret,
-      });
-      console.log(token)
+      const tokenRaw = socket.handshake.query.token;
+
+      const token = typeof tokenRaw === "string" ? tokenRaw : undefined;
 
       if (token) {
-        socket.data.user = {
-          id: token.id,
-          email: token.email,
-        };
-        next();
-      } else {
-        console.log("Unauthorized socket connection");
-        next(new Error("Unauthorized"));
+        const decoded = jwt.decode(token);
+
+        if (
+          decoded &&
+          typeof decoded === "object" &&
+          "id" in decoded &&
+          "email" in decoded
+        ) {
+          socket.data.user = {
+            id: decoded.id,
+            email: decoded.email,
+          };
+          return next();
+        }
       }
+
+      console.log("Unauthorized socket connection");
+      next(new Error("Unauthorized"));
     });
 
     io.on("connection", (socket: Socket) => {
@@ -51,7 +56,7 @@ export default async function handler(
 
       socket.on("chat:message", async (msg) => {
         console.log("Received message:", msg);
-        
+
         // Simpan ke DB
         try {
           const newChat = await prisma.chat.create({
@@ -65,7 +70,6 @@ export default async function handler(
             },
           });
           io.emit("chat:message", newChat);
-
         } catch (error) {
           console.error("Gagal menyimpan pesan ke DB:", error);
         }
