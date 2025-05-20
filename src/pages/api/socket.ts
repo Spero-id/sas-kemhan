@@ -22,10 +22,11 @@ export default async function handler(
 ) {
   if (!res.socket.server.io) {
     console.log("Socket.IO server starting...");
-
+    
     const io = new IOServer(res.socket.server);
-
+    
     io.use(async (socket, next) => {
+      console.log("debug socket: " + socket.request)
       const token = await getToken({
         req: socket.request as any,
         secret,
