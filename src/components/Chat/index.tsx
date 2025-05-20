@@ -145,8 +145,8 @@ export default function Chat() {
 
 const messageContent = (msg: any) => {
   const date = new Date(msg.created_at);
-  const hours = date.getUTCHours().toString().padStart(2, "0");
-  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
   const timeOnly = `${hours}:${minutes}`;
 
   if (msg.type === "AUDIO") {
