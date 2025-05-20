@@ -56,13 +56,20 @@ const HeaderDashboard = () => {
       <div className="flex gap-3">
         <div className="dropdown dropdown-end">
           <button className="btn border-0 bg-transparent text-left focus:bg-transparent">
-            <div className="border-2 border-cyan-neon p-1">
+            <div className="p-1 relative flex items-center justify-center">
               <Image
                 src="/images/profile.png"
                 alt="avatar"
+                width={50}
+                height={50}
+                className="object-cover absolute"
+              />
+              <Image
+                src="/images/frame-profile.png"
+                alt="avatar"
                 width={60}
                 height={60}
-                className="object-cover"
+                className="z-10 relative"
               />
             </div>
             <div className="flex flex-col justify-center">

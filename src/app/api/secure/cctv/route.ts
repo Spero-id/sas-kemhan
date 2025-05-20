@@ -6,7 +6,11 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const data = await prisma.cctv.findMany();
+    const data = await prisma.cctv.findMany({
+      include: {
+        user: true,
+      },
+    });
     return NextResponse.json({
       status: true,
       data: data,

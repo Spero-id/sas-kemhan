@@ -1,4 +1,11 @@
-import { MapContainer, TileLayer, Circle, Marker, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Circle,
+  Marker,
+  useMap,
+  Tooltip,
+} from "react-leaflet";
 import L from "leaflet";
 import { useEffect } from "react";
 
@@ -66,6 +73,7 @@ export default function MapComponent() {
           iconSize: [20, 20],
         })}
       />
+
       <Marker
         position={[-0.384, 113.883]}
         icon={L.icon({
@@ -73,13 +81,82 @@ export default function MapComponent() {
           iconSize: [200, 200],
         })}
       />
+
       <Marker
         position={[-0.385, 113.883]}
         icon={L.icon({
           iconUrl: "/images/map/people.png",
           iconSize: [20, 20],
         })}
-      />
+      >
+        <Tooltip
+          direction="top"
+          offset={[0, -30]}
+          opacity={1}
+          permanent={false}
+          sticky
+        >
+          <div
+            style={{
+              backgroundColor: "#00293B",
+              width: "400px",
+              border: "1px solid #03FAFA",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "rgba(0, 103, 135, 0.5)",
+                padding: "10px 20px",
+                display: "flex",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: "#E90000",
+                  color: "#fff",
+                  width: "30%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop: "2px",
+                  paddingBottom: "2px",
+                  textTransform: "uppercase",
+                  fontSize: "12px",
+                }}
+              >
+                Online
+              </div>
+              <div
+                style={{
+                  color: "#03FAFA",
+                  width: "70%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Penjaga Pos 2
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: "#00161D",
+              }}
+            >
+              <div
+                style={{
+                  width: "30%",
+                }}
+              ></div>
+              <div>
+                <h1>KOPDA. JOHN DOE</h1>
+                <span>Sniper | Regu Alfa</span>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </Tooltip>
+      </Marker>
     </MapContainer>
   );
 }
