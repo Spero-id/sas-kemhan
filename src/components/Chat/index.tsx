@@ -26,7 +26,11 @@ export default function Chat() {
     })();
 
     fetch("/api/socket");
+    
     const newSocket = io({
+      query: {
+        token: session?.access_token,
+      },
       withCredentials: true,
     });
 
@@ -39,7 +43,7 @@ export default function Chat() {
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [session]);
 
   const fetchMessages = async (pageToFetch: number) => {
     if (isFetchingRef.current || !hasMore) return;
