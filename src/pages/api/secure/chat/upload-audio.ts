@@ -4,10 +4,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getPrismaClient } from "../../../../../lib/prisma";
 import { Server as IOServer } from "socket.io";
 import { Server as HTTPServer } from "http";
-import { getToken } from "next-auth/jwt";
 import { IncomingForm } from "formidable";
 import fs from "fs";
 import { getMinioFileUrl, uploadToMinio } from "@/utils/minio";
+import jwt from "jsonwebtoken";
 
 type NextApiResponseServerIO = NextApiResponse & {
   socket: {
@@ -33,10 +33,16 @@ export default async function handler(
       .json({ status: false, message: "Method not allowed" });
   }
 
-  const session = await getToken({
-    req: req as unknown as Request,
-    secret: process.env.AUTH_SECRET!,
-  });
+  const tokenRaw = req.headers.token;
+  
+  const token = typeof tokenRaw === "string" ? tokenRaw : undefined;
+  
+  if (token === undefined) {
+    return res.status(401).json({ status: false, message: "Unauthorized" });
+  }
+
+  const user = jwt.decode(token);
+
   const prisma = getPrismaClient();
 
   const form = new IncomingForm({
@@ -68,7 +74,7 @@ export default async function handler(
         data: {
           type: "AUDIO",
           content: uploadedPath,
-          user_id: parseInt(session?.id as string),
+          user_id: parseInt(user?.id as string),
         },
         include: {
           user: true,
