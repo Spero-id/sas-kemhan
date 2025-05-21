@@ -41,7 +41,7 @@ export default async function handler(
     return res.status(401).json({ status: false, message: "Unauthorized" });
   }
 
-  const user = jwt.decode(token);
+  const user = jwt.decode(token) as any;
 
   const prisma = getPrismaClient();
 
