@@ -31,7 +31,7 @@ export default function Peta() {
         Back
       </Link>
       <div style={{ height: "100vh", width: "100%" }}>
-        {isLoading ? <LoadingGetData /> : <MapComponent data={data} />}
+        {isLoading ? <LoadingGetData /> : <MapComponent isLoading={isLoading} data={data} />}
       </div>
       <Chat />
     </>

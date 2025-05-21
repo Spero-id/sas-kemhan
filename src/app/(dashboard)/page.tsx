@@ -26,7 +26,7 @@ export default function Home() {
         <LoadingGetData />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-h-[70vh] overflow-auto">
-          {data?.data.map((item: Cctv, i: number) => (
+          {data?.data?.map((item: Cctv, i: number) => (
             <div
               className={`group relative overflow-hidden h-56 ${
                 item.name.toLowerCase().includes(searchDashboard.toLowerCase())
