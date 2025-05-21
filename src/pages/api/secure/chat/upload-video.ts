@@ -4,8 +4,8 @@ import { Server as HTTPServer } from "http";
 import { IncomingForm } from "formidable";
 import fs from "fs";
 import { getPrismaClient } from "../../../../../lib/prisma";
-import { getToken } from "next-auth/jwt";
 import { getMinioFileUrl, uploadToMinio } from "@/utils/minio";
+import jwt from "jsonwebtoken";
 
 type NextApiResponseServerIO = NextApiResponse & {
   socket: {
@@ -26,7 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
     return res.status(405).json({ status: false, message: "Method not allowed" });
   }
 
-  const session = await getToken({ req: req as unknown as Request, secret: process.env.AUTH_SECRET! });
+  const tokenRaw = req.headers.token;
+  const token = typeof tokenRaw === "string" ? tokenRaw : undefined;
+  
+  if (token === undefined) {
+    return res.status(401).json({ status: false, message: "Unauthorized" });
+  }
+
+  const user = jwt.decode(token);
+
   const prisma = getPrismaClient();
 
   const form = new IncomingForm({
@@ -60,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
         data: {
           type: "VIDEO",
           content: key, // bisa berupa path atau full URL tergantung implementasi
-          user_id: parseInt(session?.id as string),
+          user_id: parseInt(user?.id),
         },
         include: {
           user: true,
