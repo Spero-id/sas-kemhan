@@ -56,7 +56,7 @@ export default function Home() {
               />
               <div className="relative h-full border border-dark-ocean">
                 <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  {item.user.name} - {item.name}
+                  {item?.user?.name} - {item.name}
                 </div>
 
                 {item.status ? (
