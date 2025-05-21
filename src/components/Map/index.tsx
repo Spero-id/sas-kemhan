@@ -1,3 +1,5 @@
+'use client';
+
 import {
   MapContainer,
   TileLayer,
@@ -14,7 +16,6 @@ import { SlPicture } from "react-icons/sl";
 import { MdMessage } from "react-icons/md";
 import { RiCameraLensFill } from "react-icons/ri";
 import { People, ResponseAllPeople } from "@/types/Maps/TypeMaps";
-import LoadingGetData from "../Loading/LoadingGetData";
 
 // Biasakan inisialisasi tipe koordinat
 const center: [number, number] = [-6.705974, 106.994278];
@@ -38,7 +39,7 @@ type MapProps = {
   data: ResponseAllPeople|undefined;
 };
 
-export default async function MapComponent({ data, isLoading }: Readonly<MapProps>) {
+export default function MapComponent({ data, isLoading }: Readonly<MapProps>) {
   const circleOptions = [
     { radius: 100, color: "#F9E400" }, // kuning
     { radius: 200, color: "#B96600" }, // coklat
