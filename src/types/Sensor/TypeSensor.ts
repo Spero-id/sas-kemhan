@@ -1,4 +1,4 @@
-export type SensorGerak = {
+export type Sensor = {
   user_id: string;
   name: string;
   status: boolean;
@@ -6,7 +6,7 @@ export type SensorGerak = {
   updated_at: string;
 }
 
-export type ResponseAllSensorGerak = {
+export type ResponseAllSensor = {
   status: boolean;
-  data: SensorGerak[];
+  data: Sensor[];
 }

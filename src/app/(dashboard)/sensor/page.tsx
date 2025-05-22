@@ -3,7 +3,7 @@
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
-import { useAllSensorGerak } from "@/services/api/sensor_gerak/get/get.hooks";
+import { useAllSensorGerak } from "@/services/api/sensor/get/get.hooks";
 import { useAtom } from "jotai";
 import Image from "next/image";
 

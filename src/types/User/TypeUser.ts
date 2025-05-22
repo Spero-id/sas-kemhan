@@ -1,6 +1,6 @@
 import { BodyWorm } from "../BodyWorm/TypeBodyWorm";
 import { Cctv } from "../Cctv/TypeCctv";
-import { SensorGerak } from "../SensorGerak/TypeSensorGerak";
+import { Sensor } from "../Sensor/TypeSensor";
 
 export type ResponseAllUser = {
   status: boolean;
@@ -20,7 +20,7 @@ export type ResponseDetailUser = {
     created_at: string;
     updated_at: string;
     cctv: Cctv;
-    sensor_gerak: SensorGerak;
+    sensor_gerak: Sensor;
     body_worm: BodyWorm;
   };
 };

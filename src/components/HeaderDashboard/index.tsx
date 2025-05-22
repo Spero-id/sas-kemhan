@@ -51,7 +51,7 @@ const HeaderDashboard = () => {
         <p className="uppercase text-white text-xl tracking-widest">{date}</p>
       </div>
       <h1 className="uppercase text-3xl font-semibold text-white tracking-[.3rem]">
-        situational awarness system
+        Camera Monitoring
       </h1>
       <div className="flex gap-3">
         <div className="dropdown dropdown-end">

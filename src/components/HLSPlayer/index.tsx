@@ -1,4 +1,3 @@
-// components/HLSPlayer.tsx
 "use client";
 import { useEffect, useRef } from "react";
 import Hls from "hls.js";
@@ -11,15 +10,23 @@ const HLSPlayer = ({ src }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    let hls: Hls | null = null;
+
     if (videoRef.current) {
       if (Hls.isSupported()) {
-        const hls = new Hls();
+        hls = new Hls();
         hls.loadSource(src);
         hls.attachMedia(videoRef.current);
       } else if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
         videoRef.current.src = src;
       }
     }
+
+    return () => {
+      if (hls) {
+        hls.destroy();
+      }
+    };
   }, [src]);
 
   return (
@@ -28,7 +35,7 @@ const HLSPlayer = ({ src }: Props) => {
       controls
       autoPlay
       muted
-      className="w-full max-w-xl rounded-lg shadow-lg absolute"
+      className="w-full h-full object-cover z-1 absolute"
     />
   );
 };

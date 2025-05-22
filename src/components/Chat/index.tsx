@@ -100,7 +100,7 @@ export default function Chat() {
         }`}
       >
         <div className="flex justify-between bg-deep-teal p-3 text-white rounded-t-md">
-          <h5>Chating SAS</h5>
+          <h5>Chating EYESEE</h5>
           <IoClose
             className="text-2xl cursor-pointer"
             onClick={() => setModalChat(false)}
