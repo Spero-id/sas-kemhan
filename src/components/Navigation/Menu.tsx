@@ -19,15 +19,15 @@ export default function MenuNavigation() {
         CCTV
       </Link>
       <Link
-        href="/sensor-gerak"
+        href="/sensor"
         className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
-          pathname?.includes("sensor-gerak")
+          pathname?.includes("sensor")
             ? "border-cyan-neon"
             : "border-transparent opacity-50"
         }`}
       >
         <MdSensorOccupied />
-        Sensor Gerak
+        Sensor
       </Link>
       <Link
         href="/body-worn"
@@ -39,6 +39,28 @@ export default function MenuNavigation() {
       >
         <MdCamera />
         Body-Worn Camera
+      </Link>
+      <Link
+        href="/helmet"
+        className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
+          pathname?.includes("helmet")
+            ? "border-cyan-neon"
+            : "border-transparent opacity-50"
+        }`}
+      >
+        <MdCamera />
+        Helmet
+      </Link>
+      <Link
+        href="#"
+        className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
+          pathname?.includes("other")
+            ? "border-cyan-neon"
+            : "border-transparent opacity-50"
+        }`}
+      >
+        <MdCamera />
+        Other
       </Link>
     </div>
   );

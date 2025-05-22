@@ -90,43 +90,48 @@ export default function Home() {
               </div>
             </div>
           ))}
-          <div className={`group relative overflow-hidden h-56`}>
-            <HLSPlayer src={`${MEDIAMTX_URL}/live/stream/index.m3u8`} />
-            <Image
-              src="/images/frame.png"
-              alt="frame"
-              fill
-              className="z-10 pointer-events-none group-hover:hidden"
-            />
-            <Image
-              src="/images/frame-active.png"
-              alt="frame-active"
-              fill
-              className="z-10 pointer-events-none hidden group-hover:block"
-            />
-            <div className="relative h-full border border-dark-ocean z-10">
-              <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                John Doe - test
-              </div>
+          {[1, 2, 3, 4].map((item) => (
+            <div className={`group relative overflow-hidden h-56`} key={item}>
+              <HLSPlayer src={`${MEDIAMTX_URL}/camera${item}/index.m3u8`} />
+              <Image
+                src="/images/frame.png"
+                alt="frame"
+                fill
+                className="z-10 pointer-events-none group-hover:hidden"
+              />
+              <Image
+                src="/images/frame-active.png"
+                alt="frame-active"
+                fill
+                className="z-10 pointer-events-none hidden group-hover:block"
+              />
+              <div className="relative h-full border border-dark-ocean z-10">
+                <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                  John Doe - test
+                </div>
 
-              <div className="absolute top-3 right-3 bg-black bg-opacity-50 text-green-400 text-xs font-bold px-2 py-1 rounded">
-                ● ONLINE
-              </div>
+                <div className="absolute top-3 right-3 bg-black bg-opacity-50 text-green-400 text-xs font-bold px-2 py-1 rounded">
+                  ● ONLINE
+                </div>
 
-              <div className="absolute top-10 left-3 text-white text-sm">
-                00:15:145
-              </div>
+                <div className="absolute top-10 left-3 text-white text-sm">
+                  00:15:145
+                </div>
 
-              <div className="absolute bottom-16 right-2 flex flex-col gap-1 z-20">
-                <button className="p-1 rounded text-white text-lg">
-                  <TfiTarget />
-                </button>
-                <Link href={`/cctv`} className="p-1 rounded text-white text-lg">
-                  <MdPushPin />
-                </Link>
+                <div className="absolute bottom-16 right-2 flex flex-col gap-1 z-20">
+                  <button className="p-1 rounded text-white text-lg">
+                    <TfiTarget />
+                  </button>
+                  <Link
+                    href={`/cctv/${item}`}
+                    className="p-1 rounded text-white text-lg"
+                  >
+                    <MdPushPin />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       )}
     </>
