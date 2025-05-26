@@ -228,7 +228,7 @@ export async function DELETE(
       await tx.sensor_gerak.delete({
         where: {
           user_id: data?.id,
-        },
+        },w
       });
   
       await tx.body_worm.delete({

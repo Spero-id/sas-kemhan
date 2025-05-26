@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllUser, getDetailUser } from "./get.service";
+import { getAllRole, getDetailRole } from "./get.service";
 
-export const useAllUser = () => {
+export const useAllRole = () => {
   return useQuery({
-    queryFn: () => getAllUser(),
+    queryFn: () => getAllRole(),
     queryKey: ["all"],
   });
 };
 
-export const useDetailUser = ({ id }: { id: string }) => {
+export const useDetailRole = ({ id }: { id: string }) => {
   return useQuery({
-    queryFn: () => getDetailUser(id),
+    queryFn: () => getDetailRole(id),
     queryKey: ["detail", id],
   });
 };

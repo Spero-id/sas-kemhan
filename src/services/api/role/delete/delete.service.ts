@@ -1,10 +1,10 @@
 import { axiosClient } from "@/common/utils/AxiosClient";
 
-export const deleteUser = async ({ id }: { id: string }) => {
+export const deleteRole = async ({ id }: { id: string }) => {
   try {
-    const response = await axiosClient.delete(`/secure/user/${id}`);
+    const response = await axiosClient.delete(`/secure/role/${id}`);
     return response.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    throw error
   }
 };

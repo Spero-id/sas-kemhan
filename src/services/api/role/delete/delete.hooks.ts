@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteUser } from "./delete.service";
+import { deleteRole } from "./delete.service";
 
-export const useDeleteUser = ({id}: {id: string}) => {
+export const useDeleteRole = ({id}: {id: string}) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteUser,
+    mutationFn: deleteRole,
     onSuccess: () => {
       queryClient.invalidateQueries(["all"]);
     },

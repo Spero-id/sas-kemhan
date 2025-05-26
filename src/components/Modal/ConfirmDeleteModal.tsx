@@ -25,11 +25,11 @@ export default function ConfirmDeleteModal({ hooks, refetch = () => {} }: any) {
         refetch();
         toast.success("Berhasil dihapus");
       },
-      onError: (error: any) => {
+      onError: () => {
         setIsLoading(false);
         setIsConfirmDelete(false);
         setStatusDelete(false);
-        toast.error("Telah terjadi kesalahan");
+        toast.error("Maaf data tidak dapat dihapus");
       },
     });
   };
@@ -60,7 +60,7 @@ export default function ConfirmDeleteModal({ hooks, refetch = () => {} }: any) {
           </p>
           <div className="flex justify-center gap-4">
             <button
-              className={`btn btn-primary ${
+              className={`btn  ${
                 isLoading ? "btn-disabled loading" : ""
               }`}
               onClick={onConfirm}

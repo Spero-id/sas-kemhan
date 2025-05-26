@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import FormEditUser from "@/module/user/Form/FormEdit";
+import FormEditRole from "@/module/role/Form/FormEdit";
 
 export default function EditUser({ params }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
@@ -17,7 +17,7 @@ export default function EditUser({ params }: Readonly<{ params: { id: string } }
 
       <div className="w-full shadow rounded bg-white p-6">
         <h5 className="text-xl font-bold text-slate-600 mb-2">Edit User</h5>
-        <FormEditUser id={id}></FormEditUser>
+        <FormEditRole id={id}></FormEditRole>
       </div>
     </div>
   );

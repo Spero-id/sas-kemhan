@@ -1,17 +1,12 @@
 import { axiosClient } from "@/common/utils/AxiosClient";
-import { ResponseAllUser, ResponseDetailUser } from "@/types/User/TypeUser";
+import { ResponseAllRole, ResponseDetailRole } from "@/types/Role/TypeRole";
 
-export const getAllUser = async () => {
-  const response = await axiosClient.get<ResponseAllUser>("/secure/user");
+export const getAllRole = async () => {
+  const response = await axiosClient.get<ResponseAllRole>("/secure/role");
   return response.data;
 };
 
-export const getDetailUser = async (id: string) => {
-  const response = await axiosClient.get<ResponseDetailUser>(`/secure/user/${id}`);
-  return response.data;
-};
-
-export const checkEmail = async (email: string, id?: string) => {
-  const response = await axiosClient.post(`/secure/user/check-email`, { email: email, userId: id });
+export const getDetailRole = async (id: string) => {
+  const response = await axiosClient.get<ResponseDetailRole>(`/secure/role/${id}`);
   return response.data;
 };
