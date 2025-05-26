@@ -15,8 +15,8 @@ model user {
   name          String
   email         String    @unique
   password      String
-  role          Role
   image         String?
+  roleId        String
   last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
@@ -25,6 +25,7 @@ model user {
   cctv          cctv?
   body_worm     body_worm?
   sensor_gerak  sensor_gerak?
+  role          role      @relation(fields: [roleId], references: [id])
 }
 
 model chat {
@@ -71,10 +72,17 @@ model sensor_gerak {
   user       user @relation(fields: [user_id], references: [id])
 }
 
-// Enum role tetap
-enum Role {
-  admin
-  public
+model role {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  permissions Permission[] @relation("RolePermissions")
+  users       user[]
+}
+
+model Permission {
+  id    String @id @default(uuid())
+  code  String @unique
+  roles role[] @relation("RolePermissions")
 }
 
 // Enum type chat
