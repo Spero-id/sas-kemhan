@@ -12,7 +12,16 @@ const Sidebar = () => {
         className="drawer-overlay"
       ></label>
       <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-        {/* Sidebar content here */}
+        <li>
+          <Link
+            href="/cctv"
+            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+              pathname?.includes("cctv") && "bg-graydark dark:bg-meta-4"
+            }`}
+          >
+            CCTV
+          </Link>
+        </li>
         <li>
           <Link
             href="/user"
@@ -21,6 +30,16 @@ const Sidebar = () => {
             }`}
           >
             User
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/role"
+            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+              pathname?.includes("role") && "bg-graydark dark:bg-meta-4"
+            }`}
+          >
+            Role
           </Link>
         </li>
       </ul>

@@ -1,5 +1,5 @@
 import { BodyWorm } from "../BodyWorm/TypeBodyWorm";
-import { Cctv } from "../Cctv/TypeCctv";
+import { Helmet } from "../Helmet/TypeHelmet";
 import { Sensor } from "../Sensor/TypeSensor";
 
 export type ResponseAllUser = {
@@ -15,11 +15,11 @@ export type ResponseDetailUser = {
     email: string;
     image: string;
     password: string;
-    role: string;
+    roleId: string;
     last_login: string;
     created_at: string;
     updated_at: string;
-    cctv: Cctv;
+    helmet: Helmet;
     sensor_gerak: Sensor;
     body_worm: BodyWorm;
   };

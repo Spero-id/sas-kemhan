@@ -11,11 +11,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const users = await prisma.user.findMany({
-      where: {
-        role: "public",
-      },
-    });
+    const users = await prisma.user.findMany();
     return NextResponse.json({
       status: true,
       data: users,
@@ -39,6 +35,7 @@ export async function POST(request: Request) {
     const formData = await request.formData();
 
     const result = await prisma.$transaction(async (tx) => {
+      const roleId = formData.get("role_id") as string;
       const name = formData.get("name") as string;
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
@@ -47,29 +44,27 @@ export async function POST(request: Request) {
       const passwordHash = await bcrypt.hash(password, saltRounds);
       const fileUrl = await uploadToMinio(image, 'uploads/profile');
 
-      // 1. user
+      // user
       const user = await tx.user.create({
         data: {
           name: name,
           email: email,
           password: passwordHash,
-          role: "public",
           image: fileUrl,
+          roleId: roleId,
         },
       });
 
-      // 2. CCTV
-      const name_cctv = formData.get("name_cctv") as string;
-      const path_slug_cctv = formData.get("path_slug_cctv") as string;
-      const rtsp_url_cctv = formData.get("rtsp_url_cctv") as string;
-      const status_cctv = formData.get("status_cctv") as string;
+      // Helmet
+      const name_helmet = formData.get("name_helmet") as string;
+      const path_slug_helmet = formData.get("path_slug_helmet") as string;
+      const rtsp_url_helmet = formData.get("rtsp_url_helmet") as string;
 
-      await tx.cctv.create({
+      await tx.helmet.create({
         data: {
-          name: name_cctv,
-          path_slug: path_slug_cctv,
-          rtsp_url: rtsp_url_cctv,
-          status: status_cctv === "true",
+          name: name_helmet,
+          path_slug: path_slug_helmet,
+          rtsp_url: rtsp_url_helmet,
           user: {
             connect: {
               id: user.id,
@@ -78,7 +73,7 @@ export async function POST(request: Request) {
         },
       });
 
-      // 3. Sensor Gerak
+      // Sensor Gerak
       const name_sensor_gerak = formData.get("name_sensor_gerak") as string;
       const status_sensor_gerak = formData.get("status_sensor_gerak") as string;
 
@@ -94,18 +89,16 @@ export async function POST(request: Request) {
         },
       });
 
-      // 4. Body Worm
+      // Body Worm
       const name_body_worm = formData.get("name_body_worm") as string;
       const path_slug_body_worm = formData.get("path_slug_body_worm") as string;
       const rtsp_url_body_worm = formData.get("rtsp_url_body_worm") as string;
-      const status_body_worm = formData.get("status_body_worm") as string;
 
       await tx.body_worm.create({
         data: {
           name: name_body_worm,
           path_slug: path_slug_body_worm,
           rtsp_url: rtsp_url_body_worm,
-          status: status_body_worm === "true",
           user: {
             connect: {
               id: user.id,

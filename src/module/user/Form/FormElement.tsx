@@ -3,6 +3,10 @@ import InputForm from "@/components/FormGroup/Input";
 import FilePondInput from "@/components/FormGroup/FilePond";
 import { ACCEPTED_IMAGE_TYPES } from "@/utils/constant";
 import ToggleCustom from "@/components/FormGroup/ToggleCustom";
+import SelectCustom from "@/components/FormGroup/Select";
+import { useEffect, useState } from "react";
+import { useAllRole } from "@/services/api/role/get/get.hooks";
+import { Role } from "@/types/Role/TypeRole";
 
 export default function FormElement({
   control,
@@ -17,6 +21,22 @@ export default function FormElement({
   handleSubmit?: any;
   hooksDeleteFile?: any;
 }>) {
+  const [optionPermission, setOptionPermission] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const { data, isLoading } = useAllRole();
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      const optionsParse = data.data.map((role: Role) => ({
+        value: role.id as string,
+        label: role.name as string,
+      }));
+
+      setOptionPermission(optionsParse);
+    }
+  }, [data, isLoading]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FilePondInput
@@ -56,36 +76,40 @@ export default function FormElement({
         label="Password"
         placeholder="Password"
       ></InputForm>
+      <SelectCustom
+        control={control}
+        name="role_id"
+        label="Role"
+        flexDir="column"
+        isRequired={true}
+        options={optionPermission}
+        isClearable={true}
+      />
       <hr className="my-4" />
       <InputForm
         control={control}
-        name="name_cctv"
+        name="name_helmet"
         type="text"
         isRequired={true}
-        label="Nama CCTV"
-        placeholder="Nama CCTV"
+        label="Nama Helmet"
+        placeholder="Nama Helmet"
       ></InputForm>
       <InputForm
         control={control}
-        name="path_slug_cctv"
+        name="path_slug_helmet"
         type="text"
         isRequired={true}
-        label="Path Slug CCTV"
-        placeholder="Path Slug CCTV"
+        label="Path Slug Helmet"
+        placeholder="Path Slug Helmet"
       ></InputForm>
       <InputForm
         control={control}
-        name="rtsp_url_cctv"
+        name="rtsp_url_helmet"
         type="text"
         isRequired={true}
-        label="RTSP URL CCTV"
-        placeholder="RTSP URL CCTV"
+        label="RTSP URL Helmet"
+        placeholder="RTSP URL Helmet"
       ></InputForm>
-      <ToggleCustom
-        control={control}
-        name="status_cctv"
-        label="Status CCTV"
-      ></ToggleCustom>
       <hr className="my-4" />
       <InputForm
         control={control}
@@ -125,11 +149,6 @@ export default function FormElement({
         label="RTSP URL Body Worm"
         placeholder="RTSP URL Body Worm"
       ></InputForm>
-      <ToggleCustom
-        control={control}
-        name="status_body_worm"
-        label="Status Body Worm"
-      ></ToggleCustom>
       <Button type="submit" className="mt-3">
         Save
       </Button>

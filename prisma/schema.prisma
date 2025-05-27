@@ -15,16 +15,17 @@ model user {
   name          String
   email         String    @unique
   password      String
-  role          Role
   image         String?
+  roleId        String
   last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
 
   chats         chat[]
-  cctv          cctv?
+  helmet        helmet?
   body_worm     body_worm?
   sensor_gerak  sensor_gerak?
+  role          role      @relation(fields: [roleId], references: [id])
 }
 
 model chat {
@@ -38,11 +39,19 @@ model chat {
 }
 
 model cctv {
-  user_id    Int     @id
+  id         Int      @id @default(autoincrement())
   name       String
   path_slug  String
   rtsp_url   String
-  status     Boolean
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model helmet {
+  user_id    Int     @id
+  name       String
+  path_slug  String
+  rtsp_url   String 
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 
@@ -53,8 +62,7 @@ model body_worm {
   user_id    Int     @id
   name       String
   path_slug  String
-  rtsp_url   String
-  status     Boolean
+  rtsp_url   String 
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 
@@ -71,10 +79,35 @@ model sensor_gerak {
   user       user @relation(fields: [user_id], references: [id])
 }
 
-// Enum role tetap
-enum Role {
-  admin
-  public
+model role {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  permissions role_permission[]
+  users       user[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model permission {
+  id    Int    @id @default(autoincrement())
+  name  String
+  code  String @unique
+  roles role_permission[]
+
+  created_at DateTime  @default(now())
+}
+
+model role_permission {
+  roleId       String
+  permissionId Int
+
+  role       role       @relation(fields: [roleId], references: [id])
+  permission permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId]) // composite primary key
+
+  created_at DateTime  @default(now())
 }
 
 // Enum type chat
