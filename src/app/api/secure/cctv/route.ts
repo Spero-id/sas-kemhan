@@ -23,3 +23,33 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  const prisma = getPrismaClient();
+  const body = await request.json();
+
+  try {
+    const result = await prisma.cctv.create({
+      data: {
+        name: body.name,
+        path_slug: body.path_slug,
+        rtsp_url: body.rtsp_url,
+      },
+    });
+
+    return NextResponse.json({
+      status: true,
+      data: result,
+      message: "CCTV created successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      {
+        status: false,
+        message: "Failed to create user",
+      },
+      { status: 500 }
+    );
+  }
+}

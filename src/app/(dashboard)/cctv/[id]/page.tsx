@@ -17,8 +17,8 @@ const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 
 export default function DetailCctv({
   params,
-}: Readonly<{ params: { user_id: string } }>) {
-  const id = params.user_id;
+}: Readonly<{ params: { id: string } }>) {
+  const id = params.id;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">

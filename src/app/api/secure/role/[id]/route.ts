@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../lib/prisma";
-import bcrypt from "bcryptjs";
-import { deleteMinioFile, uploadToMinio } from "@/utils/minio";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,7 +10,7 @@ export async function GET(
 ) {
   const prisma = getPrismaClient();
   try {
-    const user = await prisma.role.findFirst({
+    const role = await prisma.role.findFirst({
       where: {
         id: params.id,
       },
@@ -23,7 +21,7 @@ export async function GET(
 
     return NextResponse.json({
       status: true,
-      data: user,
+      data: role,
     });
   } catch (error) {
     console.error(error);
@@ -48,6 +46,16 @@ export async function PUT(
       const name = data.name as string;
       const permissions = data.permissions as string[];
       const newPermissionIds = permissions.map((p) => parseInt(p));
+
+      await tx.role.update({
+        where: {
+          id: params.id,
+        },
+        data: {
+          name: name,
+          updated_at: new Date(),
+        },
+      });
 
       // 1. Hapus permission yang tidak ada di list baru
       await tx.role_permission.deleteMany({
