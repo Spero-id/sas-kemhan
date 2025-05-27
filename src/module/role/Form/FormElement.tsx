@@ -3,6 +3,7 @@ import InputForm from "@/components/FormGroup/Input";
 import SelectCustom from "@/components/FormGroup/Select";
 import { useEffect, useState } from "react";
 import { useAllPermission } from "@/services/api/permission/get/get.hooks";
+import { Permission } from "@/types/Permission/TypePermission";
 
 export default function FormElement({
   control,
@@ -24,10 +25,11 @@ export default function FormElement({
 
   useEffect(() => {
     if (!isLoading && data) {
-      const optionsParse = data.data.map((permission:any) => ({
-        value: String(permission.id),
-        label: String(permission.name),
+      const optionsParse = data.data.map((permission: Permission) => ({
+        value: permission.id.toString(),
+        label: permission.name,
       }));
+      
       setOptionPermission(optionsParse);
     }
   }, [data, isLoading]);

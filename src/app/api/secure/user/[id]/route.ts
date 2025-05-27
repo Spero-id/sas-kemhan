@@ -125,7 +125,7 @@ export async function PUT(
         req["image"] = fileUrl;
       }
 
-      // 1. User
+      // User
       const user = await tx.user.update({
         where: {
           id: parseInt(params.id),
@@ -133,25 +133,7 @@ export async function PUT(
         data: req,
       });
 
-      // 2. CCTV
-      const name_cctv = formData.get("name_cctv") as string;
-      const path_slug_cctv = formData.get("path_slug_cctv") as string;
-      const rtsp_url_cctv = formData.get("rtsp_url_cctv") as string;
-      const status_cctv = formData.get("status_cctv") as string;
-
-      await tx.cctv.update({
-        where: {
-          user_id: data?.id,
-        },
-        data: {
-          name: name_cctv,
-          path_slug: path_slug_cctv,
-          rtsp_url: rtsp_url_cctv,
-          status: status_cctv === "true",
-        },
-      });
-
-      // 3. Sensor Gerak
+      // Sensor Gerak
       const name_sensor_gerak = formData.get("name_sensor_gerak") as string;
       const status_sensor_gerak = formData.get("status_sensor_gerak") as string;
 
@@ -165,11 +147,10 @@ export async function PUT(
         },
       });
 
-      // 4. Body Worn
+      // Body Worn
       const name_body_worm = formData.get("name_body_worm") as string;
       const path_slug_body_worm = formData.get("path_slug_body_worm") as string;
       const rtsp_url_body_worm = formData.get("rtsp_url_body_worm") as string;
-      const status_body_worm = formData.get("status_body_worm") as string;
 
       await tx.body_worm.update({
         where: {
@@ -179,7 +160,6 @@ export async function PUT(
           name: name_body_worm,
           path_slug: path_slug_body_worm,
           rtsp_url: rtsp_url_body_worm,
-          status: status_body_worm === "true",
         },
       });
 
@@ -219,16 +199,10 @@ export async function DELETE(
         deleteMinioFile(data.image);
       }
   
-      await tx.cctv.delete({
-        where: {
-          user_id: data?.id,
-        },
-      });
-  
       await tx.sensor_gerak.delete({
         where: {
           user_id: data?.id,
-        },w
+        },
       });
   
       await tx.body_worm.delete({

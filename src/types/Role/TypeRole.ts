@@ -12,7 +12,7 @@ export type ResponseDetailRole = {
     name: string;
     created_at: string;
     updated_at: string;
-    permissions: Permission[];
+    permissions: RolePermission[];
   };
 };
 
@@ -31,3 +31,9 @@ export type Role = Partial<{
   created_at: string;
   updated_at: string;
 }>;
+
+export type RolePermission = {
+  roleId: string;
+  permissionId: string;
+  created_at: string;
+}

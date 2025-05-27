@@ -6,8 +6,8 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import {
-  RoleSchema,
-  RoleValidation
+  RolePostSchema,
+  RolePostValidation
 } from "../Validation";
 import FormElement from "./FormElement";
 import { PostRoleFunction } from "@/services/api/role/post/PostRoleFunction";
@@ -22,12 +22,12 @@ export default function FormPostRole() {
     },
   });
 
-  const { control, handleSubmit } = useForm<RoleSchema>({
-    resolver: zodResolver(RoleValidation),
+  const { control, handleSubmit } = useForm<RolePostSchema>({
+    resolver: zodResolver(RolePostValidation),
   });
 
-  const onSubmit: SubmitHandler<RoleSchema> = (
-    values: RoleSchema
+  const onSubmit: SubmitHandler<RolePostSchema> = (
+    values: RolePostSchema
   ) => {
     postRole.mutate(values, {
       onSuccess() {

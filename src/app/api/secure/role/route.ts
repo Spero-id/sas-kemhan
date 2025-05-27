@@ -36,6 +36,13 @@ export async function POST(request: Request) {
           name: body.name,
         },
       });
+  
+      await tx.role_permission.createMany({
+        data: body.permissions.map((perm: string) => ({
+          roleId: role.id,
+          permissionId: parseInt(perm),
+        })),
+      });
 
       return role
     });

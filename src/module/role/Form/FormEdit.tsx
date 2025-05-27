@@ -9,9 +9,10 @@ import { useEffect } from "react";
 import FormElement from "./FormElement";
 import { Alert } from "react-daisyui";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
-import { RoleSchema, RoleValidation } from "../Validation";
+import { RoleEditSchema, RoleEditValidation } from "../Validation";
 import { UpdateRoleFunction } from "@/services/api/role/update/UpdateRoleFunction";
 import { useDetailRole } from "@/services/api/role/get/get.hooks";
+import { RolePermission } from "@/types/Role/TypeRole";
 
 interface FormRoleProps {
   id: string;
@@ -27,8 +28,8 @@ export default function FormEditRole({ id }: Readonly<FormRoleProps>) {
     },
   });
 
-  const { control, handleSubmit, reset } = useForm<RoleSchema>({
-    resolver: zodResolver(RoleValidation),
+  const { control, handleSubmit, reset } = useForm<RoleEditSchema>({
+    resolver: zodResolver(RoleEditValidation(id)),
   });
 
   const { data, isLoading, error } = useDetailRole({
@@ -36,14 +37,15 @@ export default function FormEditRole({ id }: Readonly<FormRoleProps>) {
   });
 
   useEffect(() => {
-    console.log(data)
-    reset({
-      name: data?.data.name,
-      permissions: data?.data.permissions.map((perm: any) => String(perm.id)),
-    });
+    if(!isLoading){
+      reset({
+        name: data?.data.name,
+        permissions: data?.data.permissions.map((perm: RolePermission) => perm.permissionId.toString()),
+      });
+    }
   }, [data, isLoading, reset]);
 
-  const onSubmit: SubmitHandler<RoleSchema> = (values: RoleSchema) => {
+  const onSubmit: SubmitHandler<RoleEditSchema> = (values: RoleEditSchema) => {
     updateRole.mutate(
       {
         id,
