@@ -51,16 +51,15 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
       reset({
         name: data?.data.name,
         email: data?.data.email,
-        name_cctv: data?.data.cctv.name,
-        path_slug_cctv: data?.data.cctv.path_slug,
-        rtsp_url_cctv: data?.data.cctv.rtsp_url,
-        status_cctv: data?.data.cctv.status,
+        role_id: data?.data.roleId.toString(),
+        name_helmet: data?.data.helmet.name,
+        path_slug_helmet: data?.data.helmet.path_slug,
+        rtsp_url_helmet: data?.data.helmet.rtsp_url,
         name_sensor_gerak: data?.data.sensor_gerak.name,
         status_sensor_gerak: data?.data.sensor_gerak.status,
         name_body_worm: data?.data.body_worm.name,
         path_slug_body_worm: data?.data.body_worm.path_slug,
         rtsp_url_body_worm: data?.data.body_worm.rtsp_url,
-        status_body_worm: data?.data.body_worm.status,
       });
     }
   }, [data, isLoading, reset]);

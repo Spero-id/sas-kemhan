@@ -19,7 +19,7 @@ export async function GET(
         id: parseInt(params.id),
       },
       include: {
-        cctv: true,
+        helmet: true,
         sensor_gerak: true,
         body_worm: true,
       },
@@ -35,11 +35,11 @@ export async function GET(
       );
     }
 
-    if (!user.cctv) {
+    if (!user.helmet) {
       return NextResponse.json(
         {
           status: false,
-          message: "CCTV not found",
+          message: "Helmet not found",
         },
         { status: 404 }
       );
@@ -93,6 +93,7 @@ export async function PUT(
 
     const result = await prisma.$transaction(async (tx) => {
       const name = formData.get("name") as string;
+      const roleId = formData.get("role_id") as string;
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
       const image = formData.get("image") as File;
@@ -108,9 +109,11 @@ export async function PUT(
         email: string;
         password?: string;
         image?: string;
+        roleId: string;
       } = {
         name,
         email,
+        roleId
       };
 
       if (password) {
@@ -131,6 +134,22 @@ export async function PUT(
           id: parseInt(params.id),
         },
         data: req,
+      });
+
+      // Helmet
+      const name_helmet = formData.get("name_helmet") as string;
+      const path_slug_helmet = formData.get("path_slug_helmet") as string;
+      const rtsp_url_helmet = formData.get("rtsp_url_helmet") as string;
+
+      await tx.helmet.update({
+        where: {
+          user_id: data?.id,
+        },
+        data: {
+          name: name_helmet,
+          path_slug: path_slug_helmet,
+          rtsp_url: rtsp_url_helmet,
+        },
       });
 
       // Sensor Gerak
@@ -199,6 +218,12 @@ export async function DELETE(
         deleteMinioFile(data.image);
       }
   
+      await tx.helmet.delete({
+        where: {
+          user_id: data?.id,
+        },
+      });
+
       await tx.sensor_gerak.delete({
         where: {
           user_id: data?.id,

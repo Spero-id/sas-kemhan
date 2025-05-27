@@ -62,16 +62,18 @@ const defaultSchema = z.object({
       required_error: REQUIRED_FIELD.message,
     })
     .email("Email wajib diisi dengan format email yang benar"),
-  name_cctv: z.string({
+  role_id: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  path_slug_cctv: z.string({
+  name_helmet: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  rtsp_url_cctv: z.string({
+  path_slug_helmet: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  status_cctv: z.preprocess((value) => Boolean(value), z.boolean()),
+  rtsp_url_helmet: z.string({
+    required_error: REQUIRED_FIELD.message,
+  }),
   name_sensor_gerak: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
@@ -85,7 +87,6 @@ const defaultSchema = z.object({
   rtsp_url_body_worm: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  status_body_worm: z.preprocess((value) => Boolean(value), z.boolean()),
 });
 
 const UserPostValidation = z
