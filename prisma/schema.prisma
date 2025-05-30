@@ -110,6 +110,14 @@ model role_permission {
   created_at DateTime  @default(now())
 }
 
+model layout{
+  id         Int    @id @default(autoincrement())
+  name       String
+  layout     Json  
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt 
+}
+
 // Enum type chat
 enum ChatType {
   TEXT
