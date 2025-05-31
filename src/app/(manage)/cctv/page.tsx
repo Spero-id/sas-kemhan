@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonGenerateMediaMTX from "@/components/GenerateMediaMTX";
 import TableCctv from "@/module/cctv/TableCctv";
 import Link from "next/link";
 
@@ -10,6 +11,7 @@ export default function Cctv() {
         <div className="flex justify-between items-center">
           <h5 className="text-xl font-bold text-slate-600">Cctv</h5>
           <div className="flex gap-3">
+            <ButtonGenerateMediaMTX/>
             <Link href={"/cctv/create"} className="btn">
               Create
             </Link> 

@@ -1,10 +1,10 @@
 import { axiosClient } from "@/common/utils/AxiosClient";
-import { CctvResponse } from "@/types/Cctv/TypeCctv";
+import { GenerateMediaMTXResponse } from "@/types/GenerateMediaMTX/TypeGenerateMediaMTX";
 
 export const PostGenerateMediaMTX = async () => {
   try {
-    const response = await axiosClient.post<CctvResponse>(
-      `/secure/cctv`,
+    const response = await axiosClient.post<GenerateMediaMTXResponse>(
+      `/secure/generate-yml`,
     );
     return response;
   } catch (error: any) {
