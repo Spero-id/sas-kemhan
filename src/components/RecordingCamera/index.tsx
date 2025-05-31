@@ -2,6 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { StartRecord } from "@/services/api/stream/post/StartRecord";
 import { StopRecord } from "@/services/api/stream/post/StopRecord";
+import { FaStopCircle, FaSpinner } from "react-icons/fa";
+import { AiFillVideoCamera } from "react-icons/ai";
 
 type RecordStatus = "none" | "on" | "off";
 
@@ -61,13 +63,13 @@ export default function RecordingCamera({
   };
 
   const getButtonLabel = () => {
-    if (startRecord.isLoading || stopRecord.isLoading) return "Processing...";
-    if (statusRecord === "none") return "Start Recording";
-    return "Stop Recording";
+    if (startRecord.isLoading || stopRecord.isLoading) return <FaSpinner className="animate-spin text-yellow-500" />;
+    if (statusRecord === "none") return <AiFillVideoCamera className="text-white" />;
+    return <FaStopCircle className="text-red-600" />;
   };
 
   return (
-    <button onClick={handleClick} disabled={startRecord.isLoading || stopRecord.isLoading}>
+    <button onClick={handleClick} disabled={startRecord.isLoading || stopRecord.isLoading} className="p-1 rounded cursor-pointer pointer-events-auto">
       {getButtonLabel()}
     </button>
   );

@@ -3,17 +3,13 @@
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
-import RecorderPage from "@/components/PlayerVideo";
 import RecordingCamera from "@/components/RecordingCamera";
-import RTSPCamera from "@/components/RTSPCamera";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import Link from "next/link";
-import { IoMdQrScanner } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
-import { TfiTarget } from "react-icons/tfi";
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
@@ -35,9 +31,15 @@ export default function Home() {
               }`}
               key={i}
             >
-              <iframe src="http://localhost:8889/camera1/" allow="fullscreen; autoplay; encrypted-media" className="absolute w-full h-full"></iframe>
-              <RecordingCamera pathSlug={item.path_slug} rtspUrl={item.rtsp_url} outputPath={`/recordings/${item.path_slug}`}/>
-              {/* <Image
+              {/* IFRAME as background */}
+              <iframe
+                src="http://localhost:8889/camera1/"
+                allow="fullscreen; autoplay; encrypted-media"
+                className="absolute w-full h-full z-10 pointer-events-auto"
+              ></iframe>
+
+              {/* FRAME IMAGE OVERLAY */}
+              <Image
                 src="/images/frame.png"
                 alt="frame"
                 fill
@@ -48,13 +50,15 @@ export default function Home() {
                 alt="frame-active"
                 fill
                 className="z-10 pointer-events-none hidden group-hover:block"
-              /> */}
-              <div className="relative h-full border border-dark-ocean">
-                <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+              />
+
+              {/* OVERLAY & CONTROL LAYER */}
+              <div className="relative h-full border border-dark-ocean z-20 pointer-events-none">
+                <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
                   {item.name}
                 </div>
-                
-                <div className="absolute bottom-3 right-2 flex flex-col gap-1 z-20">
+
+                <div className="absolute bottom-9 right-3 flex flex-col gap-1 z-30">
                   <RecordingCamera
                     key={i}
                     pathSlug={item.path_slug}
@@ -63,7 +67,7 @@ export default function Home() {
                   />
                   <Link
                     href={`/cctv/1`}
-                    className="p-1 rounded text-white text-lg"
+                    className="p-1 rounded text-white text-lg pointer-events-auto"
                   >
                     <MdPushPin />
                   </Link>
