@@ -9,9 +9,11 @@ export default function Cctv() {
       <div className="w-full shadow rounded bg-white p-6">
         <div className="flex justify-between items-center">
           <h5 className="text-xl font-bold text-slate-600">Cctv</h5>
-          <Link href={"/cctv/create"} className="btn">
-            Create
-          </Link>
+          <div className="flex gap-3">
+            <Link href={"/cctv/create"} className="btn">
+              Create
+            </Link> 
+          </div>
         </div>
         <TableCctv />
       </div>

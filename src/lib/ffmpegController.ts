@@ -1,5 +1,8 @@
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import path from 'path';
+import fs from 'fs';
+import mime from 'mime-types';
+import { uploadToMinio } from '@/utils/minio';
 
 const streamProcesses = new Map<string, ChildProcessWithoutNullStreams>();
 const recordProcesses = new Map<string, ReturnType<typeof spawn>>();
@@ -109,6 +112,25 @@ export async function startRecording(streamId: string, rtspUrl: string): Promise
   proc.on('close', code => {
     console.log(`[${streamId}] container exited with code ${code}`);
     recordProcesses.delete(streamId);
+
+    const filePath = path.join(process.cwd(), 'public', 'recordings', streamId, filename);
+    const buffer = fs.readFileSync(filePath);
+    const name = path.basename(filePath);
+    const type = mime.lookup(filePath) || 'application/octet-stream';
+
+    // Bungkus buffer ke objek `File` ala browser
+    const file = new File([buffer], name, { type });
+
+    const uploadedPath = uploadToMinio(file, `recordings/${streamId}`)
+
+    // Hapus file lokal setelah upload berhasil
+    try {
+      fs.unlinkSync(filePath);
+    } catch (err) {
+      console.error("Gagal hapus file lokal:", err);
+    }
+
+    return uploadedPath;
   });
 
   recordProcesses.set(streamId, proc);
