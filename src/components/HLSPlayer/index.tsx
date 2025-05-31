@@ -14,7 +14,12 @@ const HLSPlayer = ({ src }: Props) => {
 
     if (videoRef.current) {
       if (Hls.isSupported()) {
-        hls = new Hls();
+        hls = new Hls({
+          maxBufferLength: 30,
+          maxMaxBufferLength: 60,
+          liveSyncDuration: 6,
+          liveMaxLatencyDuration: 20,
+        });
         hls.loadSource(src);
         hls.attachMedia(videoRef.current);
       } else if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {

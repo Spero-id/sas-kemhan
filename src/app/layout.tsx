@@ -4,6 +4,8 @@ import "./globals.css";
 import Providers from "@/common/utils/Provider";
 import { SessionProvider } from "next-auth/react";
 import 'leaflet/dist/leaflet.css';
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 
 const inter = Inter({ subsets: ["latin"] });
 
