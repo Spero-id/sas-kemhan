@@ -1,7 +1,8 @@
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
+import path from 'path';
 
 const streamProcesses = new Map<string, ChildProcessWithoutNullStreams>();
-const recordProcesses = new Map<string, ChildProcessWithoutNullStreams>();
+const recordProcesses = new Map<string, ReturnType<typeof spawn>>();
 
 function buildStreamArgs(rtspUrl: string, outputPath: string): string[] {
   return [
@@ -33,30 +34,11 @@ function buildStreamArgs(rtspUrl: string, outputPath: string): string[] {
   ];
 }
 
-function getTimestampFilename(): string {
-  const now = new Date();
-  const pad = (n: number) => String(n).padStart(2, '0');
-  const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-  const time = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
-  return `record_${date}_${time}.mkv`;
-}
-
-function buildRecordArgs(rtspUrl: string, outputPath: string): string[] {
-  const filename = getTimestampFilename();
-  return [
-    '-rtsp_transport', 'tcp',
-    '-i', rtspUrl,
-    '-c', 'copy',             // ringan, tanpa transcode
-    '-f', 'matroska',         // pastikan format MKV
-    `${outputPath}/${filename}`,
-  ];
-}
-
 export function startStream(streamId: string, rtspUrl: string, outputPath: string): void {
   stopStream(streamId);
 
   const args = buildStreamArgs(rtspUrl, outputPath);
-  const proc = spawn('docker', ['exec', 'ffmpeg_sas', 'ffmpeg', ...args]);
+  const proc = spawn('docker', ['exec', 'mediamtx', 'ffmpeg', ...args]);
 
   proc.stderr.on('data', data => console.error(`[${streamId}] stream: ${data}`));
   proc.on('close', code => {
@@ -75,35 +57,59 @@ export function stopStream(streamId: string): void {
   }
 }
 
-// Ubah stopRecording jadi async dan return Promise<void>
+function getTimestampFilename(): string {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const time = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+  return `record_${date}_${time}.mkv`;
+}
+
+function buildRecordArgs(rtspUrl: string, outputFile: string, streamId: string): string[] {
+  const containerName = `record-${streamId}`;
+  return [
+    'run',
+    '--rm',
+    '--name', containerName,
+    '-v', `${path.resolve(`./public/recordings/${streamId}`)}:/recordings`,
+    'jrottenberg/ffmpeg:6.1-alpine',
+    '-rtsp_transport', 'tcp',
+    '-i', rtspUrl,
+    '-c:v', 'copy',
+    '-c:a', 'aac',
+    '-movflags', '+faststart',
+    '-y',
+    `/recordings/${outputFile}`,
+  ];
+}
+
 export function stopRecording(streamId: string): Promise<void> {
   return new Promise((resolve) => {
-    const proc = recordProcesses.get(streamId);
-    if (proc) {
-      proc.once('close', (code) => {
-        console.log(`[${streamId}] recording exited with code ${code}`);
-        recordProcesses.delete(streamId);
-        resolve();
-      });
-      proc.kill('SIGINT');
-    } else {
+    const containerName = `record-${streamId}`;
+    const proc = spawn('docker', ['stop', containerName]);
+
+    proc.stderr.on('data', data => console.error(`[${streamId}] stop: ${data}`));
+    proc.on('close', (code) => {
+      console.log(`[${streamId}] stopped container with code ${code}`);
+      recordProcesses.delete(streamId);
       resolve();
-    }
+    });
   });
 }
 
-export async function startRecording(streamId: string, rtspUrl: string, outputPath: string): Promise<void> {
-  await stopRecording(streamId); // tunggu proses lama selesai
+export async function startRecording(streamId: string, rtspUrl: string): Promise<void> {
+  await stopRecording(streamId); // stop dulu jika ada
 
-  const args = buildRecordArgs(rtspUrl, outputPath);
-  const proc = spawn('docker', ['exec', 'ffmpeg_sas', 'ffmpeg', ...args]);
+  const filename = getTimestampFilename();
+  const args = buildRecordArgs(rtspUrl, filename, streamId);
+
+  const proc = spawn('docker', args);
 
   proc.stderr.on('data', data => console.error(`[${streamId}] record: ${data}`));
   proc.on('close', code => {
-    console.log(`[${streamId}] recording exited with code ${code}`);
+    console.log(`[${streamId}] container exited with code ${code}`);
     recordProcesses.delete(streamId);
   });
 
   recordProcesses.set(streamId, proc);
 }
-

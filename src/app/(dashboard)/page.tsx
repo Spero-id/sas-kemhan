@@ -3,6 +3,7 @@
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
+import RecorderPage from "@/components/PlayerVideo";
 import RecordingCamera from "@/components/RecordingCamera";
 import RTSPCamera from "@/components/RTSPCamera";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
@@ -34,12 +35,8 @@ export default function Home() {
               }`}
               key={i}
             >
-              <RTSPCamera
-                key={i}
-                pathSlug={item.path_slug}
-                rtspUrl={item.rtsp_url}
-                outputPath={`/app/public/stream/${item.path_slug}/out.m3u8`}
-              />
+              <iframe src="http://localhost:8889/camera1/" allow="fullscreen; autoplay; encrypted-media" className="absolute w-full h-full"></iframe>
+              <RecordingCamera pathSlug={item.path_slug} rtspUrl={item.rtsp_url} outputPath={`/recordings/${item.path_slug}`}/>
               {/* <Image
                 src="/images/frame.png"
                 alt="frame"
@@ -56,17 +53,13 @@ export default function Home() {
                 <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
                   {item.name}
                 </div>
-
-                <div className="absolute top-10 left-3 text-white text-sm">
-                  00:15:145
-                </div>
-
+                
                 <div className="absolute bottom-3 right-2 flex flex-col gap-1 z-20">
                   <RecordingCamera
                     key={i}
                     pathSlug={item.path_slug}
-                    rtspUrl={item.rtsp_url}
-                    outputPath={`/app/public/record/${item.path_slug}`}
+                    rtspUrl={`rtsp://192.168.100.10:8554/${item.path_slug}`}
+                    outputPath={`/recordings/${item.path_slug}`}
                   />
                   <Link
                     href={`/cctv/1`}

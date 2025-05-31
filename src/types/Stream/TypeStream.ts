@@ -11,7 +11,6 @@ export type StopResponse = {
 export type StartRequest = Partial<{
   pathSlug: string;
   rtspUrl: string;
-  outputPath: string;
 }>;
 
 export type StartResponse = {

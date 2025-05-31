@@ -42,7 +42,6 @@ export default function RecordingCamera({
       startRecord.mutate({
         pathSlug,
         rtspUrl,
-        outputPath,
       });
     } else if (statusRecord === "off" && isRecording && !stopRecord.isLoading) {
       stopRecord.mutate({
