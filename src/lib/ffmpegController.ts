@@ -5,29 +5,29 @@ const recordProcesses = new Map<string, ChildProcessWithoutNullStreams>();
 
 function buildStreamArgs(rtspUrl: string, outputPath: string): string[] {
   return [
-    '-fflags', 'nobuffer',
+    '-fflags', '+genpts+discardcorrupt',
     '-rtsp_transport', 'tcp',
-    '-stimeout', '2000000',
+    '-stimeout', '5000000',
     '-i', rtspUrl,
     '-vsync', '1',
     '-fflags', '+genpts',
     '-flags', '+low_delay',
-    '-probesize', '500000',
-    '-analyzeduration', '1000000',
+    '-probesize', '1000000',
+    '-analyzeduration', '1500000',
     '-c:v', 'libx264',
-    '-preset', 'ultrafast',
+    '-preset', 'veryfast', // Lebih stabil dari ultrafast
     '-tune', 'zerolatency',
-    '-g', '24',
-    '-keyint_min', '24',
+    '-g', '48', // GOP: 2s kalau fps 24
+    '-keyint_min', '48',
     '-c:a', 'aac',
     '-b:a', '128k',
     '-ac', '2',
     '-ar', '44100',
     '-f', 'hls',
-    '-hls_time', '2',
-    '-hls_list_size', '3',
-    '-hls_flags', 'omit_endlist+program_date_time',
-    '-hls_allow_cache', '0',
+    '-hls_time', '4',               // Lebih lama untuk stabilitas
+    '-hls_list_size', '6',          // Lebih banyak segment
+    '-hls_flags', 'delete_segments+program_date_time', // Hapus segmen lama, hemat space
+    '-hls_allow_cache', '1',        // Izinkan cache segment
     '-hls_start_number_source', 'epoch',
     outputPath,
   ];
