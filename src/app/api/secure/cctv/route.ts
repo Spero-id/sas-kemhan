@@ -29,10 +29,23 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   try {
+    const check = await prisma.cctv.findFirst({
+      where: {
+        path_slug: `cctv_${body.path_slug}`,
+      },
+    })
+
+    if (check) {
+      return NextResponse.json({
+        status: false,
+        message: "Path slug already exists",
+      }, { status: 400 });
+    }
+
     const result = await prisma.cctv.create({
       data: {
         name: body.name,
-        path_slug: body.path_slug,
+        path_slug: `cctv_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
       },
     });

@@ -14,26 +14,23 @@ export default function FormPostCctv() {
 
   const postCctv = useMutation({
     mutationFn: PostCctvFunction,
-    onError() {
-      toast.error("Telah terjadi kesalahan!");
-    },
   });
 
   const { control, handleSubmit } = useForm<CctvSchema>({
     resolver: zodResolver(CctvValidation),
   });
 
-  const onSubmit: SubmitHandler<CctvSchema> = (
-    values: CctvSchema
-  ) => {
-    console.log(values)
+  const onSubmit: SubmitHandler<CctvSchema> = (values: CctvSchema) => {
     postCctv.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
         router.push(`/cctv`);
       },
-      onError() {
-        toast.error("Telah terjadi kesalahan!");
+      onError(error: any) {
+        const message =
+          error?.response?.data?.message ?? "Telah terjadi kesalahan!";
+
+        toast.error(message);
       },
     });
   };

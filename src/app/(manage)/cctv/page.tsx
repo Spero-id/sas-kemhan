@@ -9,7 +9,7 @@ export default function Cctv() {
     <div className="container mt-5 mx-auto">
       <div className="w-full shadow rounded bg-white p-6">
         <div className="flex justify-between items-center">
-          <h5 className="text-xl font-bold text-slate-600">Cctv</h5>
+          <h5 className="text-xl font-bold text-slate-600">CCTV</h5>
           <div className="flex gap-3">
             <ButtonGenerateMediaMTX/>
             <Link href={"/cctv/create"} className="btn">
