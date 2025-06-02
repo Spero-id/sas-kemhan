@@ -14,6 +14,8 @@ services:
     volumes:
       - ./mediamtx.yml:/mediamtx.yml
       - ./public/recordings:/recordings
+    networks:
+      - sas
 
   app:
     build:
@@ -34,3 +36,12 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_ENDPOINT: ${MINIO_ENDPOINT}
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+    networks:
+      - sas
+
+networks:
+  sas:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.1.255.0/24"
