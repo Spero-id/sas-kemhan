@@ -70,7 +70,7 @@ export default function TableCustom({ data, columns }: Readonly<TableProps>) {
             ))}
           </thead>
           <tbody className="text-slate-600">
-            {table.getRowModel().rows.map((row) => (
+            {typeof table != undefined && table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>

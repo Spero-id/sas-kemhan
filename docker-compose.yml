@@ -1,6 +1,6 @@
 services:
   mediamtx:
-    image: bluenviron/mediamtx:1.12.3
+    image: bluenviron/mediamtx:1.12.3-ffmpeg
     container_name: mediamtx
     restart: always
     ports:

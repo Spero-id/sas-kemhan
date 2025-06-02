@@ -69,7 +69,7 @@ export default function RecordingCamera({
   };
 
   return (
-    <button onClick={handleClick} disabled={startRecord.isLoading || stopRecord.isLoading} className="p-1 rounded cursor-pointer pointer-events-auto">
+    <button onClick={handleClick} disabled={startRecord.isLoading || stopRecord.isLoading} className="p-1 rounded cursor-pointer pointer-events-auto flex items-center justify-center">
       {getButtonLabel()}
     </button>
   );

@@ -59,8 +59,8 @@ export default function Home() {
           cols={12}
           rowHeight={100}
           width={1850}
-          isDraggable
-          isResizable
+          isDraggable={false}
+          isResizable={false}
         >
           {layout?.map((item, i: number) => (
             <div
@@ -99,7 +99,7 @@ export default function Home() {
               />
 
               {/* OVERLAY & CONTROL LAYER */}
-              <div className="relative h-full border border-dark-ocean z-20 pointer-events-auto">
+              <div className="relative h-full border border-dark-ocean z-20 pointer-events-none">
                 <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
                   {item.data.name}
                 </div>
@@ -112,7 +112,7 @@ export default function Home() {
                     outputPath={`/recordings/${item.data.path_slug}`}
                   />
                   <Link
-                    href={`/cctv/1`}
+                    href={`/cctv/${item.data.id}`}
                     className="p-1 rounded text-white text-lg pointer-events-auto"
                   >
                     <MdPushPin />
