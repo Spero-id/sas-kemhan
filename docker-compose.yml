@@ -15,26 +15,22 @@ services:
       - ./mediamtx.yml:/mediamtx.yml
       - ./public/recordings:/recordings
 
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: app
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     NODE_ENV: ${NODE_ENV}
-  #     AUTH_URL: ${AUTH_URL}
-  #     AUTH_SECRET: ${AUTH_SECRET}
-  #     BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
-  #     DATABASE_URL: ${DATABASE_URL}
-  #     NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
-  #     MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-  #     MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-  #     MINIO_ENDPOINT: ${MINIO_ENDPOINT}
-  #     MINIO_PUBLIC_URL: ${MINIO_PUBLIC_URL}
-  #     MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - ./public/uploads:/app/public/uploads
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      AUTH_URL: ${AUTH_URL}
+      AUTH_SECRET: ${AUTH_SECRET}
+      BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
+      DATABASE_URL: ${DATABASE_URL}
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
