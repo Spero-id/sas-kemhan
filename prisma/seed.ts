@@ -57,6 +57,14 @@ async function main() {
         code: 'cctv.delete' 
       },
       { 
+        name: 'View Layout',
+        code: 'layout.view' 
+      },
+      { 
+        name: 'Update Layout',
+        code: 'layout.update' 
+      },
+      { 
         name: 'Dashboard CCTV',
         code: 'dashboard.cctv.view' 
       },

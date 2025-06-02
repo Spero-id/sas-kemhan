@@ -5,7 +5,10 @@ import LoadingGetData from "@/components/Loading/LoadingGetData";
 import mergeWithSavedLayout from "@/lib/Layout";
 import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
 import { UpdateLayoutFunction } from "@/services/api/layout/update/UpdateLayoutFunction";
+import { hasPermission } from "@/utils/permissions";
 import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import GridLayout, { Layout } from "react-grid-layout";
 import { toast } from "react-toastify";
@@ -14,6 +17,18 @@ export default function EditLayout({
   params,
 }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
+
+  const { data: dataSession, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (
+      status === "authenticated" &&
+      !hasPermission(dataSession?.user, "layout.update")
+    ) {
+      router.push("/");
+    }
+  }, [status]);
 
   const { data, isLoading } = useDetailLayout({
     id: id,

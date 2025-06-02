@@ -76,7 +76,7 @@ const HeaderDashboard = () => {
               <h3 className="text-3xl font-semibold text-cyan-neon">
                 {session?.user?.name}
               </h3>
-              <p className="text-lg text-white">{session?.user?.role}</p>
+              <p className="text-lg text-white">{session?.user?.role?.name}</p>
             </div>
           </button>
           <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow mt-2">

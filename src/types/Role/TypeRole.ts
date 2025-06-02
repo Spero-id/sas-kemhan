@@ -30,6 +30,14 @@ export type Role = Partial<{
   updated_at: string;
 }>;
 
+export type RoleAuth = Partial<{
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  permissions_code: string[];
+}>;
+
 export type RolePermission = {
   roleId: string;
   permissionId: string;

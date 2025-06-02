@@ -4,9 +4,12 @@ import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 import { Role as RoleType } from "@/types/Role/TypeRole";
 import { useAllLayout } from "@/services/api/layout/get/get.hooks";
+import { useSession } from "next-auth/react";
+import { hasPermission } from "@/utils/permissions";
 
 export default function TableLayout() {
   const { isLoading, data } = useAllLayout();
+  const { status, data: dataSession } = useSession();
 
   const columnHelper = createColumnHelper<RoleType>();
 
@@ -20,12 +23,14 @@ export default function TableLayout() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
-          <Link
-            href={`/layout/${info.getValue()}/edit`}
-            className="btn btn-warning"
-          >
-            Edit
-          </Link>
+          {hasPermission(dataSession?.user, "layout.update") && (
+            <Link
+              href={`/layout/${info.getValue()}/edit`}
+              className="btn btn-warning"
+            >
+              Edit
+            </Link>
+          )}
         </div>
       ),
       header: () => <span>Action</span>,
@@ -34,7 +39,7 @@ export default function TableLayout() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && status !== "authenticated" ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data} columns={columns}></TableCustom>

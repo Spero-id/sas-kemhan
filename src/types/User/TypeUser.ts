@@ -1,5 +1,6 @@
 import { BodyWorm } from "../BodyWorm/TypeBodyWorm";
 import { Helmet } from "../Helmet/TypeHelmet";
+import { RoleAuth } from "../Role/TypeRole";
 import { Sensor } from "../Sensor/TypeSensor";
 
 export type ResponseAllUser = {
@@ -41,8 +42,15 @@ export type User = Partial<{
   email: string;
   image: string;
   password: string;
-  role: string;
+  role: RoleAuth;
   last_login: string;
   created_at: string;
   updated_at: string;
 }>;
+
+export type UserAuth = {
+  id: string;
+  name: string;
+  email: string;
+  role: RoleAuth;
+}
