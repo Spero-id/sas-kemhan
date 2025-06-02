@@ -46,7 +46,7 @@ export default function RootLayout({
             {/* <!-- ===== Main Content End ===== --> */}
           </div>
           {/* <!-- ===== Content Area End ===== --> */}
-          <Chat />
+          {/* <Chat /> */}
         </div>
       )}
     </div>
