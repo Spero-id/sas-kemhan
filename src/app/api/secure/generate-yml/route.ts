@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import yaml from "js-yaml";
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
 
 export const dynamic = "force-dynamic";
 

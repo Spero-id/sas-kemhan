@@ -38,6 +38,8 @@ services:
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
     networks:
       - sas
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   sas:
