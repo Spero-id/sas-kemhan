@@ -1,9 +1,9 @@
 import { getPrismaClient } from "../../../../../lib/prisma";
 import { NextResponse } from "next/server";
 import yaml from "js-yaml";
-import fs from 'fs'
-import path from 'path'
-import { execSync } from 'child_process'
+import fs from "fs";
+import path from "path";
+import { execSync } from "child_process";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +24,11 @@ export async function POST() {
       webrtcAllowOrigin: "*",
       rtmp: true,
       rtmpAddress: ":1935",
+      webrtcICEServers2: [
+        {
+          url: "stun:stun.l.google.com:19302",
+        },
+      ],
       paths: {} as Record<string, { source: string }>,
     };
 
@@ -36,12 +41,13 @@ export async function POST() {
     }
 
     const yamlStr = yaml.dump(config, { noRefs: true, lineWidth: -1 });
-    const filePath = path.join(process.cwd(), 'mediamtx.yml')
-    fs.writeFileSync(filePath, yamlStr, 'utf8')
+    const filePath = path.join(process.cwd(), "mediamtx.yml");
+    fs.writeFileSync(filePath, yamlStr, "utf8");
 
-    execSync('docker restart mediamtx')
-
-    return NextResponse.json({ message: 'mediamtx.yml generated', count: allDevices.length })
+    return NextResponse.json({
+      message: "mediamtx.yml generated",
+      count: allDevices.length,
+    });
   } catch (err: any) {
     return NextResponse.json(
       { error: "Failed to generate mediamtx.yml", details: err.message },
