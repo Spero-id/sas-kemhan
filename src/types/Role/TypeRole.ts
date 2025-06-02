@@ -1,5 +1,3 @@
-import { Permission } from "../Permission/TypePermission";
-
 export type ResponseAllRole = {
   status: boolean;
   data: Role[];

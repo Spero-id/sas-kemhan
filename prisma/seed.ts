@@ -123,6 +123,7 @@ async function main() {
 
   const password = await bcrypt.hash("123456", saltRounds)
 
+  // Create User admin
   await prisma.user.createMany({
     data: [
       {
@@ -131,11 +132,23 @@ async function main() {
         password: password,
         roleId: adminRole.id,
       },
+    ],
+  })
+
+  // Create Layout
+  await prisma.layout.createMany({
+    data: [
       {
-        name: 'User',
-        email: 'user@example.com',
-        password: password,
-        roleId: publicRole.id,
+        name: 'cctv',
+        layout: []
+      },
+      {
+        name: 'helmet',
+        layout: []
+      },
+      {
+        name: 'body_worm',
+        layout: []
       },
     ],
   })
