@@ -42,7 +42,7 @@ export default function EditLayout({
 
   useEffect(() => {
     if (!isLoading && data) {
-      const rawLayout = data?.data.layout.layout;
+      const rawLayout = data?.data?.layout?.layout;
       const layoutArray = Array.isArray(rawLayout)
         ? (rawLayout as Layout[])
         : [];

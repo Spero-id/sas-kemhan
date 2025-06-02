@@ -11,7 +11,9 @@ import { MdPushPin, MdDashboard } from "react-icons/md";
 import { TfiTarget } from "react-icons/tfi";
 import FilterNavigation from "@/components/Navigation/Filter";
 import { FaMap } from "react-icons/fa";
-import HLSPlayer from "@/components/HLSPlayer";
+import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
+import RecordingCamera from "@/components/RecordingCamera";
+import LoadingGetData from "@/components/Loading/LoadingGetData";
 
 const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 
@@ -20,41 +22,42 @@ export default function DetailCctv({
 }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
 
+  const { data, isLoading } = useDetailCctv({ id });
+
+  if (isLoading) return <LoadingGetData />;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
         <div className="relative h-[28.5rem]">
-          <HLSPlayer src={`${MEDIAMTX_URL}/camera${id}/index.m3u8`} />
+          <iframe
+            src={`${MEDIAMTX_URL}/${data?.data.path_slug}`}
+            allow="fullscreen; autoplay; encrypted-media"
+            className="w-full h-full pointer-events-auto border-none"
+            title={data?.data.path_slug}
+          />
           <Image
             src="/images/frame-detail.png"
             alt="frame-detail"
             fill
             className="z-10 pointer-events-none"
           />
-          <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 rounded text-base">
+          <div className="absolute top-4 right-4 bg-red-600 text-white px-4 py-1 rounded text-base">
             John Doe - CCTV 1
           </div>
-          <div className="absolute top-4 right-4 bg-green-500 text-white px-4 py-1 rounded text-base">
-            ONLINE
-          </div>
 
-          <div className="absolute top-14 left-4 text-white text-base">
-            00:15:145
-          </div>
-
-          <div className="absolute bottom-4 right-4 flex flex-col gap-1 z-20">
-            <button className="p-1 rounded text-white text-2xl">
-              <TfiTarget />
-            </button>
+          <div className="absolute bottom-12 right-4 flex flex-col gap-1 z-20">
+            <RecordingCamera
+              pathSlug={data?.data.path_slug ?? ""}
+              rtspUrl={`rtsp://192.168.100.10:8554/${data?.data.path_slug}`}
+              outputPath={`/recordings/${data?.data.path_slug}`}
+            />
             <Link
               href={`/cctv`}
               className="p-1 rounded text-yellow-500 text-2xl"
             >
               <MdPushPin />
             </Link>
-            <button className="p-1 rounded text-white text-2xl">
-              <IoMdQrScanner />
-            </button>
           </div>
         </div>
         <div className="grid grid-cols-3 h-36 mt-5 gap-3">
@@ -73,28 +76,16 @@ export default function DetailCctv({
                 className="z-10 pointer-events-none hidden group-hover:block"
               />
               <div className="relative h-full border border-dark-ocean">
-                <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
                   John doe - CCTV
                 </div>
 
-                {true ? (
-                  <div className="absolute top-3 right-3 bg-black bg-opacity-50 text-green-400 text-xs font-bold px-2 py-1 rounded">
-                    ● ONLINE
-                  </div>
-                ) : (
-                  <div className="absolute top-3 right-3 bg-black bg-opacity-50 text-red-400 text-xs font-bold px-2 py-1 rounded">
-                    ● OFFLINE
-                  </div>
-                )}
-
-                <div className="absolute top-10 left-3 text-white text-sm">
-                  00:15:145
-                </div>
-
                 <div className="absolute bottom-3 right-2 flex flex-col gap-1 z-20">
-                  <button className="p-1 rounded text-white text-lg">
-                    <TfiTarget />
-                  </button>
+                  <RecordingCamera
+                    pathSlug={data?.data.path_slug ?? ''}
+                    rtspUrl={`rtsp://192.168.100.10:8554/${data?.data.path_slug}`}
+                    outputPath={`/recordings/${data?.data.path_slug}`}
+                  />
                   <Link
                     href={`/cctv/`}
                     className="p-1 rounded text-white text-lg"
