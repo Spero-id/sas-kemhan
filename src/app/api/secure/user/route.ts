@@ -11,7 +11,15 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      where: {
+        role: {
+          name: {
+            not: "admin",
+          },
+        },
+      },
+    });
     return NextResponse.json({
       status: true,
       data: users,
@@ -42,7 +50,7 @@ export async function POST(request: Request) {
       const image = formData.get("image") as File;
 
       const passwordHash = await bcrypt.hash(password, saltRounds);
-      const fileUrl = await uploadToMinio(image, 'uploads/profile');
+      const fileUrl = await uploadToMinio(image, "uploads/profile");
 
       // user
       const user = await tx.user.create({
@@ -63,7 +71,7 @@ export async function POST(request: Request) {
       await tx.helmet.create({
         data: {
           name: name_helmet,
-          path_slug: path_slug_helmet,
+          path_slug: `helmet_${path_slug_helmet}`,
           rtsp_url: rtsp_url_helmet,
           user: {
             connect: {
@@ -97,7 +105,7 @@ export async function POST(request: Request) {
       await tx.body_worm.create({
         data: {
           name: name_body_worm,
-          path_slug: path_slug_body_worm,
+          path_slug:  `body_worm_${path_slug_body_worm}`,
           rtsp_url: rtsp_url_body_worm,
           user: {
             connect: {

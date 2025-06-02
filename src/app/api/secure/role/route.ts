@@ -7,7 +7,13 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const roles = await prisma.role.findMany();
+    const roles = await prisma.role.findMany({
+      where:{
+        name: {
+          not: "admin"
+        }
+      }
+    });
     return NextResponse.json({
       status: true,
       data: roles,

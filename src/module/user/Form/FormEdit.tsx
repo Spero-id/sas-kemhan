@@ -5,9 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import {
-  useDetailUser,
-} from "@/services/api/user/get/get.hooks";
+import { useDetailUser } from "@/services/api/user/get/get.hooks";
 import { useEffect, useState } from "react";
 import FormElement from "./FormElement";
 import { Alert } from "react-daisyui";
@@ -26,9 +24,6 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
 
   const updateUser = useMutation({
     mutationFn: UpdateUserFunction,
-    onError() {
-      toast.error("Telah terjadi kesalahan!");
-    },
   });
 
   const { control, handleSubmit, reset } = useForm<UserEditSchema>({
@@ -53,20 +48,18 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
         email: data?.data.email,
         role_id: data?.data.roleId.toString(),
         name_helmet: data?.data.helmet.name,
-        path_slug_helmet: data?.data.helmet.path_slug,
+        path_slug_helmet: data?.data.helmet.path_slug.replace("helmet_", ""),
         rtsp_url_helmet: data?.data.helmet.rtsp_url,
         name_sensor_gerak: data?.data.sensor_gerak.name,
         status_sensor_gerak: data?.data.sensor_gerak.status,
         name_body_worm: data?.data.body_worm.name,
-        path_slug_body_worm: data?.data.body_worm.path_slug,
+        path_slug_body_worm: data?.data.body_worm.path_slug.replace("body_worm_", ""),
         rtsp_url_body_worm: data?.data.body_worm.rtsp_url,
       });
     }
   }, [data, isLoading, reset]);
 
-  const onSubmit: SubmitHandler<UserEditSchema> = (
-    values: UserEditSchema
-  ) => {
+  const onSubmit: SubmitHandler<UserEditSchema> = (values: UserEditSchema) => {
     updateUser.mutate(
       {
         id,
@@ -76,6 +69,12 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
         onSuccess() {
           toast.success("Berhasil diupdate!");
           router.push(`/user`);
+        },
+        onError(error: any) {
+          const message =
+            error?.response?.data?.message ?? "Telah terjadi kesalahan!";
+
+          toast.error(message);
         },
       }
     );

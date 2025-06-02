@@ -12,9 +12,12 @@ import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv as CctvType } from "@/types/Cctv/TypeCctv";
 import { useDeleteCctv } from "@/services/api/cctv/delete/delete.hooks";
+import { useSession } from "next-auth/react";
+import { hasPermission } from "@/utils/permissions";
 
 export default function TableCctv() {
   const { isLoading, data, refetch } = useAllCctv();
+  const { status, data: dataSession } = useSession();
 
   const columnHelper = createColumnHelper<CctvType>();
 
@@ -28,18 +31,22 @@ export default function TableCctv() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
-          <Link
-            href={`/cctv/${info.getValue()}/edit`}
-            className="btn btn-warning"
-          >
-            Edit
-          </Link>
-          <Button
-            className="btn btn-error"
-            onClick={() => handleDelete(String(info.getValue()))}
-          >
-            Delete
-          </Button>
+          {hasPermission(dataSession?.user, "cctv.update") && (
+            <Link
+              href={`/cctv/${info.getValue()}/edit`}
+              className="btn btn-warning"
+            >
+              Edit
+            </Link>
+          )}
+          {hasPermission(dataSession?.user, "cctv.delete") && (
+            <Button
+              className="btn btn-error"
+              onClick={() => handleDelete(String(info.getValue()))}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       ),
       header: () => <span>Action</span>,
@@ -59,7 +66,7 @@ export default function TableCctv() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && status !== "authenticated" ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data} columns={columns}></TableCustom>

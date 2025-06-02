@@ -5,7 +5,7 @@ import {
   TYPE_FILE_INVALID,
 } from "@/utils/constant";
 import { z } from "zod";
-import { checkEmail } from "@/services/api/user/get/get.service";
+import { checkEmail, checkPathSlugBodyWorm, checkPathSlugHelmet } from "@/services/api/user/get/get.service";
 
 const MAX_FILE_SIZE = 1 * 1024 * 1024;
 
@@ -104,6 +104,26 @@ const UserPostValidation = z
         code: z.ZodIssueCode.custom,
       });
     }
+
+    const checkHelmet = await checkPathSlugHelmet(`helmet_${data.path_slug_helmet}`);
+
+    if (!checkHelmet.status) {
+      ctx.addIssue({
+        path: ["path_slug_helmet"],
+        message: "Path slug sudah digunakan",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    const checkBodyWorm = await checkPathSlugBodyWorm(`body_worm_${data.path_slug_body_worm}`);
+
+    if (!checkBodyWorm.status) {
+      ctx.addIssue({
+        path: ["path_slug_body_worm"],
+        message: "Path slug sudah digunakan",
+        code: z.ZodIssueCode.custom,
+      });
+    }
   });
 const UserEditValidation = (currentUserId: string) => z
   .object({
@@ -117,6 +137,26 @@ const UserEditValidation = (currentUserId: string) => z
       ctx.addIssue({
         path: ["email"],
         message: "Email sudah digunakan oleh user lain",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    const checkHelmet = await checkPathSlugHelmet(`helmet_${data.path_slug_helmet}`, currentUserId);
+
+    if (!checkHelmet.status) {
+      ctx.addIssue({
+        path: ["path_slug_helmet"],
+        message: "Path slug sudah digunakan oleh user lain",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    const checkBodyWorm = await checkPathSlugBodyWorm(`body_worm_${data.path_slug_body_worm}`, currentUserId);
+
+    if (!checkBodyWorm.status) {
+      ctx.addIssue({
+        path: ["path_slug_body_worm"],
+        message: "Path slug sudah digunakan oleh user lain",
         code: z.ZodIssueCode.custom,
       });
     }

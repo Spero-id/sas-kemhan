@@ -6,10 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { PostUserFunction } from "@/services/api/user/post/PostUserFunction";
-import {
-  UserPostValidation,
-  UserPostSchema
-} from "../Validation";
+import { UserPostValidation, UserPostSchema } from "../Validation";
 import FormElement from "./FormElement";
 
 export default function FormPostUser() {
@@ -17,25 +14,23 @@ export default function FormPostUser() {
 
   const postUser = useMutation({
     mutationFn: PostUserFunction,
-    onError() {
-      toast.error("Telah terjadi kesalahan!");
-    },
   });
 
   const { control, handleSubmit } = useForm<UserPostSchema>({
     resolver: zodResolver(UserPostValidation),
   });
 
-  const onSubmit: SubmitHandler<UserPostSchema> = (
-    values: UserPostSchema
-  ) => {
+  const onSubmit: SubmitHandler<UserPostSchema> = (values: UserPostSchema) => {
     postUser.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
         router.push(`/user`);
       },
-      onError() {
-        toast.error("Telah terjadi kesalahan!");
+      onError(error: any) {
+        const message =
+          error?.response?.data?.message ?? "Telah terjadi kesalahan!";
+
+        toast.error(message);
       },
     });
   };

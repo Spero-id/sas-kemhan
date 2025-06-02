@@ -12,9 +12,12 @@ import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
 import { useAllRole } from "@/services/api/role/get/get.hooks";
 import { Role as RoleType } from "@/types/Role/TypeRole";
 import { useDeleteRole } from "@/services/api/role/delete/delete.hooks";
+import { useSession } from "next-auth/react";
+import { hasPermission } from "@/utils/permissions";
 
 export default function TableRole() {
   const { isLoading, data, refetch } = useAllRole();
+  const { status, data: dataSession } = useSession();
 
   const columnHelper = createColumnHelper<RoleType>();
 
@@ -28,18 +31,22 @@ export default function TableRole() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
-          <Link
-            href={`/role/${info.getValue()}/edit`}
-            className="btn btn-warning"
-          >
-            Edit
-          </Link>
-          <Button
-            className="btn btn-error"
-            onClick={() => handleDelete(String(info.getValue()))}
-          >
-            Delete
-          </Button>
+          {hasPermission(dataSession?.user, "role.update") && (
+            <Link
+              href={`/role/${info.getValue()}/edit`}
+              className="btn btn-warning"
+            >
+              Edit
+            </Link>
+          )}
+          {hasPermission(dataSession?.user, "role.delete") && (
+            <Button
+              className="btn btn-error"
+              onClick={() => handleDelete(String(info.getValue()))}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       ),
       header: () => <span>Action</span>,
@@ -59,7 +66,7 @@ export default function TableRole() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || status !== "authenticated" ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data} columns={columns}></TableCustom>

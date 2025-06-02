@@ -11,6 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdPushPin } from "react-icons/md";
 import GridLayout from "react-grid-layout";
+import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
+import { useEffect, useState } from "react";
 
 const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 
@@ -18,19 +20,37 @@ export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllCctv();
 
-  const layout =
-    data?.data?.map((item: Cctv, index: number) => ({
-      i: item.path_slug || String(index),
-      x: (index * 4) % 12, // biar grid-nya nyebar
-      y: Math.floor(index / 3) * 2,
-      w: 4,
-      h: 2,
-    })) ?? [];
+  const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
+    id: "1", // layout cctv
+  });
+
+  const [layout, setLayout] = useState<any[]>();
+
+  useEffect(() => {
+    if (!isLoadingLayout && !isLoading && data?.data) {
+      const rawLayout = dataLayout?.data.layout.layout;
+      const layoutArray = Array.isArray(rawLayout) ? rawLayout : [];
+
+      const mappingLayout = layoutArray
+        .filter((item) =>
+          data.data.some((cctv: Cctv) => cctv.path_slug === item.i)
+        )
+        .map((item) => {
+          const matchedCctv = data.data.find(
+            (cctv: Cctv) => cctv.path_slug === item.i
+          );
+          item.data = matchedCctv!;
+          return item;
+        });
+
+      setLayout(mappingLayout);
+    }
+  }, [isLoadingLayout, isLoading, data]);
 
   return (
     <>
       <Navigation />
-      {isLoading ? (
+      {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (
         <GridLayout
@@ -42,11 +62,13 @@ export default function Home() {
           isDraggable
           isResizable
         >
-          {data?.data?.map((item: Cctv, i: number) => (
+          {layout?.map((item, i: number) => (
             <div
               data-grid={layout[i]}
               className={`group relative overflow-hidden h-full w-full pointer-events-none ${
-                item.name.toLowerCase().includes(searchDashboard.toLowerCase())
+                item.data.name
+                  .toLowerCase()
+                  .includes(searchDashboard.toLowerCase())
                   ? ""
                   : "hidden"
               }`}
@@ -55,39 +77,39 @@ export default function Home() {
               {/* IFRAME as background */}
               <div className="absolute top-0 left-0 w-full h-full pointer-events-auto">
                 <iframe
-                  src={`${MEDIAMTX_URL}/${item.path_slug}`}
+                  src={`${MEDIAMTX_URL}/${item.data.path_slug}`}
                   allow="fullscreen; autoplay; encrypted-media"
                   className="w-full h-full pointer-events-auto border-none"
-                  title={item.path_slug}
+                  title={item.data.path_slug}
                 />
               </div>
 
               {/* FRAME IMAGE OVERLAY */}
-                <Image
-                  src="/images/frame.png"
-                  alt="frame"
-                  fill
-                  className="z-10 pointer-events-none group-hover:hidden"
-                />
-                <Image
-                  src="/images/frame-active.png"
-                  alt="frame-active"
-                  fill
-                  className="z-10 pointer-events-none hidden group-hover:block"
-                />
+              <Image
+                src="/images/frame.png"
+                alt="frame"
+                fill
+                className="z-10 pointer-events-none group-hover:hidden"
+              />
+              <Image
+                src="/images/frame-active.png"
+                alt="frame-active"
+                fill
+                className="z-10 pointer-events-none hidden group-hover:block"
+              />
 
               {/* OVERLAY & CONTROL LAYER */}
               <div className="relative h-full border border-dark-ocean z-20 pointer-events-auto">
                 <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  {item.name}
+                  {item.data.name}
                 </div>
 
                 <div className="absolute bottom-9 right-3 flex flex-col gap-1 z-30 pointer-events-auto">
                   <RecordingCamera
                     key={i}
-                    pathSlug={item.path_slug}
-                    rtspUrl={`rtsp://192.168.100.10:8554/${item.path_slug}`}
-                    outputPath={`/recordings/${item.path_slug}`}
+                    pathSlug={item.data.path_slug}
+                    rtspUrl={`rtsp://192.168.100.10:8554/${item.data.path_slug}`}
+                    outputPath={`/recordings/${item.data.path_slug}`}
                   />
                   <Link
                     href={`/cctv/1`}

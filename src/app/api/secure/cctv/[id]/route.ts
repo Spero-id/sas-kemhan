@@ -43,13 +43,32 @@ export async function PUT(
     const path_slug = data.path_slug as string;
     const rtsp_url = data.rtsp_url as string;
 
+    const check = await prisma.cctv.findFirst({
+      where: {
+        path_slug: path_slug,
+        NOT: {
+          id: parseInt(params.id),
+        }
+      }
+    });
+
+    if (check) {
+      return NextResponse.json(
+        {
+          status: false,
+          message: "Path slug already exists",
+        },
+        { status: 400 }
+      );
+    }
+
     await prisma.cctv.update({
       where: {
         id: parseInt(params.id),
       },
       data: {
         name: name,
-        path_slug: path_slug,
+        path_slug: `cctv_${path_slug}`,
         rtsp_url: rtsp_url,
       },
     });

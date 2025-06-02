@@ -1,5 +1,6 @@
 import { Button } from "react-daisyui";
 import InputForm from "@/components/FormGroup/Input";
+import InputWithPrefixForm from "@/components/FormGroup/InputWithPrefix";
 
 export default function FormElement({
   control,
@@ -24,14 +25,15 @@ export default function FormElement({
         label="Nama"
         placeholder="Nama"
       ></InputForm>
-      <InputForm
+      <InputWithPrefixForm
         control={control}
         name="path_slug"
         type="text"
         isRequired={true}
         label="Path Slug"
         placeholder="Path Slug"
-      ></InputForm>
+        prefix="cctv_"
+      ></InputWithPrefixForm>
       <InputForm
         control={control}
         name="rtsp_url"

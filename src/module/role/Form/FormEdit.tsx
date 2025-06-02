@@ -23,9 +23,6 @@ export default function FormEditRole({ id }: Readonly<FormRoleProps>) {
 
   const updateRole = useMutation({
     mutationFn: UpdateRoleFunction,
-    onError() {
-      toast.error("Telah terjadi kesalahan!");
-    },
   });
 
   const { control, handleSubmit, reset } = useForm<RoleEditSchema>({
@@ -37,10 +34,12 @@ export default function FormEditRole({ id }: Readonly<FormRoleProps>) {
   });
 
   useEffect(() => {
-    if(!isLoading){
+    if (!isLoading) {
       reset({
         name: data?.data.name,
-        permissions: data?.data.permissions.map((perm: RolePermission) => perm.permissionId.toString()),
+        permissions: data?.data.permissions.map((perm: RolePermission) =>
+          perm.permissionId.toString()
+        ),
       });
     }
   }, [data, isLoading, reset]);
@@ -55,6 +54,12 @@ export default function FormEditRole({ id }: Readonly<FormRoleProps>) {
         onSuccess() {
           toast.success("Berhasil diupdate!");
           router.push(`/role`);
+        },
+        onError(error: any) {
+          const message =
+            error?.response?.data?.message ?? "Telah terjadi kesalahan!";
+
+          toast.error(message);
         },
       }
     );

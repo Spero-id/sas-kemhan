@@ -1,5 +1,3 @@
-import { Permission } from "../Permission/TypePermission";
-
 export type ResponseAllRole = {
   status: boolean;
   data: Role[];
@@ -30,6 +28,14 @@ export type Role = Partial<{
   name: string;
   created_at: string;
   updated_at: string;
+}>;
+
+export type RoleAuth = Partial<{
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  permissions_code: string[];
 }>;
 
 export type RolePermission = {

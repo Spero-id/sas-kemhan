@@ -22,9 +22,6 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
 
   const updateRole = useMutation({
     mutationFn: UpdateCctvFunction,
-    onError() {
-      toast.error("Telah terjadi kesalahan!");
-    },
   });
 
   const { control, handleSubmit, reset } = useForm<CctvSchema>({
@@ -39,7 +36,7 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
     if (!isLoading) {
       reset({
         name: data?.data.name,
-        path_slug: data?.data.path_slug,
+        path_slug: data?.data.path_slug.replace("cctv_", ""),
         rtsp_url: data?.data.rtsp_url,
       });
     }
@@ -55,6 +52,12 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
         onSuccess() {
           toast.success("Berhasil diupdate!");
           router.push(`/cctv`);
+        },
+        onError(error: any) {
+          const message =
+            error?.response?.data?.message ?? "Telah terjadi kesalahan!";
+
+          toast.error(message);
         },
       }
     );

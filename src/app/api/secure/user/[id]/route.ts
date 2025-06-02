@@ -147,7 +147,7 @@ export async function PUT(
         },
         data: {
           name: name_helmet,
-          path_slug: path_slug_helmet,
+          path_slug: `helmet_${path_slug_helmet}`,
           rtsp_url: rtsp_url_helmet,
         },
       });
@@ -177,7 +177,7 @@ export async function PUT(
         },
         data: {
           name: name_body_worm,
-          path_slug: path_slug_body_worm,
+          path_slug: `body_worm_${path_slug_body_worm}`,
           rtsp_url: rtsp_url_body_worm,
         },
       });

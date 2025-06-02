@@ -12,9 +12,12 @@ import {
 import { Button } from "react-daisyui";
 import { useDeleteUser } from "@/services/api/user/delete/delete.hooks";
 import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
+import { useSession } from "next-auth/react";
+import { hasPermission } from "@/utils/permissions";
 
 export default function TableUser() {
   const { isLoading, data, refetch } = useAllUser();
+  const { status, data: dataSession } = useSession();
 
   const columnHelper = createColumnHelper<UserType>();
 
@@ -33,18 +36,22 @@ export default function TableUser() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
-          <Link
-            href={`/user/${info.getValue()}/edit`}
-            className="btn btn-warning"
-          >
-            Edit
-          </Link>
-          <Button
-            className="btn btn-error"
-            onClick={() => handleDelete(String(info.getValue()))}
-          >
-            Delete
-          </Button>
+          {hasPermission(dataSession?.user, "user.update") && (
+            <Link
+              href={`/user/${info.getValue()}/edit`}
+              className="btn btn-warning"
+            >
+              Edit
+            </Link>
+          )}
+          {hasPermission(dataSession?.user, "user.delete") && (
+            <Button
+              className="btn btn-error"
+              onClick={() => handleDelete(String(info.getValue()))}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       ),
       header: () => <span>Action</span>,
@@ -64,7 +71,7 @@ export default function TableUser() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || status !== "authenticated" ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data} columns={columns}></TableCustom>

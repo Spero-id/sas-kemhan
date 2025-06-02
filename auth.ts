@@ -1,13 +1,13 @@
-import { getPrismaClient } from './lib/prisma'
+import { getPrismaClient } from "./lib/prisma";
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const config = {
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   providers: [
     CredentialsProvider({
@@ -26,34 +26,57 @@ export const config = {
 
         // Cek apakah email ada di database
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email }
-        })
+          where: { email: credentials.email },
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: { permission: true },
+                },
+              },
+            },
+          },
+        });
 
         // Verifikasi password (pastikan Anda meng-hash password di database)
-        if (user && await bcrypt.compare(credentials.password, user.password)) {
+        if (
+          user &&
+          (await bcrypt.compare(credentials.password, user.password))
+        ) {
           // Return only the necessary user information, excluding the password
+
+          const permissionCodes =
+            user?.role?.permissions?.map((p) => p.permission.code) || [];
+
+          const safeUser = {
+            ...user,
+            role: {
+              ...user.role,
+              permissions_code: permissionCodes,
+            },
+          };
 
           await prisma.user.update({
             where: { id: user.id },
             data: {
-              last_login: new Date()
-            }
-          })
+              last_login: new Date(),
+            },
+          });
 
           return {
-            id: user.id.toString(),
-            name: user.name,
-            email: user.email,
-            role: user.role
-          }
+            id: safeUser.id.toString(),
+            name: safeUser.name,
+            email: safeUser.email,
+            role: safeUser.role,
+          };
         } else {
-          return null // Jika tidak, login gagal
+          return null; // Jika tidak, login gagal
         }
       },
     }),
   ],
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }: any) {
@@ -70,11 +93,11 @@ export const config = {
       }
 
       const customAccessToken = jwt.sign(
-          session.user,
-          process.env.AUTH_SECRET as string,
+        session.user,
+        process.env.AUTH_SECRET as string
       );
 
-      session.access_token = customAccessToken    
+      session.access_token = customAccessToken;
 
       return session;
     },

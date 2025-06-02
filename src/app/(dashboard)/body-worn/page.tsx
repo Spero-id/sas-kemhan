@@ -3,79 +3,125 @@
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
-import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
+import RecordingCamera from "@/components/RecordingCamera";
 import { useAtom } from "jotai";
-import { IoMdQrScanner } from "react-icons/io";
+import Image from "next/image";
+import Link from "next/link";
 import { MdPushPin } from "react-icons/md";
-import { TfiTarget } from "react-icons/tfi";
+import GridLayout from "react-grid-layout";
+import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
+import { useEffect, useState } from "react";
+import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
+import { BodyWorm as BodyWormType } from "@/types/BodyWorm/TypeBodyWorm";
+
+const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 
 export default function BodyWorm() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllBodyWorm();
 
+  const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
+    id: "3", // layout bodyWorm
+  });
+
+  const [layout, setLayout] = useState<any[]>();
+
+  useEffect(() => {
+    if (!isLoadingLayout && !isLoading && data?.data) {
+      const rawLayout = dataLayout?.data.layout.layout;
+      const layoutArray = Array.isArray(rawLayout) ? rawLayout : [];
+
+      const mappingLayout = layoutArray
+        .filter((item) =>
+          data.data.some((bodyWorm: BodyWormType) => bodyWorm.path_slug === item.i)
+        )
+        .map((item) => {
+          const matchedBodyWorm = data.data.find(
+            (bodyWorm: BodyWormType) => bodyWorm.path_slug === item.i
+          );
+          item.data = matchedBodyWorm!;
+          return item;
+        });
+
+      setLayout(mappingLayout);
+    }
+  }, [isLoadingLayout, isLoading, data]);
+
   return (
     <>
       <Navigation />
-      {isLoading ? (
+      {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 h-[70vh]">
-          {data?.data.map((item: any, i: number) => (
+        <GridLayout
+          className="layout pointer-events-none"
+          layout={layout}
+          cols={12}
+          rowHeight={100}
+          width={1850}
+          isDraggable
+          isResizable
+        >
+          {layout?.map((item, i: number) => (
             <div
-              className={`relative rounded-md overflow-hidden border-2 border-cyan-neon h-48 ${
-                item.name.toLowerCase().includes(searchDashboard.toLowerCase())
+              data-grid={layout[i]}
+              className={`group relative overflow-hidden h-full w-full pointer-events-none ${
+                item.data.name
+                  .toLowerCase()
+                  .includes(searchDashboard.toLowerCase())
                   ? ""
                   : "hidden"
               }`}
               key={i}
             >
-              {/* <Image
-                    src=""
-                    alt="CCTV"
-                    className=" h-auto"
-                    width={300}
-                    height={200}
-                /> */}
-
-              <div className="w-full h-full bg-slate-800"></div>
-
-              <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                {item.name}
+              {/* IFRAME as background */}
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-auto">
+                <iframe
+                  src={`${MEDIAMTX_URL}/${item.data.path_slug}`}
+                  allow="fullscreen; autoplay; encrypted-media"
+                  className="w-full h-full pointer-events-auto border-none"
+                  title={item.data.path_slug}
+                />
               </div>
 
-              {item.status ? (
-                <div className="absolute top-3 right-3 bg-black bg-opacity-50 text-green-400 text-xs font-bold px-2 py-1 rounded">
-                  ● ONLINE
+              {/* FRAME IMAGE OVERLAY */}
+              <Image
+                src="/images/frame.png"
+                alt="frame"
+                fill
+                className="z-10 pointer-events-none group-hover:hidden"
+              />
+              <Image
+                src="/images/frame-active.png"
+                alt="frame-active"
+                fill
+                className="z-10 pointer-events-none hidden group-hover:block"
+              />
+
+              {/* OVERLAY & CONTROL LAYER */}
+              <div className="relative h-full border border-dark-ocean z-20 pointer-events-auto">
+                <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                  {item.data.name}
                 </div>
-              ) : (
-                <div className="absolute top-3 right-3 bg-black bg-opacity-50 text-red-400 text-xs font-bold px-2 py-1 rounded">
-                  ● OFFLINE
+
+                <div className="absolute bottom-9 right-3 flex flex-col gap-1 z-30 pointer-events-auto">
+                  <RecordingCamera
+                    key={i}
+                    pathSlug={item.data.path_slug}
+                    rtspUrl={`rtsp://192.168.100.10:8554/${item.data.path_slug}`}
+                    outputPath={`/recordings/${item.data.path_slug}`}
+                  />
+                  <Link
+                    href={`/body-worn/1`}
+                    className="p-1 rounded text-white text-lg pointer-events-auto"
+                  >
+                    <MdPushPin />
+                  </Link>
                 </div>
-              )}
-
-              <div className="absolute top-10 left-3 text-white text-sm">
-                00:15:145
-              </div>
-
-              <div className="absolute bottom-3 right-2 flex flex-col gap-1">
-                <button className="p-1 rounded text-white text-lg">
-                  <TfiTarget />
-                </button>
-                <button className="p-1 rounded text-white text-lg">
-                  <MdPushPin />
-                </button>
-                <button className="p-1 rounded text-white text-lg">
-                  <IoMdQrScanner />
-                </button>
-              </div>
-
-              <div className="absolute bottom-3 left-3 text-white text-sm">
-                <div className="font-bold">John Doe</div>
-                <div className="text-xs">12/02/2025, 07:45</div>
               </div>
             </div>
           ))}
-        </div>
+        </GridLayout>
       )}
     </>
   );

@@ -7,6 +7,7 @@ import SelectCustom from "@/components/FormGroup/Select";
 import { useEffect, useState } from "react";
 import { useAllRole } from "@/services/api/role/get/get.hooks";
 import { Role } from "@/types/Role/TypeRole";
+import InputWithPrefixForm from "@/components/FormGroup/InputWithPrefix";
 
 export default function FormElement({
   control,
@@ -94,14 +95,15 @@ export default function FormElement({
         label="Nama Helmet"
         placeholder="Nama Helmet"
       ></InputForm>
-      <InputForm
+      <InputWithPrefixForm
         control={control}
         name="path_slug_helmet"
         type="text"
         isRequired={true}
         label="Path Slug Helmet"
         placeholder="Path Slug Helmet"
-      ></InputForm>
+        prefix="helmet_"
+      ></InputWithPrefixForm>
       <InputForm
         control={control}
         name="rtsp_url_helmet"
@@ -133,14 +135,15 @@ export default function FormElement({
         label="Nama Body Worm"
         placeholder="Nama Body Worm"
       ></InputForm>
-      <InputForm
+      <InputWithPrefixForm
         control={control}
         name="path_slug_body_worm"
         type="text"
         isRequired={true}
         label="Path Slug Body Worm"
         placeholder="Path Slug Body Worm"
-      ></InputForm>
+        prefix="body_worm_"
+      ></InputWithPrefixForm>
       <InputForm
         control={control}
         name="rtsp_url_body_worm"

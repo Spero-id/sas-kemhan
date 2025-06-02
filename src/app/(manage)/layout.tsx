@@ -15,17 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  const { data, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if (status !== "loading" && status !== "authenticated") {
       router.push("/api/auth/signin");
     }
-
-    if (data?.user?.role && data?.user?.role !== "admin") {
-      router.push("/");
-    }
-  }, [status, router, data?.user?.role]);
+  }, [status, router]);
 
   const [loading, setLoading] = useState<boolean>(true);
 

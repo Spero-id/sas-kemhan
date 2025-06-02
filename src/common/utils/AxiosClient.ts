@@ -17,6 +17,7 @@ const ApiClient = () => {
     },
     (error) => {
       console.error(`[interceptor][error]`, error);
+      return Promise.reject(error);
     }
   );
 

@@ -2,9 +2,28 @@
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import FormEditUser from "@/module/user/Form/FormEdit";
+import { hasPermission } from "@/utils/permissions";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function EditUser({ params }: Readonly<{ params: { id: string } }>) {
+export default function EditUser({
+  params,
+}: Readonly<{ params: { id: string } }>) {
   const id = params.id;
+
+  const { data, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (
+      status === "authenticated" &&
+      !hasPermission(data?.user, "user.update")
+    ) {
+      router.push("/");
+    }
+  }, [status]);
+
   return (
     <div className="container mx-auto mt-5">
       <Breadcrumb
