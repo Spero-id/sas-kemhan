@@ -28,7 +28,7 @@ export default function BodyWorm() {
 
   useEffect(() => {
     if (!isLoadingLayout && !isLoading && data?.data) {
-      const rawLayout = dataLayout?.data.layout.layout;
+      const rawLayout = dataLayout?.data?.layout?.layout;
       const layoutArray = Array.isArray(rawLayout) ? rawLayout : [];
 
       const mappingLayout = layoutArray
