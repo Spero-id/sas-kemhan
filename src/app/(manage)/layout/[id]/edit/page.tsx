@@ -95,29 +95,29 @@ export default function EditLayout({
 
         {isLoading ? (
           <LoadingGetData />
+        ) : layout ? (
+          <GridLayout
+            className="layout"
+            layout={layout}
+            cols={12}
+            rowHeight={30}
+            width={1200}
+            onLayoutChange={setLayout}
+          >
+            {layout.map((l) => {
+              const item = data?.data.data.find((d) => d.path_slug === l.i);
+
+              if (!item) return null;
+
+              return (
+                <div key={l.i} className="bg-gray-200 border p-2 rounded">
+                  {item.name}
+                </div>
+              );
+            })}
+          </GridLayout>
         ) : (
-          <div>
-            <GridLayout
-              className="layout"
-              layout={layout}
-              cols={12}
-              rowHeight={30}
-              width={1200}
-              onLayoutChange={setLayout}
-            >
-              {layout?.map((l) => {
-                const item = data?.data.data.find((d) => d.path_slug === l.i);
-
-                if (!item) return null;
-
-                return (
-                  <div key={l.i} className="bg-gray-200 border p-2 rounded">
-                    {item.name}
-                  </div>
-                );
-              })}
-            </GridLayout>
-          </div>
+          <p>No layout data available.</p>
         )}
       </div>
     </div>

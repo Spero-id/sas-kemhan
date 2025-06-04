@@ -69,7 +69,7 @@ export default function TableCctv() {
       {isLoading && status !== "authenticated" ? (
         <LoadingTableCustom />
       ) : (
-        <TableCustom data={data?.data} columns={columns}></TableCustom>
+        <TableCustom data={data?.data || []} columns={columns}></TableCustom>
       )}
 
       {isConfirmDelete && (

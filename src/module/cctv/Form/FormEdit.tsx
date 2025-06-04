@@ -36,7 +36,7 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
     if (!isLoading) {
       reset({
         name: data?.data.name,
-        path_slug: data?.data.path_slug.replace("cctv_", ""),
+        path_slug: data?.data.path_slug?.replace("cctv_", "") || "",
         rtsp_url: data?.data.rtsp_url,
         lat: data?.data.lat,
         long: data?.data.long,
