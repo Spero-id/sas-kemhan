@@ -1,7 +1,6 @@
 import { BodyWorm } from "../BodyWorm/TypeBodyWorm";
 import { Helmet } from "../Helmet/TypeHelmet";
 import { RoleAuth } from "../Role/TypeRole";
-import { Sensor } from "../Sensor/TypeSensor";
 
 export type ResponseAllUser = {
   status: boolean;
@@ -21,7 +20,6 @@ export type ResponseDetailUser = {
     created_at: string;
     updated_at: string;
     helmet: Helmet;
-    sensor_gerak: Sensor;
     body_worm: BodyWorm;
   };
 };

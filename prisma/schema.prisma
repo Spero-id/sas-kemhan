@@ -24,7 +24,6 @@ model user {
   chats         chat[]
   helmet        helmet?
   body_worm     body_worm?
-  sensor_gerak  sensor_gerak?
   role          role      @relation(fields: [roleId], references: [id])
 }
 
@@ -63,16 +62,6 @@ model body_worm {
   name       String
   path_slug  String
   rtsp_url   String 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-
-  user       user @relation(fields: [user_id], references: [id])
-}
-
-model sensor_gerak {
-  user_id    Int     @id
-  name       String
-  status     Boolean
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 

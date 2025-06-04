@@ -115,20 +115,6 @@ export default function FormElement({
       <hr className="my-4" />
       <InputForm
         control={control}
-        name="name_sensor_gerak"
-        type="text"
-        isRequired={true}
-        label="Nama Sensor Gerak"
-        placeholder="Nama Sensor Gerak"
-      ></InputForm>
-      <ToggleCustom
-        control={control}
-        name="status_sensor_gerak"
-        label="Status Sensor Gerak"
-      ></ToggleCustom>
-      <hr className="my-4" />
-      <InputForm
-        control={control}
         name="name_body_worm"
         type="text"
         isRequired={true}

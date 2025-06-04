@@ -20,7 +20,6 @@ export async function GET(
       },
       include: {
         helmet: true,
-        sensor_gerak: true,
         body_worm: true,
       },
     });
@@ -40,16 +39,6 @@ export async function GET(
         {
           status: false,
           message: "Helmet not found",
-        },
-        { status: 404 }
-      );
-    }
-
-    if (!user.sensor_gerak) {
-      return NextResponse.json(
-        {
-          status: false,
-          message: "Sensor gerak not found",
         },
         { status: 404 }
       );
@@ -152,20 +141,6 @@ export async function PUT(
         },
       });
 
-      // Sensor Gerak
-      const name_sensor_gerak = formData.get("name_sensor_gerak") as string;
-      const status_sensor_gerak = formData.get("status_sensor_gerak") as string;
-
-      await tx.sensor_gerak.update({
-        where: {
-          user_id: data?.id,
-        },
-        data: {
-          name: name_sensor_gerak,
-          status: status_sensor_gerak === "true",
-        },
-      });
-
       // Body Worn
       const name_body_worm = formData.get("name_body_worm") as string;
       const path_slug_body_worm = formData.get("path_slug_body_worm") as string;
@@ -219,12 +194,6 @@ export async function DELETE(
       }
   
       await tx.helmet.delete({
-        where: {
-          user_id: data?.id,
-        },
-      });
-
-      await tx.sensor_gerak.delete({
         where: {
           user_id: data?.id,
         },

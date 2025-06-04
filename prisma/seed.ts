@@ -69,10 +69,6 @@ async function main() {
         code: 'dashboard.cctv.view' 
       },
       { 
-        name: 'Dashboard Sensor',
-        code: 'dashboard.sensor.view' 
-      },
-      { 
         name: 'Dashboard Body Worn',
         code: 'dashboard.body_worm.view' 
       },

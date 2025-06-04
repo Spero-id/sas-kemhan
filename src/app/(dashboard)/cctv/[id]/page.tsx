@@ -182,39 +182,7 @@ export default function DetailCctv({
             </div>
           ))}
         </div>
-        <div className="flex justify-between mt-3 mb-2">
-          <div className="flex items-center justify-between w-full">
-            <p className="text-yellow-400 font-semibold text-lg">
-              Sensor Gerak
-            </p>
-            <div className="flex text-white gap-1">
-              <Link href="/">Lainnya</Link>
-              <IoIosArrowDropleft className="text-2xl" />
-              <IoIosArrowDropright className="text-2xl" />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 h-36 gap-3">
-          {[1, 2, 3].map((item) => (
-            <div
-              className={`bg-gray-800 rounded-lg p-4 flex flex-col items-center justify-center text-white border-2 border-cyan-400 h-48`}
-              key={item}
-            >
-              <div className="text-red-500 text-4xl">
-                <Image
-                  src={"/icons/sensor.svg"}
-                  alt="Sensor"
-                  width={80}
-                  height={80}
-                  className="fill-red-700"
-                />
-              </div>
-              <div className="mt-2 bg-yellow-500 text-black px-2 py-1 rounded">
-                test
-              </div>
-            </div>
-          ))}
-        </div>
+       
       </div>
     </div>
   );
