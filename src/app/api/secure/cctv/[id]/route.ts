@@ -42,6 +42,8 @@ export async function PUT(
     const name = data.name as string;
     const path_slug = data.path_slug as string;
     const rtsp_url = data.rtsp_url as string;
+    const lat = data.lat as string;
+    const long = data.long as string;
 
     const check = await prisma.cctv.findFirst({
       where: {
@@ -70,6 +72,8 @@ export async function PUT(
         name: name,
         path_slug: `cctv_${path_slug}`,
         rtsp_url: rtsp_url,
+        lat: lat,
+        long: long,
       },
     });
 

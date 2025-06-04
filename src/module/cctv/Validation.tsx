@@ -13,6 +13,12 @@ const CctvValidation = z.object({
   rtsp_url: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
+  lat: z.string({
+    required_error: REQUIRED_FIELD.message,
+  }),
+  long: z.string({
+    required_error: REQUIRED_FIELD.message,
+  }),
 });
 
 export { CctvValidation };

@@ -47,6 +47,8 @@ export async function POST(request: Request) {
         name: body.name,
         path_slug: `cctv_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
+        lat: body.lat,
+        long: body.long,
       },
     });
 
