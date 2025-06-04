@@ -26,7 +26,7 @@ export default async function handler(
   }
 
   res.json({
-    data: chats.toReversed(), // dibalik supaya lama → baru di UI
+    data: [...chats].reverse(), // dibalik supaya lama → baru di UI
     hasMore: chats.length === limit,
   });
 }

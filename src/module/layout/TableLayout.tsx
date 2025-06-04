@@ -42,7 +42,7 @@ export default function TableLayout() {
       {isLoading && status !== "authenticated" ? (
         <LoadingTableCustom />
       ) : (
-        <TableCustom data={data?.data} columns={columns}></TableCustom>
+        <TableCustom data={data?.data || []} columns={columns}></TableCustom>
       )}
     </>
   );
