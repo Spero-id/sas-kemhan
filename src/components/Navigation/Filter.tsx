@@ -6,16 +6,7 @@ import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 export default function FilterNavigation() {
   const [, setsearchDashboardAtom] = useAtom(searchDashboardAtom);
   return (
-    <div className="flex gap-3">
-      <select
-        defaultValue="Pick a color"
-        className="select bg-deep-teal bg-opacity-50 rounded text-white"
-      >
-        <option>Semua</option>
-        <option>Crimson</option>
-        <option>Amber</option>
-        <option>Velvet</option>
-      </select>
+    <div className="flex gap-3 justify-end">
       <label className="input input-bordered flex items-center gap-2 bg-deep-teal bg-opacity-50 rounded text-white">
         <input
           type="text"

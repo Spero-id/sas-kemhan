@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { TbDeviceCctvFilled } from "react-icons/tb";
-import { MdCamera, MdSensorOccupied } from "react-icons/md";
+import { MdCamera } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoadingGetData from "../Loading/LoadingGetData";
@@ -27,19 +27,6 @@ export default function MenuNavigation() {
         >
           <TbDeviceCctvFilled />
           CCTV
-        </Link>
-      )}
-      {hasPermission(data?.user, "dashboard.sensor.view") && (
-        <Link
-          href="/sensor"
-          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
-            pathname?.includes("sensor")
-              ? "border-cyan-neon"
-              : "border-transparent opacity-50"
-          }`}
-        >
-          <MdSensorOccupied />
-          Sensor
         </Link>
       )}
       {hasPermission(data?.user, "dashboard.body_worm.view") && (

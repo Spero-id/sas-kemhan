@@ -10,3 +10,8 @@ export const getDetailCctv = async (id: string) => {
   const response = await axiosClient.get<ResponseDetailCctv>(`/secure/cctv/${id}`);
   return response.data;
 };
+
+export const getRamdomCctv = async (limit: number) => {
+  const response = await axiosClient.get<ResponseAllCctv>("/secure/body-worm/random?limit=" + limit);
+  return response.data;
+};

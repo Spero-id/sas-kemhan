@@ -3,6 +3,8 @@ export type Cctv = {
   name: string;
   path_slug: string;
   rtsp_url: string;
+  lat: string;
+  long: string;
   created_at: string;
   updated_at: string;
 };
@@ -16,6 +18,8 @@ export type CctvRequest = Partial<{
   name: string;
   path_slug: string;
   rtsp_url: string;
+  lat: string;
+  long: string;
 }>;
 
 export type CctvResponse = {
@@ -29,6 +33,8 @@ export type ResponseDetailCctv = {
     name: string;
     path_slug: string;
     rtsp_url: string;
+    lat: string;
+    long: string;
     created_at: string;
     updated_at: string;
   };

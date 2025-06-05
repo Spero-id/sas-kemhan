@@ -50,8 +50,6 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
         name_helmet: data?.data.helmet.name,
         path_slug_helmet: data?.data.helmet.path_slug?.replace("helmet_", "") || "",
         rtsp_url_helmet: data?.data.helmet.rtsp_url,
-        name_sensor_gerak: data?.data.sensor_gerak.name,
-        status_sensor_gerak: data?.data.sensor_gerak.status,
         name_body_worm: data?.data.body_worm.name,
         path_slug_body_worm: data?.data.body_worm.path_slug?.replace("body_worm_", "") || "",
         rtsp_url_body_worm: data?.data.body_worm.rtsp_url,

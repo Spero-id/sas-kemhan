@@ -74,10 +74,6 @@ const defaultSchema = z.object({
   rtsp_url_helmet: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  name_sensor_gerak: z.string({
-    required_error: REQUIRED_FIELD.message,
-  }),
-  status_sensor_gerak: z.preprocess((value) => Boolean(value), z.boolean()),
   name_body_worm: z.string({
     required_error: REQUIRED_FIELD.message,
   }),

@@ -36,6 +36,22 @@ export default function FormElement({
       ></InputWithPrefixForm>
       <InputForm
         control={control}
+        name="lat"
+        type="text"
+        isRequired={true}
+        label="Latitude"
+        placeholder="Latitude"
+      ></InputForm>
+      <InputForm
+        control={control}
+        name="long"
+        type="text"
+        isRequired={true}
+        label="Longitude"
+        placeholder="Longitude"
+      ></InputForm>
+      <InputForm
+        control={control}
         name="rtsp_url"
         type="text"
         isRequired={true}

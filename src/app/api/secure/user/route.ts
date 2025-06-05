@@ -81,22 +81,6 @@ export async function POST(request: Request) {
         },
       });
 
-      // Sensor Gerak
-      const name_sensor_gerak = formData.get("name_sensor_gerak") as string;
-      const status_sensor_gerak = formData.get("status_sensor_gerak") as string;
-
-      await tx.sensor_gerak.create({
-        data: {
-          name: name_sensor_gerak,
-          status: status_sensor_gerak === "true",
-          user: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-      });
-
       // Body Worm
       const name_body_worm = formData.get("name_body_worm") as string;
       const path_slug_body_worm = formData.get("path_slug_body_worm") as string;
