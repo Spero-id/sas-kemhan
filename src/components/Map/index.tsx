@@ -14,6 +14,8 @@ import { SlPicture } from "react-icons/sl";
 import { ResponseAllCctv } from "@/types/Cctv/TypeCctv";
 import { useEffect } from "react";
 
+const NEXT_PUBLIC_MAPS = process.env.NEXT_PUBLIC_MAPS;
+
 // Inisialisasi icon
 const cctvIcon = L.icon({
   iconUrl: "/images/map/cctv.png",
@@ -59,7 +61,7 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
     >
-      <TileLayer url="http://localhost:8080/tile/{z}/{x}/{y}.png" />
+      <TileLayer url={`${NEXT_PUBLIC_MAPS}/tile/{z}/{x}/{y}.png`} />
 
       {/* Menampilkan semua marker */}
       {data.data.map((item, i) => (
