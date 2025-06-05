@@ -7,7 +7,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
-import { useAllPeople } from "@/services/api/maps/get/get.hooks";
+import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 
 export default function Peta() {
   const MapComponent = useMemo(
@@ -19,7 +19,11 @@ export default function Peta() {
     []
   );
 
-  const { isLoading, data } = useAllPeople();
+  const { isLoading, data } = useAllCctv();
+
+  if (isLoading || !data) {
+    return <LoadingGetData />;
+  }
 
   return (
     <>
@@ -31,9 +35,9 @@ export default function Peta() {
         Back
       </Link>
       <div style={{ height: "100vh", width: "100%" }}>
-        <MapComponent isLoading={isLoading} data={data} />
+        <MapComponent data={data} />
       </div>
-      <Chat />
+      {/* <Chat /> */}
     </>
   );
 }
