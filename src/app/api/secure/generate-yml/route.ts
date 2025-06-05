@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 
 export const dynamic = "force-dynamic";
+const MEDIAMTX_STUN=process.env.MEDIAMTX_STUN
 
 export async function POST() {
   const prisma = getPrismaClient();
@@ -25,7 +26,7 @@ export async function POST() {
       rtmpAddress: ":1935",
       webrtcICEServers2: [
         {
-          url: "stun:stun.l.google.com:19302",
+          url: MEDIAMTX_STUN,
         },
       ],
       paths: {} as Record<string, { source: string }>,

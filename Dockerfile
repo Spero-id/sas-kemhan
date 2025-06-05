@@ -1,6 +1,8 @@
 # Gunakan image official Next.js
 FROM node:21.5.0-alpine AS base
 
+RUN apk add --no-cache docker
+
 # Build Next.js app
 FROM base AS builder
 WORKDIR /app
