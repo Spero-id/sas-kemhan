@@ -11,8 +11,6 @@ services:
       - "554:554"
       - "554:554/udp"
       - "8189:8189/udp"
-      - "3478:3478"
-      - "3478:3478/udp" 
     volumes:
       - ./config/mediamtx.yml:/mediamtx.yml
       - ./public/recordings:/recordings
