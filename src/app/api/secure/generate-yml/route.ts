@@ -7,9 +7,9 @@ import { execSync } from "child_process";
 
 export const dynamic = "force-dynamic";
 const MEDIAMTX_STUN=process.env.MEDIAMTX_STUN
+const MEDIAMTX_ADDITIONAL_HOSTS=(process.env.MEDIAMTX_ADDITIONAL_HOSTS ?? '').split(',').map(host => host.trim())
 
 export async function POST() {
-  console.log(MEDIAMTX_STUN)
   const prisma = getPrismaClient();
   try {
     // Ambil semua data dari DB
@@ -20,17 +20,25 @@ export async function POST() {
     const allDevices = [...cctv, ...bodyWorm, ...helmet];
 
     const config = {
+      rtmp: true,
+      rtmpAddress: ":1935",
       webrtc: true,
       webrtcAddress: ":8889",
       webrtcEncryption: false,
       webrtcAllowOrigin: "*",
-      rtmp: true,
-      rtmpAddress: ":1935",
+      webrtcLocalUDPAddress: ":8889",
+      webrtcLocalTCPAddress: '',
+      webrtcIPsFromInterfaces: false,
+      webrtcIPsFromInterfacesList: [],
+      webrtcAdditionalHosts: MEDIAMTX_ADDITIONAL_HOSTS,
       webrtcICEServers2: [
         {
           url: MEDIAMTX_STUN,
         },
       ],
+      webrtcHandshakeTimeout: "10s",
+      webrtcTrackGatherTimeout: "2s",
+      webrtcSTUNGatherTimeout: "5s",
       paths: {} as Record<string, { source: string }>,
     };
 
