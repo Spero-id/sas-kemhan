@@ -12,10 +12,11 @@ services:
       - "554:554/udp"
       - "8189:8189/udp"
     volumes:
-      - ./mediamtx.yml:/mediamtx.yml
+      - ./config:/mediamtx/config
       - ./public/recordings:/recordings
     networks:
       - sas
+    command: -config /mediamtx/config/mediamtx.yml
 
   app:
     build:
@@ -39,10 +40,12 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_ENDPOINT: ${MINIO_ENDPOINT}
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+      MEDIAMTX_STUN: ${MEDIAMTX_STUN}
     networks:
       - sas
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./config:/app/config
 
 networks:
   sas:
