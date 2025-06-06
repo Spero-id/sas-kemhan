@@ -14,8 +14,6 @@ services:
     volumes:
       - ./config/mediamtx.yml:/mediamtx.yml
       - ./public/recordings:/recordings
-    networks:
-      - sas
 
   app:
     build:
@@ -40,15 +38,7 @@ services:
       MINIO_ENDPOINT: ${MINIO_ENDPOINT}
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
       MEDIAMTX_STUN: ${MEDIAMTX_STUN}
-    networks:
-      - sas
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config:/app/config
-
-networks:
-  sas:
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.1.255.0/24"
+    network_mode: host
