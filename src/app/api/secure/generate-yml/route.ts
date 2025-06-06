@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 const MEDIAMTX_STUN=process.env.MEDIAMTX_STUN
 
 export async function POST() {
+  console.log(MEDIAMTX_STUN)
   const prisma = getPrismaClient();
   try {
     // Ambil semua data dari DB
