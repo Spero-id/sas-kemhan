@@ -42,7 +42,7 @@ export async function POST() {
     }
 
     const yamlStr = yaml.dump(config, { noRefs: true, lineWidth: -1 });
-    const filePath = path.join(process.cwd(), "mediamtx.yml");
+    const filePath = path.join(process.cwd(), "config/mediamtx.yml");
     fs.writeFileSync(filePath, yamlStr, "utf8");
 
     return NextResponse.json({
