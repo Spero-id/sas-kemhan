@@ -42,7 +42,7 @@ export default function BodyWorm() {
 
       setLayout(mappingLayout);
     }
-  }, [isLoadingLayout, isLoading, data]);
+  }, [isLoadingLayout, isLoading, data, dataLayout]);
 
   return (
     <>

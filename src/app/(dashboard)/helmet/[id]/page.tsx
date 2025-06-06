@@ -41,9 +41,9 @@ export default function DetailCctv({
       <div>
         <div className="flex justify-between gap-4">
           <div className="flex items-center justify-between w-1/2">
-            <p className="text-yellow-400 font-semibold text-lg">CCTV</p>
+            <p className="text-yellow-400 font-semibold text-lg">Helmet</p>
             <div className="flex text-white gap-1">
-              <Link href="/">Lainnya</Link>
+              <Link href="/helmet">Lainnya</Link>
             </div>
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>

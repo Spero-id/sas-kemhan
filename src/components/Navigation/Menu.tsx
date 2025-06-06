@@ -5,7 +5,6 @@ import { TbDeviceCctvFilled } from "react-icons/tb";
 import { MdCamera } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import LoadingGetData from "../Loading/LoadingGetData";
 import { hasPermission } from "@/utils/permissions";
 
 export default function MenuNavigation() {
@@ -13,7 +12,7 @@ export default function MenuNavigation() {
   const pathname = usePathname();
   
   return status !== "authenticated" ? (
-    <LoadingGetData />
+    <p>Loading ..</p>
   ) : (
     <div className="flex gap-3">
       {hasPermission(data?.user, "dashboard.cctv.view") && (

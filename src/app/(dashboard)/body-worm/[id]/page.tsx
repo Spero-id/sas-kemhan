@@ -41,7 +41,7 @@ export default function DetailBodyWorm({
           <div className="flex items-center justify-between w-1/2">
             <p className="text-yellow-400 font-semibold text-lg">Body Worm</p>
             <div className="flex text-white gap-1">
-              <Link href="/">Lainnya</Link>
+              <Link href="/body-worm">Lainnya</Link>
             </div>
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>

@@ -40,7 +40,7 @@ export default function Home() {
 
       setLayout(mappingLayout);
     }
-  }, [isLoadingLayout, isLoading, data]);
+  }, [isLoadingLayout, isLoading, data, dataLayout]);
 
   return (
     <>

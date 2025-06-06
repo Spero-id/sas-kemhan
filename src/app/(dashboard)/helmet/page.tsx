@@ -40,7 +40,7 @@ export default function Helmet() {
 
       setLayout(mappingLayout);
     }
-  }, [isLoadingLayout, isLoading, data]);
+  }, [isLoadingLayout, isLoading, data, dataLayout]);
 
   return (
     <>
@@ -72,7 +72,7 @@ export default function Helmet() {
               <StreamCard
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
-                redirect={`/helmet/${item?.data?.id}`}
+                redirect={`/helmet/${item?.data?.user_id}`}
               />
             </div>
           ))}
