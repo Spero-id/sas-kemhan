@@ -11,4 +11,9 @@ export type BodyWorm = {
 export type ResponseAllBodyWorm = {
   status: boolean;
   data: BodyWorm[];
-}
+};
+
+export type ResponseDetailBodyWorm = {
+  status: boolean;
+  data: BodyWorm;
+};

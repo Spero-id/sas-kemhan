@@ -18,6 +18,6 @@ export const useDetailCctv = ({ id }: { id: string }) => {
 export const useGetRandomCctv = (limit: number) => {
   return useQuery({
     queryFn: () => getRamdomCctv(limit),
-    queryKey: ["random"],
+    queryKey: ["random-cctv"],
   });
 };

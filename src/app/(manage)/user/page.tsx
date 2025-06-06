@@ -17,7 +17,7 @@ export default function User() {
     if (status === "authenticated" && !hasPermission(data?.user, "user.view")) {
       router.push("/");
     }
-  }, [status]);
+  }, [status, data]);
 
   return (
     <div className="container mt-5 mx-auto">

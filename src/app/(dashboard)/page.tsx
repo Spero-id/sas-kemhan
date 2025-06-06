@@ -3,19 +3,13 @@
 import { searchDashboardAtom } from "@/common/module/SettingsJotai";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
-import RecordingCamera from "@/components/RecordingCamera";
 import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
 import { useAtom } from "jotai";
-import Image from "next/image";
-import Link from "next/link";
-import { MdPushPin } from "react-icons/md";
 import GridLayout from "react-grid-layout";
 import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
 import { useEffect, useState } from "react";
 import StreamCard from "@/components/StreamCard";
-
-const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
@@ -46,7 +40,7 @@ export default function Home() {
 
       setLayout(mappingLayout);
     }
-  }, [isLoadingLayout, isLoading, data]);
+  }, [isLoadingLayout, isLoading, data, dataLayout]);
 
   return (
     <>

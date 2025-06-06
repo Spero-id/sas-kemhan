@@ -16,7 +16,7 @@ export default function Cctv() {
     if (status === "authenticated" && !hasPermission(data?.user, "cctv.view")) {
       router.push("/");
     }
-  }, [status]);
+  }, [status, data, router]);
 
   return (
     <div className="container mt-5 mx-auto">

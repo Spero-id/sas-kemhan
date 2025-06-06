@@ -7,16 +7,16 @@ import { useAtom } from "jotai";
 import GridLayout from "react-grid-layout";
 import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
 import { useEffect, useState } from "react";
-import { useAllHelmet } from "@/services/api/helmet/get/get.hooks";
-import { Helmet as HelmetType } from "@/types/Helmet/TypeHelmet";
+import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
+import { BodyWorm as BodyWormType } from "@/types/BodyWorm/TypeBodyWorm";
 import StreamCard from "@/components/StreamCard";
 
-export default function Helmet() {
+export default function BodyWorm() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
-  const { isLoading, data } = useAllHelmet();
+  const { isLoading, data } = useAllBodyWorm();
 
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
-    id: "2", // layout helmet
+    id: "3", // layout bodyWorm
   });
 
   const [layout, setLayout] = useState<any[]>();
@@ -28,13 +28,15 @@ export default function Helmet() {
 
       const mappingLayout = layoutArray
         .filter((item) =>
-          data.data.some((helmet: HelmetType) => helmet.path_slug === item.i)
+          data.data.some(
+            (bodyWorm: BodyWormType) => bodyWorm.path_slug === item.i
+          )
         )
         .map((item) => {
-          const matchedHelmet = data.data.find(
-            (helmet: HelmetType) => helmet.path_slug === item.i
+          const matchedBodyWorm = data.data.find(
+            (bodyWorm: BodyWormType) => bodyWorm.path_slug === item.i
           );
-          item.data = matchedHelmet!;
+          item.data = matchedBodyWorm!;
           return item;
         });
 
@@ -72,7 +74,7 @@ export default function Helmet() {
               <StreamCard
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
-                redirect={`/helmet/${item?.data?.user_id}`}
+                redirect={`/body-worm/${item?.data?.user_id}`}
               />
             </div>
           ))}

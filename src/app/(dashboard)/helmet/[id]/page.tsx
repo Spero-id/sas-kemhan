@@ -1,20 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { IoMdQrScanner } from "react-icons/io";
-import { MdPushPin, MdDashboard } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import FilterNavigation from "@/components/Navigation/Filter";
 import { FaMap } from "react-icons/fa";
 import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
-import RecordingCamera from "@/components/RecordingCamera";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import StreamCard from "@/components/StreamCard";
 import PartialsBodyWorm from "@/components/Partials/body-worm";
 import PartialsHelmet from "@/components/Partials/helmet";
 import PartialsCctv from "@/components/Partials/cctv";
-
-const MEDIAMTX_RTSP = process.env.NEXT_PUBLIC_MEDIAMTX_RTSP;
 
 export default function DetailCctv({
   params,
@@ -28,37 +23,27 @@ export default function DetailCctv({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
-        <div className="relative h-[28.5rem] h-">
+        <div className="relative h-[28.5rem]">
           <StreamCard
             path_slug={data?.data?.path_slug ?? ""}
             name={data?.data?.name ?? ""}
             redirect="/"
           />
         </div>
-        <div className="mt-5 gap-3">
-          <PartialsCctv limit={3} classParent="flex gap-3" classStream="h-36" />
-        </div>
-        <div className="flex gap-4 mt-3">
-          <Link
-            href="/"
-            className="w-1/2 bg-deep-teal bg-opacity-50 border border-white border-opacity-30 h-16 flex items-center justify-center text-cyan-neon text-lg gap-1 rounded-md"
-          >
-            <MdDashboard className="text-red-700 text-2xl" /> Tata Letak
-          </Link>
-          <Link
-            href="/peta"
-            className="w-1/2 bg-deep-teal bg-opacity-50 border border-white border-opacity-30 h-16 flex items-center justify-center text-cyan-neon text-lg gap-1 rounded-md"
-          >
-            <FaMap className="text-red-700 text-2xl" /> Tampilkan Peta
-          </Link>
+        <div className="mt-4 gap-3">
+          <PartialsHelmet
+            limit={3}
+            classParent="flex gap-3"
+            classStream="h-56"
+          />
         </div>
       </div>
       <div>
         <div className="flex justify-between gap-4">
           <div className="flex items-center justify-between w-1/2">
-            <p className="text-yellow-400 font-semibold text-lg">CCTV</p>
+            <p className="text-yellow-400 font-semibold text-lg">Helmet</p>
             <div className="flex text-white gap-1">
-              <Link href="/" className="text-lg">Lainnya</Link>
+              <Link href="/helmet">Lainnya</Link>
             </div>
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>
@@ -69,9 +54,7 @@ export default function DetailCctv({
         <div className="flex gap-3">
           <div className="w-1/2 mt-2">
             <div className="flex justify-between items-center mb-2">
-              <p className="text-yellow-400 font-semibold text-lg">
-                Body Worm
-              </p>
+              <p className="text-yellow-400 font-semibold text-lg">Body Worm</p>
               <Link href="/body-worm" className="text-white text-lg">
                 Lainnya
               </Link>
@@ -86,20 +69,16 @@ export default function DetailCctv({
           </div>
           <div className="w-1/2 mt-2">
             <div className="flex justify-between items-center mb-2">
-              <p className="text-yellow-400 font-semibold text-lg">
-                Helmet
-              </p>
-              <Link href="/helmet" className="text-white text-lg">
+              <p className="text-yellow-400 font-semibold text-lg">CCTV</p>
+              <Link href="/" className="text-white text-lg">
                 Lainnya
               </Link>
             </div>
-            <div className="mt-2">
-              <PartialsHelmet
-                limit={3}
-                classParent="flex flex-col gap-3"
-                classStream="h-48"
-              />
-            </div>
+            <PartialsCctv
+              limit={3}
+              classParent="flex flex-col gap-4"
+              classStream="h-48"
+            />
           </div>
         </div>
       </div>
