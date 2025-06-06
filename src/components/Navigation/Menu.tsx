@@ -31,15 +31,15 @@ export default function MenuNavigation() {
       )}
       {hasPermission(data?.user, "dashboard.body_worm.view") && (
         <Link
-          href="/body-worn"
+          href="/body-worm"
           className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
-            pathname?.includes("body-worn")
+            pathname?.includes("body-worm")
               ? "border-cyan-neon"
               : "border-transparent opacity-50"
           }`}
         >
           <MdCamera />
-          Body-Worn Camera
+          Body-Worm Camera
         </Link>
       )}
       {hasPermission(data?.user, "dashboard.helmet.view") && (

@@ -1,30 +1,25 @@
 import { useGetRandomCctv } from "@/services/api/cctv/get/get.hooks";
 import LoadingGetData from "../Loading/LoadingGetData";
 import StreamCard from "../StreamCard";
-import Link from "next/link";
+import { Cctv } from "@/types/Cctv/TypeCctv";
+import { useEffect } from "react";
 
-export default function PartialsCctv({
-  limit,
-}: Readonly<{ limit: number }>) {
+export default function PartialsCctv({ limit, classParent, classStream }: Readonly<{ limit: number, classParent: string, classStream: string }>) {
   const { data, isLoading } = useGetRandomCctv(limit);
 
-  return (
-    <div>
-      <div className="flex justify-between items-center">
-        <p className="text-yellow-400 font-semibold text-lg mb-2">CCTV</p>
-        <Link href="/cctv" className="text-white text-lg">Lainnya</Link>
-      </div>
-      {isLoading ? (
-        <LoadingGetData />
-      ) : (
-        <div className="flex flex-col gap-4">
-          {data?.data?.map((item: any, i: number) => (
-            <div className="h-48" key={i}>
-              <StreamCard path_slug={item?.path_slug} name={item?.name} redirect={`/cctv/${item?.id}`} />
-            </div>
-          ))}
+  return isLoading ? (
+    <LoadingGetData />
+  ) : (
+    <div className={classParent}>
+      {data?.data?.map((item: Cctv, i: number) => (
+        <div className={classStream} key={i}>
+          <StreamCard
+            path_slug={item?.path_slug}
+            name={item?.name}
+            redirect={`/cctv/${item?.id}`}
+          />
         </div>
-      )}
+      ))}
     </div>
   );
 }

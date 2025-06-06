@@ -21,6 +21,8 @@ export async function GET(request: Request) {
       LIMIT ${safeLimit}
     `;
 
+    console.log(data)
+
     return NextResponse.json({
       status: true,
       data,

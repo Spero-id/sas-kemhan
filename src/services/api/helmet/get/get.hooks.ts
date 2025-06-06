@@ -11,6 +11,6 @@ export const useAllHelmet = () => {
 export const useGetRandomHelmet = (limit: number) => {
   return useQuery({
     queryFn: () => getRamdomHelmet(limit),
-    queryKey: ["random"],
+    queryKey: ["random-helmet"],
   });
 };
