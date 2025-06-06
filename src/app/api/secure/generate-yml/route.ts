@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import yaml from "js-yaml";
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 
 export const dynamic = "force-dynamic";
 const MEDIAMTX_STUN=process.env.MEDIAMTX_STUN
@@ -44,6 +45,8 @@ export async function POST() {
     const yamlStr = yaml.dump(config, { noRefs: true, lineWidth: -1 });
     const filePath = path.join(process.cwd(), "config/mediamtx.yml");
     fs.writeFileSync(filePath, yamlStr, "utf8");
+
+    execSync('docker restart mediamtx')
 
     return NextResponse.json({
       message: "mediamtx.yml generated",
