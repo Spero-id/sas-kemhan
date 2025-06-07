@@ -22,13 +22,14 @@ export async function POST() {
     const config = {
       rtmp: true,
       rtmpAddress: ":1935",
-      webrtc: true,
+      webrtc: 'yes',
       webrtcAddress: ":8889",
-      webrtcEncryption: false,
+      webrtcEncryption: 'no',
       webrtcAllowOrigin: "*",
+      webrtcTrustedProxies: [],
       webrtcLocalUDPAddress: ":8889",
       webrtcLocalTCPAddress: '',
-      webrtcIPsFromInterfaces: false,
+      webrtcIPsFromInterfaces: 'no',
       webrtcIPsFromInterfacesList: [],
       webrtcAdditionalHosts: MEDIAMTX_ADDITIONAL_HOSTS,
       webrtcICEServers2: [
