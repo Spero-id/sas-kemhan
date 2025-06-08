@@ -47,7 +47,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config:/app/config
-      - ./recordings:/recordings
+      - ./recordings:/app/recordings
 
 networks:
   sas:
