@@ -154,10 +154,11 @@ export async function startRecording(streamId: string, rtspUrl: string): Promise
     console.log(`[${streamId}] container exited with code ${code}`);
     recordProcesses.delete(streamId);
 
-    const filePath = `${baseDir}/${streamId}/${filename}`;
+    const filePath = path.join(
+      process.cwd(), 'recordings', streamId, filename
+    );
 
     try {
-      await waitForFile(filePath); // <--- Tunggu sampai siap
       const buffer = fs.readFileSync(filePath);
       const name = path.basename(filePath);
       const type = mime.lookup(filePath) || 'application/octet-stream';
