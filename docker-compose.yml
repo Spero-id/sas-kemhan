@@ -13,7 +13,7 @@ services:
       - "8189:8189/udp"
     volumes:
       - ./config/mediamtx.yml:/mediamtx.yml
-      - ./public/recordings:/recordings
+      - ./recordings:/recordings
     networks:
       - sas
 
@@ -47,6 +47,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config:/app/config
+      - ./recordings:/recordings
 
 networks:
   sas:
