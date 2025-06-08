@@ -84,7 +84,7 @@ function buildRecordArgs(rtspUrl: string, outputFile: string, streamId: string):
     '-c:a', 'aac',
     '-movflags', '+faststart',
     '-y',
-    `/recordings/${outputFile}`,
+    `/recordings/${streamId}/${outputFile}`,
   ];
 }
 
