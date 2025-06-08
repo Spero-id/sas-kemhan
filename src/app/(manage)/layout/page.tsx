@@ -17,7 +17,7 @@ export default function Layout() {
     ) {
       router.push("/");
     }
-  }, [status, data]);
+  }, [status, data, router]);
 
   return (
     <div className="container mt-5 mx-auto">

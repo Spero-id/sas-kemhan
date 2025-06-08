@@ -36,11 +36,9 @@ type MapProps = {
 };
 
 export default function MapComponent({ data }: Readonly<MapProps>) {
-  if (!data || !data.data || data.data.length === 0) return null;
-
   const [position, setPosition] = useState<LatLngTuple>([0, 0]);
   const [zoom, setZoom] = useState(2);
-
+  
   useEffect(() => {
     // Cek apakah geolocation tersedia di browser
     if (navigator.geolocation) {
@@ -60,6 +58,8 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
       alert("Geolocation tidak didukung oleh browser ini.");
     }
   }, []);
+
+  if (!data || !data.data || data.data.length === 0) return null;
 
   // Ambil semua posisi dari data
   const markerPositions = data.data

@@ -18,7 +18,7 @@ export default function CreateRole() {
     ) {
       router.push("/");
     }
-  }, [status, data]);
+  }, [status, data, router]);
 
   return (
     <div className="container mx-auto mt-5">
