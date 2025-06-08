@@ -5,9 +5,10 @@ import mime from 'mime-types';
 import { uploadToMinio } from '@/utils/minio';
 import { existsSync, mkdirSync } from 'fs';
 
+const PATH_HOST_APP = process.env.PATH_HOST_APP ?? '';
 const streamProcesses = new Map<string, ChildProcessWithoutNullStreams>();
 const recordProcesses = new Map<string, ReturnType<typeof spawn>>();
-const baseDir = resolve(process.cwd(), 'public', 'recordings');
+const baseDir = resolve(PATH_HOST_APP, 'public', 'recordings');
 
 function buildStreamArgs(rtspUrl: string, outputPath: string): string[] {
   return [
@@ -72,12 +73,11 @@ function getTimestampFilename(): string {
 
 function buildRecordArgs(rtspUrl: string, outputFile: string, streamId: string): string[] {
   const containerName = `record-${streamId}`;
-  const hostDir = `/app/recordings/${streamId}`;
   return [
     'run',
     '--rm',
     '--name', containerName,
-    '-v', `${hostDir}:/recordings`,
+    '-v', `${baseDir}/${streamId}:/recordings`,
     'jrottenberg/ffmpeg:6.1-alpine',
     '-rtsp_transport', 'tcp',
     '-i', rtspUrl,
@@ -103,6 +103,32 @@ export function stopRecording(streamId: string): Promise<void> {
   });
 }
 
+function waitForFile(filePath: string, timeout = 5000): Promise<void> {
+  const interval = 200;
+  let waited = 0;
+
+  return new Promise((resolve, reject) => {
+    const check = () => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.accessSync(filePath, fs.constants.R_OK);
+          resolve();
+        } catch (e) {
+          console.log(e)
+        }
+      }
+
+      waited += interval;
+      if (waited >= timeout) {
+        reject(new Error(`File not ready after ${timeout}ms`));
+      } else {
+        setTimeout(check, interval);
+      }
+    };
+    check();
+  });
+}
+
 export async function startRecording(streamId: string, rtspUrl: string): Promise<void> {
   await stopRecording(streamId); // stop dulu jika ada
 
@@ -118,33 +144,32 @@ export async function startRecording(streamId: string, rtspUrl: string): Promise
   }
 
   const filename = getTimestampFilename();
+  
   const args = buildRecordArgs(rtspUrl, filename, streamId);
 
   const proc = spawn('docker', args);
 
   proc.stderr.on('data', data => console.error(`[${streamId}] record: ${data}`));
-  proc.on('close', code => {
+  proc.on('close', async code => {
     console.log(`[${streamId}] container exited with code ${code}`);
     recordProcesses.delete(streamId);
 
-    const filePath = path.join(process.cwd(), 'public', 'recordings', streamId, filename);
-    const buffer = fs.readFileSync(filePath);
-    const name = path.basename(filePath);
-    const type = mime.lookup(filePath) || 'application/octet-stream';
+    const filePath = `${baseDir}/${streamId}/${filename}`;
 
-    // Bungkus buffer ke objek `File` ala browser
-    const file = new File([buffer], name, { type });
-
-    const uploadedPath = uploadToMinio(file, `recordings/${streamId}`)
-
-    // Hapus file lokal setelah upload berhasil
     try {
-      fs.unlinkSync(filePath);
-    } catch (err) {
-      console.error("Gagal hapus file lokal:", err);
-    }
+      await waitForFile(filePath); // <--- Tunggu sampai siap
+      const buffer = fs.readFileSync(filePath);
+      const name = path.basename(filePath);
+      const type = mime.lookup(filePath) || 'application/octet-stream';
 
-    return uploadedPath;
+      const file = new File([buffer], name, { type });
+      const uploadedPath = uploadToMinio(file, `recordings/${streamId}`);
+
+      fs.unlinkSync(filePath);
+      return uploadedPath;
+    } catch (err) {
+      console.error("Gagal memproses file rekaman:", err);
+    }
   });
 
   recordProcesses.set(streamId, proc);
