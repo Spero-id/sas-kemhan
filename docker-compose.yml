@@ -41,6 +41,7 @@ services:
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
       MEDIAMTX_STUN: ${MEDIAMTX_STUN}
       MEDIAMTX_ADDITIONAL_HOSTS: ${MEDIAMTX_ADDITIONAL_HOSTS}
+      PATH_HOST_APP: ${PATH_HOST_APP}
     networks:
       - sas
     volumes:
