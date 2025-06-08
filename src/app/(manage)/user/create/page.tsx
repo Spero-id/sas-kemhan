@@ -15,7 +15,7 @@ export default function CreateUser() {
     if (status === "authenticated" && !hasPermission(data?.user, "user.create")) {
       router.push("/");
     }
-  }, [status, data]);
+  }, [status, data, router]);
 
   return (
     <div className="container mx-auto mt-5">

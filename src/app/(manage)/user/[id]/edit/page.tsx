@@ -22,7 +22,7 @@ export default function EditUser({
     ) {
       router.push("/");
     }
-  }, [status, data]);
+  }, [status, data, router]);
 
   return (
     <div className="container mx-auto mt-5">

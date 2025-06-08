@@ -28,7 +28,7 @@ export default function EditLayout({
     ) {
       router.push("/");
     }
-  }, [status, dataSession]);
+  }, [status, dataSession, router]);
 
   const { data, isLoading } = useDetailLayout({
     id: id,
