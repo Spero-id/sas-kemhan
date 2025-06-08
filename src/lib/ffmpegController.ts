@@ -8,7 +8,7 @@ import { existsSync, mkdirSync } from 'fs';
 const PATH_HOST_APP = process.env.PATH_HOST_APP ?? '';
 const streamProcesses = new Map<string, ChildProcessWithoutNullStreams>();
 const recordProcesses = new Map<string, ReturnType<typeof spawn>>();
-const baseDir = resolve(PATH_HOST_APP, 'public', 'recordings');
+const baseDir = resolve(PATH_HOST_APP, 'recordings');
 
 function buildStreamArgs(rtspUrl: string, outputPath: string): string[] {
   return [
