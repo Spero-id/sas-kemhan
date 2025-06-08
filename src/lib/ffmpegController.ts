@@ -72,11 +72,12 @@ function getTimestampFilename(): string {
 
 function buildRecordArgs(rtspUrl: string, outputFile: string, streamId: string): string[] {
   const containerName = `record-${streamId}`;
+  const hostDir = `/app/recordings/${streamId}`;
   return [
     'run',
     '--rm',
     '--name', containerName,
-    '-v', `${path.resolve(`./public/recordings/${streamId}`)}:/recordings`,
+    '-v', `${hostDir}:/recordings`,
     'jrottenberg/ffmpeg:6.1-alpine',
     '-rtsp_transport', 'tcp',
     '-i', rtspUrl,
@@ -84,7 +85,7 @@ function buildRecordArgs(rtspUrl: string, outputFile: string, streamId: string):
     '-c:a', 'aac',
     '-movflags', '+faststart',
     '-y',
-    `/recordings/${streamId}/${outputFile}`,
+    `/recordings/${outputFile}`,
   ];
 }
 
