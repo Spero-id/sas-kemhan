@@ -1,11 +1,13 @@
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
-import path from 'path';
+import path, { join, resolve } from 'path';
 import fs from 'fs';
 import mime from 'mime-types';
 import { uploadToMinio } from '@/utils/minio';
+import { existsSync, mkdirSync } from 'fs';
 
 const streamProcesses = new Map<string, ChildProcessWithoutNullStreams>();
 const recordProcesses = new Map<string, ReturnType<typeof spawn>>();
+const baseDir = resolve(process.cwd(), 'public', 'recordings');
 
 function buildStreamArgs(rtspUrl: string, outputPath: string): string[] {
   return [
@@ -102,6 +104,17 @@ export function stopRecording(streamId: string): Promise<void> {
 
 export async function startRecording(streamId: string, rtspUrl: string): Promise<void> {
   await stopRecording(streamId); // stop dulu jika ada
+
+  const streamDir = join(baseDir, streamId);
+  
+  // Cek dan buat folder public/recordings jika belum ada
+  if (!existsSync(baseDir)) {
+    mkdirSync(baseDir, { recursive: true });
+  }
+
+  if (!existsSync(streamDir)) {
+    mkdirSync(streamDir, { recursive: true });
+  }
 
   const filename = getTimestampFilename();
   const args = buildRecordArgs(rtspUrl, filename, streamId);
