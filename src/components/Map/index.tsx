@@ -1,25 +1,20 @@
 "use client";
 
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  useMap,
-  Popup,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
 import L from "leaflet";
 import { TbDeviceCctvFilled } from "react-icons/tb";
 import { ResponseAllCctv } from "@/types/Cctv/TypeCctv";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import StreamCard from "../StreamCard";
 import Link from "next/link";
+import { LatLngTuple } from "leaflet";
 
 const NEXT_PUBLIC_MAPS = process.env.NEXT_PUBLIC_MAPS;
 
 // Inisialisasi icon
 const cctvIcon = L.icon({
   iconUrl: "/images/map/cctv.png",
-  iconSize: [30, 30],
+  iconSize: [100, 100],
 });
 
 // Komponen untuk mengatur view berdasarkan marker
@@ -43,6 +38,29 @@ type MapProps = {
 export default function MapComponent({ data }: Readonly<MapProps>) {
   if (!data || !data.data || data.data.length === 0) return null;
 
+  const [position, setPosition] = useState<LatLngTuple>([0, 0]);
+  const [zoom, setZoom] = useState(2);
+
+  useEffect(() => {
+    // Cek apakah geolocation tersedia di browser
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setPosition([latitude, longitude] as LatLngTuple);
+          setZoom(13); // Zoom lebih dekat ke lokasi user
+          console.log(position);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          // Tetap gunakan default jika gagal
+        }
+      );
+    } else {
+      alert("Geolocation tidak didukung oleh browser ini.");
+    }
+  }, []);
+
   // Ambil semua posisi dari data
   const markerPositions = data.data
     .map((item) => {
@@ -56,8 +74,8 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
 
   return (
     <MapContainer
-      center={[0, 0]} // Default, nanti akan diatur oleh MapController
-      zoom={2}
+      center={position} // Default, nanti akan diatur oleh MapController
+      zoom={zoom}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
     >
@@ -71,18 +89,12 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
           icon={cctvIcon}
         >
           <Popup
-            maxWidth={600}
+            maxWidth={800}
             autoClose={false} // Agar popup tidak tertutup otomatis
-            closeOnClick={false} // Agar tidak tertutup saat klik di luar
             className="custom-popup"
+            closeButton={false}
           >
-            <div
-              style={{
-                backgroundColor: "#00161D",
-                border: "1px solid #03FAFA",
-              }}
-              className="p-5"
-            >
+            <div className="w-96">
               <div className="relative h-48">
                 <StreamCard
                   path_slug={item?.path_slug}
@@ -90,19 +102,17 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
                   redirect={`/cctv/${item?.id}`}
                 />
               </div>
-              <div className="flex mt-4 justify-between">
+              <div className="flex mt-4 justify-between items-center h-8">
                 <p className="text-yellow-400 font-semibold text-lg">
                   Informasi CCTV
                 </p>
-                <div className="flex gap-2">
-                  <Link
-                    href={`/cctv/${item?.id}`}
-                    className="flex items-center justify-center bg-deep-teal text-white px-3 py-1 rounded gap-2"
-                  >
-                    <TbDeviceCctvFilled />
-                    Lihat CCTV
-                  </Link>
-                </div>
+                <Link
+                  href={`/cctv/${item?.id}`}
+                  className="flex items-center justify-center bg-deep-teal !text-white px-3 py-1 rounded gap-2 h-8"
+                >
+                  <TbDeviceCctvFilled />
+                  Lihat CCTV
+                </Link>
               </div>
             </div>
           </Popup>
