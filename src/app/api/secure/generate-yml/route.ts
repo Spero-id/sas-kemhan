@@ -7,7 +7,7 @@ import { execSync } from "child_process";
 
 export const dynamic = "force-dynamic";
 const MEDIAMTX_STUN=process.env.MEDIAMTX_STUN
-const MEDIAMTX_ADDITIONAL_HOSTS=(process.env.MEDIAMTX_ADDITIONAL_HOSTS ?? '').split(',').map(host => host.trim())
+const MEDIAMTX_ADDITIONAL_HOSTS=(process.env.MEDIAMTX_ADDITIONAL_HOSTS ?? '').split(',').map(h => h.trim()).filter(Boolean);
 
 export async function POST() {
   const prisma = getPrismaClient();
@@ -22,16 +22,16 @@ export async function POST() {
     const config = {
       rtmp: true,
       rtmpAddress: ":1935",
-      webrtc: 'yes',
+      webrtc: true,
       webrtcAddress: ":8889",
-      webrtcEncryption: 'no',
+      webrtcEncryption: false,
       webrtcAllowOrigin: "*",
       webrtcTrustedProxies: [],
-      webrtcLocalUDPAddress: ":8889",
+      webrtcLocalUDPAddress: ":8189",
       webrtcLocalTCPAddress: '',
-      webrtcIPsFromInterfaces: 'no',
+      webrtcIPsFromInterfaces: false,
       webrtcIPsFromInterfacesList: [],
-      webrtcAdditionalHosts: MEDIAMTX_ADDITIONAL_HOSTS,
+      webrtcAdditionalHosts: [MEDIAMTX_ADDITIONAL_HOSTS.join(',')],
       webrtcICEServers2: [
         {
           url: MEDIAMTX_STUN,

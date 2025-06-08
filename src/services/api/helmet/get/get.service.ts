@@ -7,6 +7,6 @@ export const getAllHelmet = async () => {
 };
 
 export const getRamdomHelmet = async (limit: number) => {
-  const response = await axiosClient.get<ResponseAllHelmet>("/secure/body-worm/random?limit=" + limit);
+  const response = await axiosClient.get<ResponseAllHelmet>("/secure/helmet/random?limit=" + limit);
   return response.data;
 };
