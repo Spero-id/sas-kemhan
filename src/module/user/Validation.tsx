@@ -5,7 +5,11 @@ import {
   TYPE_FILE_INVALID,
 } from "@/utils/constant";
 import { z } from "zod";
-import { checkEmail, checkPathSlugBodyWorm, checkPathSlugHelmet } from "@/services/api/user/get/get.service";
+import {
+  checkEmail,
+  checkPathSlugBodyWorm,
+  checkPathSlugHelmet,
+} from "@/services/api/user/get/get.service";
 
 const MAX_FILE_SIZE = 1 * 1024 * 1024;
 
@@ -68,18 +72,28 @@ const defaultSchema = z.object({
   name_helmet: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  path_slug_helmet: z.string({
-    required_error: REQUIRED_FIELD.message,
-  }),
+  path_slug_helmet: z
+    .string({
+      required_error: REQUIRED_FIELD.message,
+    })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message:
+        "Hanya boleh huruf, angka, dan underscore (_), tanpa spasi atau karakter khusus.",
+    }),
   rtsp_url_helmet: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
   name_body_worm: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
-  path_slug_body_worm: z.string({
-    required_error: REQUIRED_FIELD.message,
-  }),
+  path_slug_body_worm: z
+    .string({
+      required_error: REQUIRED_FIELD.message,
+    })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message:
+        "Hanya boleh huruf, angka, dan underscore (_), tanpa spasi atau karakter khusus.",
+    }),
   rtsp_url_body_worm: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
@@ -101,7 +115,9 @@ const UserPostValidation = z
       });
     }
 
-    const checkHelmet = await checkPathSlugHelmet(`helmet_${data.path_slug_helmet}`);
+    const checkHelmet = await checkPathSlugHelmet(
+      `helmet_${data.path_slug_helmet}`
+    );
 
     if (!checkHelmet.status) {
       ctx.addIssue({
@@ -111,7 +127,9 @@ const UserPostValidation = z
       });
     }
 
-    const checkBodyWorm = await checkPathSlugBodyWorm(`body_worm_${data.path_slug_body_worm}`);
+    const checkBodyWorm = await checkPathSlugBodyWorm(
+      `body_worm_${data.path_slug_body_worm}`
+    );
 
     if (!checkBodyWorm.status) {
       ctx.addIssue({
@@ -121,42 +139,49 @@ const UserPostValidation = z
       });
     }
   });
-const UserEditValidation = (currentUserId: string) => z
-  .object({
-    ...editSchema.shape,
-    ...defaultSchema.shape,
-  })
-  .superRefine(async (data, ctx) => {
-    const res = await checkEmail(data.email, currentUserId);
+const UserEditValidation = (currentUserId: string) =>
+  z
+    .object({
+      ...editSchema.shape,
+      ...defaultSchema.shape,
+    })
+    .superRefine(async (data, ctx) => {
+      const res = await checkEmail(data.email, currentUserId);
 
-    if (!res.status) {
-      ctx.addIssue({
-        path: ["email"],
-        message: "Email sudah digunakan oleh user lain",
-        code: z.ZodIssueCode.custom,
-      });
-    }
+      if (!res.status) {
+        ctx.addIssue({
+          path: ["email"],
+          message: "Email sudah digunakan oleh user lain",
+          code: z.ZodIssueCode.custom,
+        });
+      }
 
-    const checkHelmet = await checkPathSlugHelmet(`helmet_${data.path_slug_helmet}`, currentUserId);
+      const checkHelmet = await checkPathSlugHelmet(
+        `helmet_${data.path_slug_helmet}`,
+        currentUserId
+      );
 
-    if (!checkHelmet.status) {
-      ctx.addIssue({
-        path: ["path_slug_helmet"],
-        message: "Path slug sudah digunakan oleh user lain",
-        code: z.ZodIssueCode.custom,
-      });
-    }
+      if (!checkHelmet.status) {
+        ctx.addIssue({
+          path: ["path_slug_helmet"],
+          message: "Path slug sudah digunakan oleh user lain",
+          code: z.ZodIssueCode.custom,
+        });
+      }
 
-    const checkBodyWorm = await checkPathSlugBodyWorm(`body_worm_${data.path_slug_body_worm}`, currentUserId);
+      const checkBodyWorm = await checkPathSlugBodyWorm(
+        `body_worm_${data.path_slug_body_worm}`,
+        currentUserId
+      );
 
-    if (!checkBodyWorm.status) {
-      ctx.addIssue({
-        path: ["path_slug_body_worm"],
-        message: "Path slug sudah digunakan oleh user lain",
-        code: z.ZodIssueCode.custom,
-      });
-    }
-  });
+      if (!checkBodyWorm.status) {
+        ctx.addIssue({
+          path: ["path_slug_body_worm"],
+          message: "Path slug sudah digunakan oleh user lain",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    });
 
 export { UserPostValidation, UserEditValidation };
 export type UserPostSchema = z.infer<typeof UserPostValidation>;
