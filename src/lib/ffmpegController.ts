@@ -103,28 +103,30 @@ export function stopRecording(streamId: string): Promise<void> {
   });
 }
 
-function waitForFile(filePath: string, timeout = 5000): Promise<void> {
+function waitForContainerUp(containerName: string, timeout = 5000): Promise<void> {
   const interval = 200;
   let waited = 0;
 
   return new Promise((resolve, reject) => {
     const check = () => {
-      if (fs.existsSync(filePath)) {
-        try {
-          fs.accessSync(filePath, fs.constants.R_OK);
-          resolve();
-        } catch (e) {
-          console.log(e)
-        }
-      }
+      const proc = spawn('docker', ['inspect', '--format={{.State.Running}}', containerName]);
 
-      waited += interval;
-      if (waited >= timeout) {
-        reject(new Error(`File not ready after ${timeout}ms`));
-      } else {
+      let stdout = '';
+      proc.stdout.on('data', data => stdout += data.toString());
+
+      proc.on('close', code => {
+        if (code === 0 && stdout.trim() === 'true') {
+          return resolve();
+        }
+
+        waited += interval;
+        if (waited >= timeout) {
+          return reject(new Error(`Container ${containerName} not running after ${timeout}ms`));
+        }
         setTimeout(check, interval);
-      }
+      });
     };
+
     check();
   });
 }
@@ -174,4 +176,16 @@ export async function startRecording(streamId: string, rtspUrl: string): Promise
   });
 
   recordProcesses.set(streamId, proc);
+
+  try {
+    // Tunggu sampai container benar-benar running
+    await waitForContainerUp(`record-${streamId}`);
+
+    console.log(`[${streamId}] Container berhasil dijalankan`);
+  } catch (err) {
+    console.error(`[${streamId}] Gagal menunggu container start`, err);
+    // Stop container jika gagal
+    await stopRecording(streamId).catch(() => {});
+    throw err;
+  }
 }
