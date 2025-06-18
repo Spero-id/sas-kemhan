@@ -15,3 +15,7 @@ export type ResponseAllHelmet = {
   status: boolean;
   data: Helmet[];
 }
+
+export type ResponseStatusHelmet = {
+  message: string;
+};
