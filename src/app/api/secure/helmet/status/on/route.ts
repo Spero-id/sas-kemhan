@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../../lib/prisma";
 import { spawn, exec } from "child_process";
 
-const MEDIAMTX_RTSP = process.env.MEDIAMTX_RTSP;
+const MEDIAMTX_RTSP = process.env.NEXT_PUBLIC_MEDIAMTX_RTSP;
 
 function buildStartStreamHelmetArgs(rtspUrl: string, streamId: string): string[] {
   return [

@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { IoMdQrScanner } from "react-icons/io";
-import { MdPushPin, MdDashboard } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import FilterNavigation from "@/components/Navigation/Filter";
 import { FaMap } from "react-icons/fa";
 import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
