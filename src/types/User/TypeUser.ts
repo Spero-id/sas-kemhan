@@ -46,6 +46,20 @@ export type User = Partial<{
   updated_at: string;
 }>;
 
+export type UserDetail = Partial<{
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  password: string;
+  role: RoleAuth;
+  last_login: string;
+  created_at: string;
+  updated_at: string;
+  helmet: Helmet;
+  body_worm: BodyWorm;
+}>;
+
 export type UserAuth = {
   id: string;
   name: string;

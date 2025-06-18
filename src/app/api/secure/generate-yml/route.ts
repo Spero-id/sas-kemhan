@@ -12,13 +12,6 @@ const MEDIAMTX_ADDITIONAL_HOSTS=(process.env.MEDIAMTX_ADDITIONAL_HOSTS ?? '').sp
 export async function POST() {
   const prisma = getPrismaClient();
   try {
-    // Ambil semua data dari DB
-    const cctv = await prisma.cctv.findMany();
-    const bodyWorm = await prisma.body_worm.findMany();
-    const helmet = await prisma.helmet.findMany();
-
-    const allDevices = [...cctv, ...bodyWorm, ...helmet];
-
     const config = {
       rtmp: true,
       rtmpAddress: ":1935",
@@ -43,10 +36,25 @@ export async function POST() {
       paths: {} as Record<string, { source: string }>,
     };
 
+    // Ambil semua data dari DB
+    const cctv = await prisma.cctv.findMany();
+    const bodyWorm = await prisma.body_worm.findMany();
+    const helmet = await prisma.helmet.findMany();
+
+    const allDevices = [...cctv, ...bodyWorm];
+
     for (const device of allDevices) {
       if (device.path_slug && device.rtsp_url) {
         config.paths[device.path_slug] = {
           source: device.rtsp_url,
+        };
+      }
+    }
+
+    for (const device of helmet) {
+      if (device.path_slug && device.rtsp_url) {
+        config.paths[device.path_slug] = {
+          source: 'publisher',
         };
       }
     }

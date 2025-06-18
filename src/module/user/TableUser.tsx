@@ -1,7 +1,7 @@
 import LoadingTableCustom from "@/components/Loading/LoadingTableCustom";
 import TableCustom from "@/components/Table/TableCustom";
 import { useAllUser } from "@/services/api/user/get/get.hooks";
-import { User as UserType } from "@/types/User/TypeUser";
+import { UserDetail as UserDetailType } from "@/types/User/TypeUser";
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 import { useAtom } from "jotai";
@@ -14,12 +14,24 @@ import { useDeleteUser } from "@/services/api/user/delete/delete.hooks";
 import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
 import { useSession } from "next-auth/react";
 import { hasPermission } from "@/utils/permissions";
+import ToggleHelmet from "@/components/FormGroup/ToggleHelmet";
+import { useMutation } from "@tanstack/react-query";
+import { PostStatusHelmetOnFunction } from "@/services/api/helmet/post/PostStatusHelmetOnFunction";
+import { PostStatusHelmetOffFunction } from "@/services/api/helmet/post/PostStatusHelmetOffFunction";
 
 export default function TableUser() {
   const { isLoading, data, refetch } = useAllUser();
   const { status, data: dataSession } = useSession();
 
-  const columnHelper = createColumnHelper<UserType>();
+  const columnHelper = createColumnHelper<UserDetailType>();
+
+  const postStatusOnHelmet = useMutation({
+    mutationFn: PostStatusHelmetOnFunction,
+  });
+
+  const postStatusOffHelmet = useMutation({
+    mutationFn: PostStatusHelmetOffFunction,
+  });
 
   const columns = [
     columnHelper.accessor((row) => row.name, {
@@ -31,6 +43,28 @@ export default function TableUser() {
       id: "email",
       cell: (info) => info.getValue(),
       header: () => <span>Email</span>,
+    }),
+    columnHelper.accessor((row) => row?.helmet?.status, {
+      id: "status_helmet",
+      cell: (info) => {
+        const userId = info.row.original.id;
+
+        return (
+          <ToggleHelmet
+            defaultChecked={info.getValue()}
+            handleChange={async () => {
+              if (userId) {
+                if (info.getValue()) {
+                  await postStatusOffHelmet.mutateAsync({ user_id: userId });
+                } else {
+                  await postStatusOnHelmet.mutateAsync({ user_id: userId });
+                }
+              }
+            }}
+          />
+        );
+      },
+      header: () => <span>Status Helmet</span>,
     }),
     columnHelper.accessor((row) => row.id, {
       id: "action",
