@@ -64,6 +64,7 @@ export async function POST(request: Request) {
 
     const containerName = helmet.path_slug;
     const args = buildStartStreamHelmetArgs(helmet.rtsp_url, containerName);
+    console.log(args)
 
     const proc = spawn("docker", args);
 
@@ -101,7 +102,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         status: false,
-        message: "Failed to stream helmet",
+        message: error,
       },
       { status: 500 }
     );
