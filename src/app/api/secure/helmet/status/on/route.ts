@@ -101,7 +101,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         status: false,
-        message: "Failed to stream helmet",
+        message: error,
       },
       { status: 500 }
     );
