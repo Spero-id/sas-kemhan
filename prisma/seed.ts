@@ -57,6 +57,38 @@ async function main() {
         code: 'cctv.delete' 
       },
       { 
+        name: 'View Body Worm',
+        code: 'body_worm.view' 
+      },
+      { 
+        name: 'Create Body Worm',
+        code: 'body_worm.create' 
+      },
+      { 
+        name: 'Update Body Worm',
+        code: 'body_worm.update' 
+      },
+      { 
+        name: 'Delete Body Worm',
+        code: 'body_worm.delete' 
+      },
+      { 
+        name: 'View Helmet',
+        code: 'helmet.view' 
+      },
+      { 
+        name: 'Create Helmet',
+        code: 'helmet.create' 
+      },
+      { 
+        name: 'Update Helmet',
+        code: 'helmet.update' 
+      },
+      { 
+        name: 'Delete Helmet',
+        code: 'helmet.delete' 
+      },
+      { 
         name: 'View Layout',
         code: 'layout.view' 
       },

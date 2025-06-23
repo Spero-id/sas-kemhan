@@ -22,8 +22,6 @@ model user {
   updated_at    DateTime  @updatedAt
 
   chats         chat[]
-  helmet        helmet?
-  body_worm     body_worm?
   role          role      @relation(fields: [roleId], references: [id])
 }
 
@@ -31,6 +29,7 @@ model chat {
   id         Int       @id @default(autoincrement())
   user_id    Int
   content    String
+  room_id    String
   created_at DateTime  @default(now())
   type       ChatType  @default(TEXT)
 
@@ -49,26 +48,22 @@ model cctv {
 }
 
 model helmet {
-  user_id    Int     @id
+  id         Int      @id @default(autoincrement())
   name       String
   path_slug  String
   rtsp_url   String
   status     Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-
-  user       user @relation(fields: [user_id], references: [id])
 }
 
 model body_worm {
-  user_id    Int     @id
+  id         Int      @id @default(autoincrement())
   name       String
   path_slug  String
   rtsp_url   String 
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-
-  user       user @relation(fields: [user_id], references: [id])
 }
 
 model role {

@@ -86,58 +86,6 @@ export default function FormElement({
         options={optionPermission}
         isClearable={true}
       />
-      <hr className="my-4" />
-      <InputForm
-        control={control}
-        name="name_helmet"
-        type="text"
-        isRequired={true}
-        label="Nama Helmet"
-        placeholder="Nama Helmet"
-      ></InputForm>
-      <InputWithPrefixForm
-        control={control}
-        name="path_slug_helmet"
-        type="text"
-        isRequired={true}
-        label="Path Slug Helmet"
-        placeholder="Path Slug Helmet"
-        prefix="helmet_"
-      ></InputWithPrefixForm>
-      <InputForm
-        control={control}
-        name="rtsp_url_helmet"
-        type="text"
-        isRequired={true}
-        label="RTSP URL Helmet"
-        placeholder="RTSP URL Helmet"
-      ></InputForm>
-      <hr className="my-4" />
-      <InputForm
-        control={control}
-        name="name_body_worm"
-        type="text"
-        isRequired={true}
-        label="Nama Body Worm"
-        placeholder="Nama Body Worm"
-      ></InputForm>
-      <InputWithPrefixForm
-        control={control}
-        name="path_slug_body_worm"
-        type="text"
-        isRequired={true}
-        label="Path Slug Body Worm"
-        placeholder="Path Slug Body Worm"
-        prefix="body_worm_"
-      ></InputWithPrefixForm>
-      <InputForm
-        control={control}
-        name="rtsp_url_body_worm"
-        type="text"
-        isRequired={true}
-        label="RTSP URL Body Worm"
-        placeholder="RTSP URL Body Worm"
-      ></InputForm>
       <Button type="submit" className="mt-3">
         Save
       </Button>

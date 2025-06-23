@@ -46,13 +46,7 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
       reset({
         name: data?.data.name,
         email: data?.data.email,
-        role_id: data?.data.roleId.toString(),
-        name_helmet: data?.data.helmet.name,
-        path_slug_helmet: data?.data.helmet.path_slug?.replace("helmet_", "") || "",
-        rtsp_url_helmet: data?.data.helmet.rtsp_url,
-        name_body_worm: data?.data.body_worm.name,
-        path_slug_body_worm: data?.data.body_worm.path_slug?.replace("body_worm_", "") || "",
-        rtsp_url_body_worm: data?.data.body_worm.rtsp_url,
+        role_id: data?.data.roleId.toString()
       });
     }
   }, [data, isLoading, reset]);

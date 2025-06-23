@@ -1,6 +1,5 @@
 "use client";
 
-import ButtonGenerateMediaMTX from "@/components/GenerateMediaMTX";
 import TableUser from "@/module/user/TableUser";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
@@ -25,7 +24,6 @@ export default function User() {
         <div className="flex justify-between items-center">
           <h5 className="text-xl font-bold text-slate-600">User</h5>
           <div className="flex gap-3">
-            <ButtonGenerateMediaMTX />
             {status === "authenticated" &&
               hasPermission(data?.user, "user.create") && (
                 <Link href={"/user/create"} className="btn">

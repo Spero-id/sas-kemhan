@@ -44,28 +44,6 @@ export default function TableUser() {
       cell: (info) => info.getValue(),
       header: () => <span>Email</span>,
     }),
-    columnHelper.accessor((row) => row?.helmet?.status, {
-      id: "status_helmet",
-      cell: (info) => {
-        const userId = info.row.original.id;
-
-        return (
-          <ToggleHelmet
-            defaultChecked={info.getValue()}
-            handleChange={async () => {
-              if (userId) {
-                if (info.getValue()) {
-                  await postStatusOffHelmet.mutateAsync({ user_id: userId });
-                } else {
-                  await postStatusOnHelmet.mutateAsync({ user_id: userId });
-                }
-              }
-            }}
-          />
-        );
-      },
-      header: () => <span>Status Helmet</span>,
-    }),
     columnHelper.accessor((row) => row.id, {
       id: "action",
       cell: (info) => (

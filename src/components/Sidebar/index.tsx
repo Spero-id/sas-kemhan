@@ -29,6 +29,30 @@ const Sidebar = () => {
             </Link>
           </li>
         )}
+        {hasPermission(data?.user, "helmet.view") && (
+          <li>
+            <Link
+              href="/helmet"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                pathname?.includes("helmet") && "bg-graydark dark:bg-meta-4"
+              }`}
+            >
+              Helmet
+            </Link>
+          </li>
+        )}
+        {hasPermission(data?.user, "body_worm.view") && (
+          <li>
+            <Link
+              href="/body_worm"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                pathname?.includes("body_worm") && "bg-graydark dark:bg-meta-4"
+              }`}
+            >
+              Body Worm
+            </Link>
+          </li>
+        )}
         {hasPermission(data?.user, "user.view") && (
           <li>
             <Link
