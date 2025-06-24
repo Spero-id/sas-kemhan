@@ -60,7 +60,7 @@ export default function FormEditUser({ id }: Readonly<FormUserProps>) {
       {
         onSuccess() {
           toast.success("Berhasil diupdate!");
-          router.push(`/user`);
+          router.push(`/manage/user`);
         },
         onError(error: any) {
           const message =

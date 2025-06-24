@@ -14,24 +14,12 @@ import { useDeleteUser } from "@/services/api/user/delete/delete.hooks";
 import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
 import { useSession } from "next-auth/react";
 import { hasPermission } from "@/utils/permissions";
-import ToggleHelmet from "@/components/FormGroup/ToggleHelmet";
-import { useMutation } from "@tanstack/react-query";
-import { PostStatusHelmetOnFunction } from "@/services/api/helmet/post/PostStatusHelmetOnFunction";
-import { PostStatusHelmetOffFunction } from "@/services/api/helmet/post/PostStatusHelmetOffFunction";
 
 export default function TableUser() {
   const { isLoading, data, refetch } = useAllUser();
   const { status, data: dataSession } = useSession();
 
   const columnHelper = createColumnHelper<UserDetailType>();
-
-  const postStatusOnHelmet = useMutation({
-    mutationFn: PostStatusHelmetOnFunction,
-  });
-
-  const postStatusOffHelmet = useMutation({
-    mutationFn: PostStatusHelmetOffFunction,
-  });
 
   const columns = [
     columnHelper.accessor((row) => row.name, {
@@ -50,7 +38,7 @@ export default function TableUser() {
         <div className="flex gap-2">
           {hasPermission(dataSession?.user, "user.update") && (
             <Link
-              href={`/user/${info.getValue()}/edit`}
+              href={`/manage/user/${info.getValue()}/edit`}
               className="btn btn-warning"
             >
               Edit

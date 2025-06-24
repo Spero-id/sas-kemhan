@@ -19,10 +19,6 @@ export async function GET() {
           },
         },
       },
-      include: {
-        helmet: true,
-        body_worm: true,
-      },
     });
     return NextResponse.json({
       status: true,

@@ -25,7 +25,7 @@ export default function TableLayout() {
         <div className="flex gap-2">
           {hasPermission(dataSession?.user, "layout.update") && (
             <Link
-              href={`/layout/${info.getValue()}/edit`}
+              href={`/manage/layout/${info.getValue()}/edit`}
               className="btn btn-warning"
             >
               Edit

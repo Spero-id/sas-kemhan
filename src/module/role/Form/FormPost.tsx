@@ -24,7 +24,7 @@ export default function FormPostRole() {
     postRole.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
-        router.push(`/role`);
+        router.push(`/manage/role`);
       },
       onError(error: any) {
         const message =

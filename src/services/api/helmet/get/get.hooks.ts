@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllHelmet, getRamdomHelmet } from "./get.service";
+import { getAllHelmet, getDetailHelmet, getRamdomHelmet } from "./get.service";
 
 export const useAllHelmet = () => {
   return useQuery({
@@ -12,5 +12,12 @@ export const useGetRandomHelmet = (limit: number) => {
   return useQuery({
     queryFn: () => getRamdomHelmet(limit),
     queryKey: ["random-helmet"],
+  });
+};
+
+export const useDetailHelmet = ({ id }: { id: string }) => {
+  return useQuery({
+    queryFn: () => getDetailHelmet(id),
+    queryKey: ["detail", id],
   });
 };

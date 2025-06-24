@@ -1,5 +1,5 @@
 export type BodyWorm = {
-  user_id: string;
+  id: number;
   name: string;
   path_slug: string;
   rtsp_url: string;
@@ -11,6 +11,18 @@ export type BodyWorm = {
 export type ResponseAllBodyWorm = {
   status: boolean;
   data: BodyWorm[];
+};
+
+export type BodyWormRequest = Partial<{
+  name: string;
+  path_slug: string;
+  rtsp_url: string;
+  lat: string;
+  long: string;
+}>;
+
+export type BodyWormResponse = {
+  message: string;
 };
 
 export type ResponseDetailBodyWorm = {

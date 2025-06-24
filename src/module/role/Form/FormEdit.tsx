@@ -53,7 +53,7 @@ export default function FormEditRole({ id }: Readonly<FormRoleProps>) {
       {
         onSuccess() {
           toast.success("Berhasil diupdate!");
-          router.push(`/role`);
+          router.push(`/manage/role`);
         },
         onError(error: any) {
           const message =

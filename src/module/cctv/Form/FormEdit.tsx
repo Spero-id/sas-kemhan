@@ -53,7 +53,7 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
       {
         onSuccess() {
           toast.success("Berhasil diupdate!");
-          router.push(`/cctv`);
+          router.push(`/manage/cctv`);
         },
         onError(error: any) {
           const message =

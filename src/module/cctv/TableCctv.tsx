@@ -33,7 +33,7 @@ export default function TableCctv() {
         <div className="flex gap-2">
           {hasPermission(dataSession?.user, "cctv.update") && (
             <Link
-              href={`/cctv/${info.getValue()}/edit`}
+              href={`/manage/cctv/${info.getValue()}/edit`}
               className="btn btn-warning"
             >
               Edit
