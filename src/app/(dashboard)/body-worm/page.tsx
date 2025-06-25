@@ -46,7 +46,7 @@ export default function BodyWorm() {
 
   return (
     <>
-      <Navigation />
+      <Navigation urlManage="/manage/body-worm" permissionManage="body_worm.view" />
       {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (

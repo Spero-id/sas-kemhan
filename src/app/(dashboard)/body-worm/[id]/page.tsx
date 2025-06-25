@@ -46,7 +46,7 @@ export default function DetailBodyWorm({
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>
           <div className="w-1/2">
-            <FilterNavigation />
+            <FilterNavigation urlManage="/manage/body-worm" permissionManage="body_worm.view"/>
           </div>
         </div>
         <div className="flex gap-3">

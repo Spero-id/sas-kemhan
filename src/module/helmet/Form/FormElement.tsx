@@ -30,8 +30,8 @@ export default function FormElement({
         name="path_slug"
         type="text"
         isRequired={true}
-        label="Path Slug"
-        placeholder="Path Slug"
+        label="Stream ID"
+        placeholder="Stream ID"
         prefix="helmet_"
       ></InputWithPrefixForm>
       <InputForm

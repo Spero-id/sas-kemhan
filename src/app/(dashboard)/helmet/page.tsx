@@ -44,7 +44,7 @@ export default function Helmet() {
 
   return (
     <>
-      <Navigation />
+      <Navigation urlManage="/manage/helmet" permissionManage="helmet.view" />
       {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (

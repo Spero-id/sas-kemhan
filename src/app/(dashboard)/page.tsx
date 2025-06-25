@@ -44,7 +44,7 @@ export default function Home() {
 
   return (
     <>
-      <Navigation />
+      <Navigation urlManage="/manage/cctv" permissionManage="cctv.view" />
       {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (

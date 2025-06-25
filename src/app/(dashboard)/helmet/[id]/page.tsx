@@ -48,7 +48,7 @@ export default function DetailCctv({
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>
           <div className="w-1/2">
-            <FilterNavigation />
+            <FilterNavigation urlManage="/manage/helmet" permissionManage="helmet.view" />
           </div>
         </div>
         <div className="flex gap-3">
