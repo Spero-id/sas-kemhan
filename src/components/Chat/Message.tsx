@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { IoSend } from "react-icons/io5";
 
-export default function Message({ socket, roomId } : any) {
+export default function Message({ socket, roomId, userLogged } : any) {
   const [input, setInput] = useState("");
   const sendMessage = () => {
     if (socket && input.trim() !== "") {
       socket.emit("chat:message", {
         roomId,
+        userLogged,
         msg: input
       });
       setInput("");

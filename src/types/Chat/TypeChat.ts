@@ -1,6 +1,7 @@
 export type UploadVideoRequest = Partial<{
   file: File;
-  access_token: string;
+  roomId: string;
+  userLogged: string;
 }>;
 
 export type UploadVideoResponse = {

@@ -34,7 +34,6 @@ export default function DetailCctv({
         </div>
         <div className="mt-4 gap-3">
           <PartialsHelmet
-            limit={3}
             classParent="flex gap-3"
             classStream="h-56"
           />
@@ -63,7 +62,6 @@ export default function DetailCctv({
             </div>
             <div className="mt-2">
               <PartialsBodyWorm
-                limit={3}
                 classParent="flex flex-col gap-3"
                 classStream="h-48"
               />
@@ -77,7 +75,6 @@ export default function DetailCctv({
               </Link>
             </div>
             <PartialsCctv
-              limit={3}
               classParent="flex flex-col gap-4"
               classStream="h-48"
             />

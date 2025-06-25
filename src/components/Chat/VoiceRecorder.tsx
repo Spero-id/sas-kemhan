@@ -1,19 +1,18 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 
 export default function VoiceRecorder({
   roomId,
-}: Readonly<{ roomId: string }>) {
+  userLogged
+}: Readonly<{ roomId: string, userLogged: string }>) {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null
   );
 
   const [isRecording, setIsRecording] = useState(false);
   const audioChunks = useRef<Blob[]>([]);
-  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -31,23 +30,17 @@ export default function VoiceRecorder({
               type: "audio/webm",
             });
 
+            console.log(userLogged)
             // Kirim ke server
             const formData = new FormData();
             formData.append("file", audioBlob, "recording.webm");
+            formData.append("userLogged", userLogged);
             formData.append("roomId", roomId);
-
-            console.log(roomId)
-
-            const headers = new Headers();
-            if (session?.access_token) {
-              headers.append("token", session.access_token);
-            }
 
             try {
               const res = await fetch("/api/secure/chat/upload-audio", {
                 method: "POST",
                 body: formData,
-                headers,
               });
 
               if (res.ok) {
@@ -69,7 +62,7 @@ export default function VoiceRecorder({
           console.error("Gagal akses mikrofon:", err);
         });
     }
-  }, [status]);
+  }, [roomId, userLogged]);
 
   const startRecording = () => {
     if (mediaRecorder && mediaRecorder.state === "inactive") {

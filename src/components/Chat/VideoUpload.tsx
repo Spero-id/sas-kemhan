@@ -1,12 +1,9 @@
 import { PostUploadVideoFunction } from "@/services/api/chat/post/PostUploadVideoFunction";
 import { useMutation } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import { MdVideoCall } from "react-icons/md";
 import { toast } from "react-toastify";
 
-export default function VideoUpload() {
-  const { data: session } = useSession();
-
+export default function VideoUpload({ roomId, userLogged }: Readonly<{ roomId: string, userLogged: string }>) {
   const postVideo = useMutation({
     mutationFn: PostUploadVideoFunction,
     onError() {
@@ -20,22 +17,26 @@ export default function VideoUpload() {
 
     if (file.size > 10 * 1024 * 1024) {
       // 10MB
-      alert("Video terlalu besar, maksimal 10MB.");
+      toast.error("Video terlalu besar, maksimal 10MB.");
       return;
     }
 
-    postVideo.mutate({
-      file: file,
-      access_token: session?.access_token as string
-    }, {
-      onSuccess() {
-        console.log('Video berhasil dikirim');
+    postVideo.mutate(
+      {
+        file: file,
+        roomId: roomId,
+        userLogged: userLogged,
       },
-      onError(e) {
-        console.error(e);
-        toast.error("Telah terjadi kesalahan!");
-      },
-    });
+      {
+        onSuccess() {
+          console.log("Video berhasil dikirim");
+        },
+        onError(e) {
+          console.error(e);
+          toast.error("Telah terjadi kesalahan!");
+        },
+      }
+    );
   };
 
   return (

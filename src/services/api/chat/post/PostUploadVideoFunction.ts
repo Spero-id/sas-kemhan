@@ -9,7 +9,6 @@ export const PostUploadVideoFunction = async (data: UploadVideoRequest) => {
   const response = await axiosClient.post<UploadVideoResponse>(`/secure/chat/upload-video`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      "token": data.access_token
     },
   });
   return response;

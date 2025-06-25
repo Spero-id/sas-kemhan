@@ -8,10 +8,17 @@ import { useDetailUser } from "@/services/api/user/get/get.hooks";
 import Image from "next/image";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
+interface ChatUserProps {
+  setUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  user_id: number;
+  modalChat: boolean;
+}
+
 export default function ChatUser({
   user_id,
   modalChat,
-}: Readonly<{ user_id: number; modalChat: boolean }>) {
+  setUserId,
+}: ChatUserProps) {
   const { data: session, status } = useSession();
   const { data: user, isLoading } = useDetailUser({
     id: user_id.toString(),
@@ -27,10 +34,15 @@ export default function ChatUser({
   useEffect(() => {
     if (!session || !user) return;
 
-    setRoomId(`${session.user.id}_${user_id}`);
+    const room_id =
+      parseInt(session.user.id) < user_id
+        ? `${session.user.id}_${user_id}`
+        : `${user_id}_${session.user.id}`;
+
+    setRoomId(room_id);
 
     (async () => {
-      await fetchMessages(1);
+      await fetchMessages(1, room_id);
     })();
 
     fetch("/api/socket");
@@ -54,11 +66,13 @@ export default function ChatUser({
     };
   }, [session, user]);
 
-  const fetchMessages = async (pageToFetch: number) => {
+  const fetchMessages = async (pageToFetch: number, roomId?: string) => {
     if (isFetchingRef.current || !hasMore) return;
     isFetchingRef.current = true;
 
-    const res = await fetch(`/api/secure/chat?page=${pageToFetch}`);
+    const res = await fetch(
+      `/api/secure/chat?page=${pageToFetch}&roomId=${roomId}`
+    );
     const { data, hasMore: more } = await res.json();
 
     setMessages((prev) => [...data, ...prev]);
@@ -71,7 +85,7 @@ export default function ChatUser({
     if (!containerRef.current) return;
 
     if (containerRef.current.scrollTop === 0) {
-      fetchMessages(page);
+      fetchMessages(page, roomId);
     }
   };
 
@@ -93,10 +107,14 @@ export default function ChatUser({
     }
   }, [messages]);
 
+  const handleBack = () => {
+    setUserId(undefined);
+  };
+
   return status == "authenticated" && !isLoading ? (
     <>
       <div className="flex items-center bg-slate-50 bg-opacity-5 px-4 py-3">
-        <button>
+        <button onClick={handleBack}>
           <IoMdArrowRoundBack className="text-xl mr-1" />
         </button>
         <div className="avatar mr-3">
@@ -140,9 +158,9 @@ export default function ChatUser({
       </div>
 
       <div className="flex mt-2 p-2">
-        <VideoUpload />
-        <VoiceRecorder roomId={roomId} />
-        <Message socket={socket} roomId={roomId} />
+        <VideoUpload roomId={roomId} userLogged={session.user.id} />
+        <VoiceRecorder roomId={roomId} userLogged={session.user.id} />
+        <Message socket={socket} roomId={roomId} userLogged={session.user.id} />
       </div>
     </>
   ) : (

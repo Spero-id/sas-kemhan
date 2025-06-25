@@ -4,10 +4,12 @@ import { useState } from "react";
 import { MdMessage } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import ChatUser from "./ChatUser";
+import ListUser from "./ListUser";
 
 export default function Chat() {
   const [modalChat, setModalChat] = useState(false);
-  
+  const [userId, setUserId] = useState<number | undefined>(undefined);
+
   return (
     <>
       <button
@@ -31,7 +33,11 @@ export default function Chat() {
           />
         </div>
 
-        <ChatUser user_id={3} modalChat />
+        {userId ? (
+          <ChatUser user_id={userId} modalChat={modalChat} setUserId={setUserId} />
+        ) : (
+          <ListUser setUserId={setUserId} />
+        )}
       </div>
     </>
   );

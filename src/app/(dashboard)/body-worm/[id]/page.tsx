@@ -34,7 +34,6 @@ export default function DetailBodyWorm({
         </div>
         <div className="mt-4 gap-3">
           <PartialsBodyWorm
-            limit={3}
             classParent="flex gap-3"
             classStream="h-56"
           />
@@ -62,7 +61,6 @@ export default function DetailBodyWorm({
               </Link>
             </div>
             <PartialsCctv
-              limit={3}
               classParent="flex flex-col gap-4"
               classStream="h-48"
             />
@@ -76,7 +74,6 @@ export default function DetailBodyWorm({
             </div>
             <div className="mt-2">
               <PartialsHelmet
-                limit={3}
                 classParent="flex flex-col gap-3"
                 classStream="h-48"
               />

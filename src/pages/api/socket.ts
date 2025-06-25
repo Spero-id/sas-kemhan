@@ -33,13 +33,14 @@ export default async function handler(
         console.log(`User ${roomId.split("_")[0]} joined room ${roomId}`);
       });
 
-      socket.on("chat:message", async ({ roomId, msg }) => {
+      socket.on("chat:message", async ({ roomId, userLogged, msg }) => {
         console.log("Received message:", msg);
+        console.log(userLogged)
 
         try {
           const newChat = await prisma.chat.create({
             data: {
-              user_id: parseInt(roomId.split("_")[0]),
+              user_id: parseInt(userLogged),
               content: typeof msg === "string" ? msg : msg.content,
               room_id: roomId,
               created_at: new Date(),
