@@ -4,6 +4,7 @@ import Image from "next/image";
 import RecordingCamera from "../RecordingCamera";
 import Link from "next/link";
 import { MdPushPin } from "react-icons/md";
+import StarStream from "./StarStream";
 
 interface Props {
   path_slug: string;
@@ -11,12 +12,14 @@ interface Props {
   redirect: string;
   active?: boolean;
   pin?: boolean;
+  type: 1 | 2 | 3; // 1 = cctv, 2 = helmet, 3 = body_worm,
+  star: boolean
 }
 
 const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 const MEDIAMTX_RTSP = process.env.NEXT_PUBLIC_MEDIAMTX_RTSP;
 
-const StreamCard = ({ path_slug, name, redirect, active, pin = false }: Props) => {
+const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star }: Props) => {
   return (
     <div className="relative h-full w-full">
       <iframe
@@ -45,6 +48,7 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false }: Props) =
       </div>
 
       <div className="absolute bottom-12 right-4 flex flex-col gap-1 z-20">
+        <StarStream type={type} path_slug={path_slug} star={star} />
         <RecordingCamera
           pathSlug={path_slug ?? ""}
           rtspUrl={`rtsp://${MEDIAMTX_RTSP}/${path_slug}`}

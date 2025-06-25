@@ -1,13 +1,12 @@
-import { useGetRandomBodyWorm } from "@/services/api/body_worm/get/get.hooks";
+import { useGetStarBodyWorm } from "@/services/api/body_worm/get/get.hooks";
 import LoadingGetData from "../Loading/LoadingGetData";
 import StreamCard from "../StreamCard";
 
 export default function PartialsBodyWorm({
-  limit,
   classParent,
   classStream,
-}: Readonly<{ limit: number; classParent: string; classStream: string }>) {
-  const { data, isLoading } = useGetRandomBodyWorm(limit);
+}: Readonly<{ classParent: string; classStream: string }>) {
+  const { data, isLoading } = useGetStarBodyWorm();
 
   return isLoading ? (
     <LoadingGetData />
@@ -19,6 +18,8 @@ export default function PartialsBodyWorm({
             path_slug={item?.path_slug}
             name={item?.name}
             redirect={`/body-worm/${item?.user_id}`}
+            type={3}
+            star={item?.star}
           />
         </div>
       ))}

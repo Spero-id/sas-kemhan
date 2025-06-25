@@ -15,3 +15,8 @@ export const getRamdomCctv = async (limit: number) => {
   const response = await axiosClient.get<ResponseAllCctv>("/secure/cctv/random?limit=" + limit);
   return response.data;
 };
+
+export const getStarCctv = async () => {
+  const response = await axiosClient.get<ResponseAllCctv>("/secure/cctv/star");
+  return response.data;
+};

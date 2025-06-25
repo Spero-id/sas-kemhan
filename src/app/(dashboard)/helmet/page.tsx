@@ -73,6 +73,8 @@ export default function Helmet() {
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
                 redirect={`/helmet/${item?.data?.user_id}`}
+                type={2}
+                star={item?.data?.star}
               />
             </div>
           ))}

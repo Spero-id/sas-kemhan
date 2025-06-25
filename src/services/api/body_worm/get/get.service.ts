@@ -20,3 +20,8 @@ export const checkPathSlugBodyWorm = async (path_slug: string, id?: string) => {
   const response = await axiosClient.post(`/secure/body-worm/check-path-slug`, { path_slug: path_slug, id: id });
   return response.data;
 };
+
+export const getStarBodyWorm = async () => {
+  const response = await axiosClient.get<ResponseAllBodyWorm>("/secure/body-worm/star");
+  return response.data;
+};

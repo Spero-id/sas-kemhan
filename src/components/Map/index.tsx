@@ -100,6 +100,8 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
                   path_slug={item?.path_slug}
                   name={item?.name}
                   redirect={`/cctv/${item?.id}`}
+                  type={1}
+                  star={item?.star}
                 />
               </div>
               <div className="flex mt-4 justify-between items-center h-8">

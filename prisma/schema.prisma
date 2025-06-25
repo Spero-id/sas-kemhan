@@ -37,31 +37,34 @@ model chat {
 }
 
 model cctv {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  path_slug  String
+  path_slug  String    @unique
   rtsp_url   String
   lat        String
   long       String
+  star       Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }
 
 model helmet {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  path_slug  String
+  path_slug  String    @unique
   rtsp_url   String
   status     Boolean   @default(false)
+  star       Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }
 
 model body_worm {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  path_slug  String
+  path_slug  String    @unique
   rtsp_url   String 
+  star       Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }

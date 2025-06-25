@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllBodyWorm, getDetailBodyWorm, getRamdomBodyWorm } from "./get.service";
+import { getAllBodyWorm, getDetailBodyWorm, getRamdomBodyWorm, getStarBodyWorm } from "./get.service";
 
 export const useAllBodyWorm = () => {
   return useQuery({
@@ -19,5 +19,12 @@ export const useDetailBodyWorm = ({ id }: { id: string }) => {
   return useQuery({
     queryFn: () => getDetailBodyWorm(id),
     queryKey: ["detail", id],
+  });
+};
+
+export const useGetStarBodyWorm = () => {
+  return useQuery({
+    queryFn: () => getStarBodyWorm(),
+    queryKey: ["star-body-worm"],
   });
 };

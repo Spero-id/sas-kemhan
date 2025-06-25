@@ -75,6 +75,8 @@ export default function BodyWorm() {
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
                 redirect={`/body-worm/${item?.data?.user_id}`}
+                type={3}
+                star={item?.data?.star}
               />
             </div>
           ))}

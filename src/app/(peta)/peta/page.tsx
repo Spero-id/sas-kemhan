@@ -37,7 +37,7 @@ export default function Peta() {
       <div style={{ height: "100vh", width: "100%" }}>
         <MapComponent data={data} />
       </div>
-      <Chat />
+      {/* <Chat /> */}
     </>
   );
 }

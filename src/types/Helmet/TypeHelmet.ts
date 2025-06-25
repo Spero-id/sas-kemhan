@@ -4,6 +4,7 @@ export type Helmet = {
   path_slug: string;
   rtsp_url: string;
   status: boolean;
+  star: boolean;
   created_at: string;
   updated_at: string;
 };

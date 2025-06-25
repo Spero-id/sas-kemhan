@@ -20,3 +20,8 @@ export const checkPathSlugHelmet = async (path_slug: string, id?: string) => {
   const response = await axiosClient.post(`/secure/helmet/check-path-slug`, { path_slug: path_slug, id: id });
   return response.data;
 };
+
+export const getStarHelmet = async () => {
+  const response = await axiosClient.get<ResponseAllHelmet>("/secure/helmet/star");
+  return response.data;
+};

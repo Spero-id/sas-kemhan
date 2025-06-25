@@ -1,11 +1,10 @@
-import { useGetRandomCctv } from "@/services/api/cctv/get/get.hooks";
+import { useGetStarCctv } from "@/services/api/cctv/get/get.hooks";
 import LoadingGetData from "../Loading/LoadingGetData";
 import StreamCard from "../StreamCard";
 import { Cctv } from "@/types/Cctv/TypeCctv";
-import { useEffect } from "react";
 
-export default function PartialsCctv({ limit, classParent, classStream }: Readonly<{ limit: number, classParent: string, classStream: string }>) {
-  const { data, isLoading } = useGetRandomCctv(limit);
+export default function PartialsCctv({ classParent, classStream }: Readonly<{ classParent: string, classStream: string }>) {
+  const { data, isLoading } = useGetStarCctv();
 
   return isLoading ? (
     <LoadingGetData />
@@ -17,6 +16,8 @@ export default function PartialsCctv({ limit, classParent, classStream }: Readon
             path_slug={item?.path_slug}
             name={item?.name}
             redirect={`/cctv/${item?.id}`}
+            type={1}
+            star={item?.star}
           />
         </div>
       ))}

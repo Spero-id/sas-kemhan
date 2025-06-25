@@ -22,11 +22,15 @@ export default function DetailBodyWorm({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
         <div className="relative h-[28.5rem] h-">
-          <StreamCard
-            path_slug={data?.data?.path_slug ?? ""}
-            name={data?.data?.name ?? ""}
-            redirect="/"
-          />
+          {data && (
+            <StreamCard
+              path_slug={data?.data?.path_slug ?? ""}
+              name={data?.data?.name ?? ""}
+              redirect="/"
+              type={3}
+              star={data?.data?.star}
+            />
+          )}
         </div>
         <div className="mt-4 gap-3">
           <PartialsBodyWorm

@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MdDashboard } from "react-icons/md";
 import FilterNavigation from "@/components/Navigation/Filter";
-import { FaMap } from "react-icons/fa";
 import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import StreamCard from "@/components/StreamCard";
@@ -24,11 +22,15 @@ export default function DetailCctv({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
         <div className="relative h-[28.5rem]">
-          <StreamCard
-            path_slug={data?.data?.path_slug ?? ""}
-            name={data?.data?.name ?? ""}
-            redirect="/"
-          />
+          {data && (
+            <StreamCard
+              path_slug={data?.data?.path_slug ?? ""}
+              name={data?.data?.name ?? ""}
+              redirect="/"
+              type={2}
+              star={data?.data?.star ?? false}
+            />
+          )}
         </div>
         <div className="mt-4 gap-3">
           <PartialsHelmet
