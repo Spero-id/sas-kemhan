@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         status: false,
-        message: "Failed to create user",
+        message: "Failed to create role",
       },
       { status: 500 }
     );

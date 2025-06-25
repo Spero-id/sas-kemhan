@@ -1,11 +1,14 @@
 import FilterNavigation from "./Filter";
 import MenuNavigation from "./Menu";
 
-const Navigation = () => {
+const Navigation = ({
+  urlManage,
+  permissionManage
+} : Readonly<{ urlManage: string; permissionManage: string }>) => {
   return (
     <div className="flex justify-between my-4">
       <MenuNavigation />
-      <FilterNavigation />
+      <FilterNavigation urlManage={urlManage} permissionManage={permissionManage} />
     </div>
   );
 };

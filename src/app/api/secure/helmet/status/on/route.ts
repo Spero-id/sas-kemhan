@@ -47,11 +47,11 @@ export async function POST(request: Request) {
 
   try {
     const req = await request.json();
-    const userId = req.user_id;
+    const id = req.id;
 
     const helmet = await prisma.helmet.findFirst({
       where: {
-        user_id: parseInt(userId),
+        id: parseInt(id),
       },
     });
 
@@ -80,14 +80,14 @@ export async function POST(request: Request) {
 
     // Update status_helmet jadi true di DB
     await prisma.helmet.update({
-      where: { user_id: helmet.user_id },
+      where: { id: helmet.id },
       data: { status: true },
     });
 
     // Ketika proses container mati, ubah status jadi false
     proc.on("close", async () => {
       await prisma.helmet.update({
-        where: { user_id: helmet.user_id },
+        where: { id: helmet.id },
         data: { status: false },
       });
     });

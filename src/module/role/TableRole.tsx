@@ -33,7 +33,7 @@ export default function TableRole() {
         <div className="flex gap-2">
           {hasPermission(dataSession?.user, "role.update") && (
             <Link
-              href={`/role/${info.getValue()}/edit`}
+              href={`/manage/role/${info.getValue()}/edit`}
               className="btn btn-warning"
             >
               Edit

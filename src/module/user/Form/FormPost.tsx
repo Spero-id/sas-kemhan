@@ -24,7 +24,7 @@ export default function FormPostUser() {
     postUser.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
-        router.push(`/user`);
+        router.push(`/manage/user`);
       },
       onError(error: any) {
         const message =

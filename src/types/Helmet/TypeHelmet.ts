@@ -1,14 +1,12 @@
-import { User } from "../User/TypeUser";
-
 export type Helmet = {
-  user_id: string;
+  id: string;
   name: string;
   path_slug: string;
   rtsp_url: string;
   status: boolean;
+  star: boolean;
   created_at: string;
   updated_at: string;
-  user: User;
 };
 
 export type ResponseAllHelmet = {
@@ -16,6 +14,23 @@ export type ResponseAllHelmet = {
   data: Helmet[];
 }
 
+export type HelmetRequest = Partial<{
+  name: string;
+  path_slug: string;
+  rtsp_url: string;
+  lat: string;
+  long: string;
+}>;
+
+export type HelmetResponse = {
+  message: string;
+};
+
 export type ResponseStatusHelmet = {
   message: string;
+};
+
+export type ResponseDetailHelmet = {
+  status: boolean;
+  data: Helmet;
 };

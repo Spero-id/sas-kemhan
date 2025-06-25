@@ -1,88 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+import { useState } from "react";
 import { MdMessage } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import Message from "./Message";
-import VoiceRecorder from "./VoiceRecorder";
-import { useSession } from "next-auth/react";
-import VideoUpload from "./VideoUpload";
+import ChatUser from "./ChatUser";
+import ListUser from "./ListUser";
 
 export default function Chat() {
-  const { data: session } = useSession();
-  const [socket, setSocket] = useState<any>(null);
-  const [messages, setMessages] = useState<any[]>([]);
   const [modalChat, setModalChat] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isFetchingRef = useRef(false);
-
-  useEffect(() => {
-    // fetch messages sebelumnya
-    (async () => {
-      await fetchMessages(1);
-    })();
-
-    fetch("/api/socket");
-    
-    const newSocket = io({
-      query: {
-        token: session?.access_token,
-      },
-      withCredentials: true,
-    });
-
-    newSocket.on("chat:message", (msg: string) => {
-      setMessages((prev) => [...prev, msg]);
-    });
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [session]);
-
-  const fetchMessages = async (pageToFetch: number) => {
-    if (isFetchingRef.current || !hasMore) return;
-    isFetchingRef.current = true;
-
-    const res = await fetch(`/api/secure/chat?page=${pageToFetch}`);
-    const { data, hasMore: more } = await res.json();
-
-    setMessages((prev) => [...data, ...prev]);
-    setPage(pageToFetch + 1);
-    setHasMore(more);
-    isFetchingRef.current = false;
-  };
-
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-
-    if (containerRef.current.scrollTop === 0) {
-      fetchMessages(page);
-    }
-  };
-
-  const scrollToBottom = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    if (modalChat) {
-      setTimeout(scrollToBottom, 100);
-    }
-  }, [modalChat]);
-
-  useEffect(() => {
-    if (modalChat) {
-      scrollToBottom();
-    }
-  }, [messages]);
+  const [userId, setUserId] = useState<number | undefined>(undefined);
 
   return (
     <>
@@ -107,66 +33,12 @@ export default function Chat() {
           />
         </div>
 
-        <div
-          ref={containerRef}
-          className="p-4 h-80 overflow-y-scroll flex flex-col gap-3"
-          onScroll={handleScroll}
-        >
-          {messages.map((msg, i) =>
-            msg.user_id == session?.user.id ? (
-              <div
-                className="flex items-end flex-col gap-2 text-cyan-neon"
-                key={i}
-              >
-                <p>{msg?.user?.name}</p>
-                {messageContent(msg)}
-              </div>
-            ) : (
-              <div
-                className="flex items-start flex-col gap-2 text-cyan-neon"
-                key={i}
-              >
-                <p>{msg?.user?.name}</p>
-                {messageContent(msg)}
-              </div>
-            )
-          )}
-        </div>
-
-        <div className="flex mt-2 p-2">
-          <VideoUpload />
-          <VoiceRecorder />
-          <Message socket={socket} />
-        </div>
+        {userId ? (
+          <ChatUser user_id={userId} modalChat={modalChat} setUserId={setUserId} />
+        ) : (
+          <ListUser setUserId={setUserId} />
+        )}
       </div>
     </>
   );
 }
-
-const messageContent = (msg: any) => {
-  const date = new Date(msg.created_at);
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  const timeOnly = `${hours}:${minutes}`;
-
-  if (msg.type === "AUDIO") {
-    return (
-      <audio controls>
-        <source src={msg.content} type="audio/webm" />
-      </audio>
-    );
-  } else if (msg.type === "VIDEO") {
-    return (
-      <video controls>
-        <source src={msg.content} type="video/mp4" />
-      </video>
-    );
-  } else {
-    return (
-      <div className="bg-deep-teal text-white p-3 rounded-md max-w-[70%] break-all bg-opacity-50">
-        {msg.content}
-        <p className="text-xs text-right">{timeOnly}</p>
-      </div>
-    );
-  }
-};

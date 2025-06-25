@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllCctv, getDetailCctv, getRamdomCctv } from "./get.service";
+import { getAllCctv, getDetailCctv, getRamdomCctv, getStarCctv } from "./get.service";
 
 export const useAllCctv = () => {
   return useQuery({
@@ -19,5 +19,12 @@ export const useGetRandomCctv = (limit: number) => {
   return useQuery({
     queryFn: () => getRamdomCctv(limit),
     queryKey: ["random-cctv"],
+  });
+};
+
+export const useGetStarCctv = () => {
+  return useQuery({
+    queryFn: () => getStarCctv(),
+    queryKey: ["star-cctv"],
   });
 };

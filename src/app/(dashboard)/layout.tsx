@@ -28,11 +28,11 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="max-h-screen min-h-screen bg-dark-ocean p-8 overflow-hidden">
+    <div className="min-h-screen bg-dark-ocean p-8 overflow-x-hidden">
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex min-h-screen">
           {/* <!-- ===== Content Area Start ===== --> */}
           <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             {/* <!-- ===== Header Start ===== --> */}

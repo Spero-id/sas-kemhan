@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MdDashboard } from "react-icons/md";
 import FilterNavigation from "@/components/Navigation/Filter";
-import { FaMap } from "react-icons/fa";
 import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import StreamCard from "@/components/StreamCard";
@@ -24,15 +22,18 @@ export default function DetailCctv({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
         <div className="relative h-[28.5rem]">
-          <StreamCard
-            path_slug={data?.data?.path_slug ?? ""}
-            name={data?.data?.name ?? ""}
-            redirect="/"
-          />
+          {data && (
+            <StreamCard
+              path_slug={data?.data?.path_slug ?? ""}
+              name={data?.data?.name ?? ""}
+              redirect="/"
+              type={2}
+              star={data?.data?.star ?? false}
+            />
+          )}
         </div>
         <div className="mt-4 gap-3">
           <PartialsHelmet
-            limit={3}
             classParent="flex gap-3"
             classStream="h-56"
           />
@@ -48,7 +49,7 @@ export default function DetailCctv({
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>
           <div className="w-1/2">
-            <FilterNavigation />
+            <FilterNavigation urlManage="/manage/helmet" permissionManage="helmet.view" />
           </div>
         </div>
         <div className="flex gap-3">
@@ -61,7 +62,6 @@ export default function DetailCctv({
             </div>
             <div className="mt-2">
               <PartialsBodyWorm
-                limit={3}
                 classParent="flex flex-col gap-3"
                 classStream="h-48"
               />
@@ -75,7 +75,6 @@ export default function DetailCctv({
               </Link>
             </div>
             <PartialsCctv
-              limit={3}
               classParent="flex flex-col gap-4"
               classStream="h-48"
             />

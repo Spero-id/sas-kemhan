@@ -23,3 +23,46 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  const prisma = getPrismaClient();
+  const body = await request.json();
+
+  try {
+    const check = await prisma.body_worm.findFirst({
+      where: {
+        path_slug: `body_worm_${body.path_slug}`,
+      },
+    })
+
+    if (check) {
+      return NextResponse.json({
+        status: false,
+        message: "Path slug already exists",
+      }, { status: 400 });
+    }
+
+    const result = await prisma.body_worm.create({
+      data: {
+        name: body.name,
+        path_slug: `body_worm_${body.path_slug}`,
+        rtsp_url: body.rtsp_url,
+      },
+    });
+
+    return NextResponse.json({
+      status: true,
+      data: result,
+      message: "Body worm created successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      {
+        status: false,
+        message: "Failed to create body worm",
+      },
+      { status: 500 }
+    );
+  }
+}

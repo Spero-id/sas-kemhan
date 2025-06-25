@@ -1,11 +1,22 @@
+'use client';
+
 import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useAtom } from "jotai";
-import { searchDashboardAtom } from "@/common/module/SettingsJotai";
+import {
+  searchDashboardAtom,
+} from "@/common/module/SettingsJotai";
+import Link from "next/link";
+import { hasPermission } from "@/utils/permissions";
+import { useSession } from "next-auth/react";
 
-export default function FilterNavigation() {
+export default function FilterNavigation({
+  urlManage,
+  permissionManage
+}: Readonly<{ urlManage: string; permissionManage: string }>) {
   const [, setsearchDashboardAtom] = useAtom(searchDashboardAtom);
-  return (
+  const { data, status } = useSession();
+  return status === "authenticated" && (
     <div className="flex gap-3 justify-end">
       <label className="input input-bordered flex items-center gap-2 bg-deep-teal bg-opacity-50 rounded text-white">
         <input
@@ -16,9 +27,14 @@ export default function FilterNavigation() {
         />
         <CiSearch />
       </label>
-      <div className="bg-deep-teal bg-opacity-50 rounded text-white flex items-center justify-center p-3">
-        <Image src="/icons/filter.svg" alt="filter" width={25} height={25} />
-      </div>
+      {hasPermission(data?.user, permissionManage) && (
+        <Link
+          className="bg-deep-teal bg-opacity-50 rounded text-white flex items-center justify-center p-3"
+          href={urlManage}
+        >
+          <Image src="/icons/filter.svg" alt="filter" width={25} height={25} />
+        </Link>
+      )}
     </div>
   );
 }

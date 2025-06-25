@@ -46,7 +46,7 @@ export default function BodyWorm() {
 
   return (
     <>
-      <Navigation />
+      <Navigation urlManage="/manage/body-worm" permissionManage="body_worm.view" />
       {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (
@@ -75,6 +75,8 @@ export default function BodyWorm() {
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
                 redirect={`/body-worm/${item?.data?.user_id}`}
+                type={3}
+                star={item?.data?.star}
               />
             </div>
           ))}

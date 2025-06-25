@@ -1,5 +1,3 @@
-import { BodyWorm } from "../BodyWorm/TypeBodyWorm";
-import { Helmet } from "../Helmet/TypeHelmet";
 import { RoleAuth } from "../Role/TypeRole";
 
 export type ResponseAllUser = {
@@ -19,8 +17,6 @@ export type ResponseDetailUser = {
     last_login: string;
     created_at: string;
     updated_at: string;
-    helmet: Helmet;
-    body_worm: BodyWorm;
   };
 };
 
@@ -56,8 +52,6 @@ export type UserDetail = Partial<{
   last_login: string;
   created_at: string;
   updated_at: string;
-  helmet: Helmet;
-  body_worm: BodyWorm;
 }>;
 
 export type UserAuth = {

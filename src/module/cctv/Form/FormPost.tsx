@@ -24,7 +24,7 @@ export default function FormPostCctv() {
     postCctv.mutate(values, {
       onSuccess() {
         toast.success("Berhasil ditambahkan!");
-        router.push(`/cctv`);
+        router.push(`/manage/cctv`);
       },
       onError(error: any) {
         const message =

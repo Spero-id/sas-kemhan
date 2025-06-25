@@ -27,14 +27,18 @@ export default function DetailCctv({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
         <div className="relative h-[28.5rem] h-">
-          <StreamCard
-            path_slug={data?.data?.path_slug ?? ""}
-            name={data?.data?.name ?? ""}
-            redirect="/"
-          />
+          {data && (
+            <StreamCard
+              path_slug={data?.data?.path_slug ?? ""}
+              name={data?.data?.name ?? ""}
+              redirect="/"
+              type={1}
+              star={data?.data?.star}
+            />
+          )}
         </div>
         <div className="mt-5 gap-3">
-          <PartialsCctv limit={3} classParent="flex gap-3" classStream="h-36" />
+          <PartialsCctv classParent="flex gap-3" classStream="h-36" />
         </div>
         <div className="flex gap-4 mt-3">
           <Link
@@ -56,27 +60,29 @@ export default function DetailCctv({
           <div className="flex items-center justify-between w-1/2">
             <p className="text-yellow-400 font-semibold text-lg">CCTV</p>
             <div className="flex text-white gap-1">
-              <Link href="/" className="text-lg">Lainnya</Link>
+              <Link href="/" className="text-lg">
+                Lainnya
+              </Link>
             </div>
           </div>
           <span className="h-12 w-[2px] bg-cyan-neon"></span>
           <div className="w-1/2">
-            <FilterNavigation />
+            <FilterNavigation
+              urlManage="/manage/cctv"
+              permissionManage="cctv.view"
+            />
           </div>
         </div>
         <div className="flex gap-3">
           <div className="w-1/2 mt-2">
             <div className="flex justify-between items-center mb-2">
-              <p className="text-yellow-400 font-semibold text-lg">
-                Body Worm
-              </p>
+              <p className="text-yellow-400 font-semibold text-lg">Body Worm</p>
               <Link href="/body-worm" className="text-white text-lg">
                 Lainnya
               </Link>
             </div>
             <div className="mt-2">
               <PartialsBodyWorm
-                limit={3}
                 classParent="flex flex-col gap-3"
                 classStream="h-48"
               />
@@ -84,16 +90,13 @@ export default function DetailCctv({
           </div>
           <div className="w-1/2 mt-2">
             <div className="flex justify-between items-center mb-2">
-              <p className="text-yellow-400 font-semibold text-lg">
-                Helmet
-              </p>
+              <p className="text-yellow-400 font-semibold text-lg">Helmet</p>
               <Link href="/helmet" className="text-white text-lg">
                 Lainnya
               </Link>
             </div>
             <div className="mt-2">
               <PartialsHelmet
-                limit={3}
                 classParent="flex flex-col gap-3"
                 classStream="h-48"
               />

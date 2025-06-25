@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   const prisma = getPrismaClient();
   const page = parseInt(req.query.page as string) || 1;
+  const roomId = req.query.roomId;
   const limit = 30;
 
   const chats = await prisma.chat.findMany({
@@ -16,6 +17,9 @@ export default async function handler(
     take: limit,
     include: {
       user: true, // kalau kamu punya relasi user, ini opsional
+    },
+    where: {
+      room_id: roomId as string,
     },
   });
 

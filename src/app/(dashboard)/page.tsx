@@ -44,7 +44,7 @@ export default function Home() {
 
   return (
     <>
-      <Navigation />
+      <Navigation urlManage="/manage/cctv" permissionManage="cctv.view" />
       {isLoading || isLoadingLayout ? (
         <LoadingGetData />
       ) : (
@@ -53,7 +53,7 @@ export default function Home() {
           layout={layout}
           cols={12}
           rowHeight={100}
-          width={1850}
+          width={1835}
           isDraggable={false}
           isResizable={false}
         >
@@ -69,7 +69,13 @@ export default function Home() {
               }`}
               key={i}
             >
-              <StreamCard path_slug={item?.data?.path_slug} name={item?.data?.name} redirect={`/cctv/${item?.data?.id}`} />
+              <StreamCard
+                path_slug={item?.data?.path_slug}
+                name={item?.data?.name}
+                redirect={`/cctv/${item?.data?.id}`}
+                type={1}
+                star={item?.data?.star}
+              />
             </div>
           ))}
         </GridLayout>

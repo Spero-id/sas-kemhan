@@ -21,19 +21,15 @@ export const config = {
   },
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponseServerIO) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponseServerIO
+) {
   if (req.method !== "POST") {
-    return res.status(405).json({ status: false, message: "Method not allowed" });
+    return res
+      .status(405)
+      .json({ status: false, message: "Method not allowed" });
   }
-
-  const tokenRaw = req.headers.token;
-  const token = typeof tokenRaw === "string" ? tokenRaw : undefined;
-  
-  if (token === undefined) {
-    return res.status(401).json({ status: false, message: "Unauthorized" });
-  }
-
-  const user = jwt.decode(token) as any;
 
   const prisma = getPrismaClient();
 
@@ -46,6 +42,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
     if (err) {
       console.error(err);
       return res.status(500).json({ status: false, message: "Upload error" });
+    }
+
+    const userLogged = Array.isArray(fields.userLogged)
+      ? fields.userLogged[0]
+      : fields.userLogged;
+
+    if (!userLogged) {
+      return res.status(400).json({ error: "Room ID is required" });
+    }
+
+    const roomId = Array.isArray(fields.roomId)
+      ? fields.roomId[0]
+      : fields.roomId;
+
+    if (!roomId) {
+      return res.status(400).json({ error: "Room ID is required" });
     }
 
     const fileData = files.file?.[0];
@@ -68,7 +80,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
         data: {
           type: "VIDEO",
           content: key, // bisa berupa path atau full URL tergantung implementasi
-          user_id: parseInt(user?.id),
+          user_id: parseInt(userLogged),
+          room_id: roomId
         },
         include: {
           user: true,
@@ -76,8 +89,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
       });
 
       chat.content = await getMinioFileUrl(chat.content);
-      
-      res.socket.server.io?.emit("chat:message", chat);
+
+      res.socket.server.io?.to(roomId).emit("chat:message", chat);
       res.status(200).json({
         message: "File uploaded successfully",
         path: key,

@@ -1,9 +1,9 @@
-import { useGetRandomHelmet } from "@/services/api/helmet/get/get.hooks";
+import { useGetStarHelmet } from "@/services/api/helmet/get/get.hooks";
 import LoadingGetData from "../Loading/LoadingGetData";
 import StreamCard from "../StreamCard";
 
-export default function PartialsHelmet({ limit, classParent, classStream }: Readonly<{ limit: number, classParent: string, classStream: string }>) {
-  const { data, isLoading } = useGetRandomHelmet(limit);
+export default function PartialsHelmet({ classParent, classStream }: Readonly<{ classParent: string, classStream: string }>) {
+  const { data, isLoading } = useGetStarHelmet();
 
   return isLoading ? (
     <LoadingGetData />
@@ -15,6 +15,8 @@ export default function PartialsHelmet({ limit, classParent, classStream }: Read
             path_slug={item?.path_slug}
             name={item?.name}
             redirect={`/helmet/${item?.user_id}`}
+            type={2}
+            star={item?.star}
           />
         </div>
       ))}
