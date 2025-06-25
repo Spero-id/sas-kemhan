@@ -1,10 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllUser, getDetailUser } from "./get.service";
+import { allUser, getAllUser, getDetailUser } from "./get.service";
 
 export const useAllUser = () => {
   return useQuery({
     queryFn: () => getAllUser(),
     queryKey: ["all"],
+  });
+};
+
+export const useGetAllUser = () => {
+  return useQuery({
+    queryFn: () => allUser(),
+    queryKey: ["all-user"],
   });
 };
 

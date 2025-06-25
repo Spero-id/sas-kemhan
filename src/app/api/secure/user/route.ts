@@ -20,6 +20,7 @@ export async function GET() {
         },
       },
     });
+    
     return NextResponse.json({
       status: true,
       data: users,

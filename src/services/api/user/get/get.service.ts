@@ -20,3 +20,8 @@ export const checkPathSlugHelmet = async (path_slug: string, id?: string) => {
   const response = await axiosClient.post(`/secure/user/check-path-slug/helmet`, { path_slug: path_slug, userId: id });
   return response.data;
 };
+
+export const allUser = async () => {
+  const response = await axiosClient.get<ResponseAllUser>("/secure/user/all");
+  return response.data;
+};
