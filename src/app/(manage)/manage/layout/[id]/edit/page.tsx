@@ -30,10 +30,9 @@ export default function EditLayout({
     }
   }, [status, dataSession, router]);
 
-  const { data, isLoading } = useDetailLayout({
+  const { data, isLoading, refetch } = useDetailLayout({
     id: id,
   });
-
 
   const updateLayout = useMutation({
     mutationFn: UpdateLayoutFunction,
@@ -72,6 +71,38 @@ export default function EditLayout({
     );
   };
 
+  const onClickDefault = () => {
+    if (!data?.data?.data) return;
+
+    const defaultLayout: Layout[] = data.data.data
+    .filter((item) => typeof item.path_slug === "string") // pastikan bukan undefined
+    .map((item, index) => ({
+      i: item.path_slug as string, // safe cast
+      x: (index * 3) % 12,
+      y: Math.floor((index * 3) / 12) * 2,
+      w: 3,
+      h: 2,
+    }));
+
+    updateLayout.mutate(
+      {
+        id,
+        data: { layout: defaultLayout },
+      },
+      {
+        onSuccess() {
+          toast.success("Berhasil diset default!");
+          refetch();
+        },
+        onError(error: any) {
+          const message =
+            error?.response?.data?.message ?? "Telah terjadi kesalahan!";
+          toast.error(message);
+        },
+      }
+    );
+  };
+
   return (
     <div className="container mx-auto mt-5">
       <Breadcrumb
@@ -85,41 +116,55 @@ export default function EditLayout({
       <div className="w-full shadow rounded bg-white p-6">
         <div className="flex justify-between items-center">
           <h5 className="text-xl font-bold text-slate-600 mb-2">Edit Layout</h5>
-          <button
-            className="btn"
-            onClick={onClick}
-            disabled={updateLayout.isLoading}
-          >
-            Simpan Layout
-          </button>
+          <div className="flex gap-3">
+            <button
+              className="btn"
+              onClick={onClickDefault}
+              disabled={updateLayout.isLoading}
+            >
+              Set Default
+            </button>
+            <button
+              className="btn"
+              onClick={onClick}
+              disabled={updateLayout.isLoading}
+            >
+              Simpan Layout
+            </button>
+          </div>
         </div>
 
-        {isLoading ? (
-          <LoadingGetData />
-        ) : layout ? (
-          <GridLayout
-            className="layout"
-            layout={layout}
-            cols={12}
-            rowHeight={30}
-            width={1200}
-            onLayoutChange={setLayout}
-          >
-            {layout.map((l) => {
-              const item = data?.data.data.find((d) => d.path_slug === l.i);
+        {(() => {
+          if (isLoading) {
+            return <LoadingGetData />;
+          }
 
-              if (!item) return null;
+          if (layout?.length) {
+            return (
+              <GridLayout
+                className="layout border border-dashed mt-3"
+                layout={layout}
+                cols={12}
+                rowHeight={30}
+                width={1480}
+                onLayoutChange={setLayout}
+              >
+                {layout.map((l) => {
+                  const item = data?.data?.data?.find(
+                    (d) => d.path_slug === l.i
+                  );
+                  return item ? (
+                    <div key={l.i} className="bg-gray-200 border p-2 rounded">
+                      {item.name}
+                    </div>
+                  ) : null;
+                })}
+              </GridLayout>
+            );
+          }
 
-              return (
-                <div key={l.i} className="bg-gray-200 border p-2 rounded">
-                  {item.name}
-                </div>
-              );
-            })}
-          </GridLayout>
-        ) : (
-          <p>No layout data available.</p>
-        )}
+          return <p>No layout data available.</p>;
+        })()}
       </div>
     </div>
   );
