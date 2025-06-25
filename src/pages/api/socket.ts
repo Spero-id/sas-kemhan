@@ -25,51 +25,31 @@ export default async function handler(
 
     const io = new IOServer(res.socket.server);
 
-    io.use(async (socket, next) => {
-      const tokenRaw = socket.handshake.query.token;
-
-      const token = typeof tokenRaw === "string" ? tokenRaw : undefined;
-
-      if (token) {
-        const decoded = jwt.decode(token);
-
-        if (
-          decoded &&
-          typeof decoded === "object" &&
-          "id" in decoded &&
-          "email" in decoded
-        ) {
-          socket.data.user = {
-            id: decoded.id,
-            email: decoded.email,
-          };
-          return next();
-        }
-      }
-
-      console.log("Unauthorized socket connection");
-      next(new Error("Unauthorized"));
-    });
-
     io.on("connection", (socket: Socket) => {
       console.log("User connected:", socket.id);
 
-      socket.on("chat:message", async (msg) => {
+      socket.on("join_room", (roomId: string) => {
+        socket.join(roomId);
+        console.log(`User ${roomId.split("_")[0]} joined room ${roomId}`);
+      });
+
+      socket.on("chat:message", async ({ roomId, msg }) => {
         console.log("Received message:", msg);
 
-        // Simpan ke DB
         try {
           const newChat = await prisma.chat.create({
             data: {
-              user_id: parseInt(socket.data.user.id),
+              user_id: parseInt(roomId.split("_")[0]),
               content: typeof msg === "string" ? msg : msg.content,
+              room_id: roomId,
               created_at: new Date(),
             },
             include: {
-              user: true, // kalau mau sekalian ada user info
+              user: true, 
             },
           });
-          io.emit("chat:message", newChat);
+          
+          io.to(roomId).emit("chat:message", newChat);
         } catch (error) {
           console.error("Gagal menyimpan pesan ke DB:", error);
         }

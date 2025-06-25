@@ -33,16 +33,6 @@ export default async function handler(
       .json({ status: false, message: "Method not allowed" });
   }
 
-  const tokenRaw = req.headers.token;
-  
-  const token = typeof tokenRaw === "string" ? tokenRaw : undefined;
-  
-  if (token === undefined) {
-    return res.status(401).json({ status: false, message: "Unauthorized" });
-  }
-
-  const user = jwt.decode(token) as any;
-
   const prisma = getPrismaClient();
 
   const form = new IncomingForm({
@@ -54,6 +44,14 @@ export default async function handler(
     if (err) {
       console.error(err);
       return res.status(500).json({ status: false, message: "Upload error" });
+    }
+
+    const roomId = fields.roomId;
+
+    console.log(roomId)
+
+    if (!roomId) {
+      return res.status(400).json({ error: "Room ID is required" });
     }
 
     const fileAudio = files.file?.[0];
@@ -74,7 +72,8 @@ export default async function handler(
         data: {
           type: "AUDIO",
           content: uploadedPath,
-          user_id: parseInt(user?.id as string),
+          user_id: parseInt(roomId),
+          room_id: roomId,
         },
         include: {
           user: true,

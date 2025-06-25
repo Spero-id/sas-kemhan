@@ -4,28 +4,39 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 
-export default function VoiceRecorder() {
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+export default function VoiceRecorder({
+  roomId,
+}: Readonly<{ roomId: string }>) {
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
+  );
+
   const [isRecording, setIsRecording] = useState(false);
   const audioChunks = useRef<Blob[]>([]);
-   const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      navigator.mediaDevices.getUserMedia({ audio: true })
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
         .then((stream) => {
           const recorder = new MediaRecorder(stream);
-          
+
           recorder.ondataavailable = (e) => {
             audioChunks.current.push(e.data);
           };
 
           recorder.onstop = async () => {
-            const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
+            const audioBlob = new Blob(audioChunks.current, {
+              type: "audio/webm",
+            });
 
             // Kirim ke server
             const formData = new FormData();
             formData.append("file", audioBlob, "recording.webm");
+            formData.append("roomId", roomId);
+
+            console.log(roomId)
 
             const headers = new Headers();
             if (session?.access_token) {
@@ -36,11 +47,11 @@ export default function VoiceRecorder() {
               const res = await fetch("/api/secure/chat/upload-audio", {
                 method: "POST",
                 body: formData,
-                headers
+                headers,
               });
 
               if (res.ok) {
-                console.log('Audio berhasil dikirim');
+                console.log("Audio berhasil dikirim");
               } else {
                 console.error("Gagal kirim audio");
               }

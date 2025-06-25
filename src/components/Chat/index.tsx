@@ -1,79 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+import { useState } from "react";
 import { MdMessage } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { useSession } from "next-auth/react";
-import ListUser from "./ListUser";
+import ChatUser from "./ChatUser";
 
 export default function Chat() {
-  const { data: session } = useSession();
-  const [socket, setSocket] = useState<any>(null);
-  const [messages, setMessages] = useState<any[]>([]);
   const [modalChat, setModalChat] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isFetchingRef = useRef(false);
-
-  useEffect(() => {
-    // fetch messages sebelumnya
-    (async () => {
-      await fetchMessages(1);
-    })();
-
-    fetch("/api/socket");
-
-    const newSocket = io({
-      query: {
-        token: session?.access_token,
-      },
-      withCredentials: true,
-    });
-
-    newSocket.on("chat:message", (msg: string) => {
-      setMessages((prev) => [...prev, msg]);
-    });
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [session]);
-
-  const fetchMessages = async (pageToFetch: number) => {
-    if (isFetchingRef.current || !hasMore) return;
-    isFetchingRef.current = true;
-
-    const res = await fetch(`/api/secure/chat?page=${pageToFetch}`);
-    const { data, hasMore: more } = await res.json();
-
-    setMessages((prev) => [...data, ...prev]);
-    setPage(pageToFetch + 1);
-    setHasMore(more);
-    isFetchingRef.current = false;
-  };
-
-  const scrollToBottom = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    if (modalChat) {
-      setTimeout(scrollToBottom, 100);
-    }
-  }, [modalChat]);
-
-  useEffect(() => {
-    if (modalChat) {
-      scrollToBottom();
-    }
-  }, [messages]);
-
+  
   return (
     <>
       <button
@@ -97,7 +31,7 @@ export default function Chat() {
           />
         </div>
 
-        <ListUser />
+        <ChatUser user_id={3} modalChat />
       </div>
     </>
   );
