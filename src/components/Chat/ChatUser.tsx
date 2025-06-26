@@ -41,19 +41,18 @@ export default function ChatUser({
 
     setRoomId(room_id);
 
-    (async () => {
-      await fetchMessages(1, room_id);
-    })();
-
     fetch("/api/socket");
 
     const newSocket = io({
       auth: {
-        token: session?.access_token,
+        token: session.access_token,
       },
     });
 
-    newSocket.emit("join_room", roomId);
+
+    newSocket.emit("join_room", room_id, async () => {
+      await fetchMessages(1, room_id);
+    });
 
     newSocket.on("chat:message", (msg: string) => {
       setMessages((prev) => [...prev, msg]);
