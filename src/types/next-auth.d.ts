@@ -17,6 +17,7 @@ declare module "next-auth/jwt" {
     name: string;
     email: string;
     role: RoleAuth;
+    image: string;
     access_token: string;
   }
 }

@@ -7,7 +7,9 @@ const HeaderDashboard = () => {
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  console.log(session)
 
   useEffect(() => {
     const updateTime = () => {
@@ -54,37 +56,39 @@ const HeaderDashboard = () => {
         EYESEE
       </h1>
       <div className="flex gap-3">
-        <div className="dropdown dropdown-end">
-          <button className="btn border-0 bg-transparent text-left focus:bg-transparent">
-            <div className="p-1 relative flex items-center justify-center">
-              <Image
-                src={session?.user?.image ?? "/images/profile.png"}
-                alt="avatar"
-                width={50}
-                height={50}
-                className="object-cover absolute"
-              />
-              <Image
-                src="/images/frame-profile.png"
-                alt="avatar"
-                width={60}
-                height={60}
-                className="z-10 relative"
-              />
-            </div>
-            <div className="flex flex-col justify-center">
-              <h3 className="text-3xl font-semibold text-cyan-neon">
-                {session?.user?.name}
-              </h3>
-              <p className="text-lg text-white">{session?.user?.role?.name}</p>
-            </div>
-          </button>
-          <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow mt-2">
-            <li>
-              <ButtonLogout />
-            </li>
-          </ul>
-        </div>
+        {status == 'authenticated' && (
+          <div className="dropdown dropdown-end">
+            <button className="btn border-0 bg-transparent text-left focus:bg-transparent">
+              <div className="p-1 relative flex items-center justify-center">
+                <Image
+                  src={session?.user?.image ?? "/images/profile.png"}
+                  alt="avatar"
+                  width={50}
+                  height={50}
+                  className="object-cover absolute"
+                />
+                <Image
+                  src="/images/frame-profile.png"
+                  alt="avatar"
+                  width={60}
+                  height={60}
+                  className="z-10 relative"
+                />
+              </div>
+              <div className="flex flex-col justify-center">
+                <h3 className="text-3xl font-semibold text-cyan-neon">
+                  {session?.user?.name}
+                </h3>
+                <p className="text-lg text-white">{session?.user?.role?.name}</p>
+              </div>
+            </button>
+            <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow mt-2">
+              <li>
+                <ButtonLogout />
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </header>
   );
