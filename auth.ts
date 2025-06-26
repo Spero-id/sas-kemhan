@@ -4,6 +4,7 @@ import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { getMinioFileUrl } from "@/utils/minio";
 
 export const config = {
   pages: {
@@ -56,6 +57,8 @@ export const config = {
             },
           };
 
+          safeUser.image = await getMinioFileUrl(safeUser.image)
+
           await prisma.user.update({
             where: { id: user.id },
             data: {
@@ -68,6 +71,7 @@ export const config = {
             name: safeUser.name,
             email: safeUser.email,
             role: safeUser.role,
+            image: safeUser.image
           };
         } else {
           return null; // Jika tidak, login gagal
