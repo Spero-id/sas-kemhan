@@ -64,6 +64,7 @@ model body_worm {
   name       String
   path_slug  String    @unique
   rtsp_url   String 
+  status     Boolean   @default(false)
   star       Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt

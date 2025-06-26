@@ -14,7 +14,7 @@ export default function PartialsHelmet({ classParent, classStream }: Readonly<{ 
           <StreamCard
             path_slug={item?.path_slug}
             name={item?.name}
-            redirect={`/helmet/${item?.user_id}`}
+            redirect={`/helmet/${item?.id}`}
             type={2}
             star={item?.star}
           />

@@ -5,7 +5,6 @@ import { MdDashboard } from "react-icons/md";
 import FilterNavigation from "@/components/Navigation/Filter";
 import { FaMap } from "react-icons/fa";
 import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
-import RecordingCamera from "@/components/RecordingCamera";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import StreamCard from "@/components/StreamCard";
 import PartialsBodyWorm from "@/components/Partials/body-worm";
