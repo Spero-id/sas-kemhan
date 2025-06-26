@@ -41,17 +41,17 @@ export async function POST() {
     const bodyWorm = await prisma.body_worm.findMany();
     const helmet = await prisma.helmet.findMany();
 
-    const allDevices = [...cctv, ...bodyWorm];
-
-    for (const device of allDevices) {
+    for (const device of cctv) {
       if (device.path_slug && device.rtsp_url) {
         config.paths[device.path_slug] = {
           source: device.rtsp_url,
         };
       }
     }
-
-    for (const device of helmet) {
+    
+    const allDevices = [...bodyWorm, ...helmet];
+    
+    for (const device of allDevices) {
       if (device.path_slug && device.rtsp_url) {
         config.paths[device.path_slug] = {
           source: 'publisher',

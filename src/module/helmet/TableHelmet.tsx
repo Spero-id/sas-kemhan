@@ -14,6 +14,7 @@ import { hasPermission } from "@/utils/permissions";
 import { useAllHelmet } from "@/services/api/helmet/get/get.hooks";
 import { Helmet as HelmetType } from "@/types/Helmet/TypeHelmet";
 import { useDeleteHelmet } from "@/services/api/helmet/delete/delete.hooks";
+import ToggleStream from "@/components/StreamCard/ToggleStream";
 
 export default function TableHelmet() {
   const { isLoading, data, refetch } = useAllHelmet();
@@ -26,6 +27,20 @@ export default function TableHelmet() {
       id: "name",
       cell: (info) => info.getValue(),
       header: () => <span>Name</span>,
+    }),
+    columnHelper.accessor((row) => row?.status, {
+      id: "status_helmet",
+      cell: (info) => {
+        return (
+          <ToggleStream
+            path_slug={info.row.original.path_slug}
+            status={info.row.original.status}
+            rtsp={info.row.original.rtsp_url}
+            type={2}
+          />
+        );
+      },
+      header: () => <span>Status Helmet</span>,
     }),
     columnHelper.accessor((row) => row.id, {
       id: "action",

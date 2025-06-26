@@ -52,7 +52,6 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
         <RecordingCamera
           pathSlug={path_slug ?? ""}
           rtspUrl={`rtsp://${MEDIAMTX_RTSP}/${path_slug}`}
-          outputPath={`/recordings/${path_slug}`}
         />
         <Link
           href={redirect}

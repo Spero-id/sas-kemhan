@@ -1,12 +1,13 @@
 import { axiosClient } from "@/common/utils/AxiosClient";
-import { StopRequest, StopResponse } from "@/types/Stream/TypeStream";
+import { StopStreamRequest, StopStreamResponse } from "@/types/Stream/TypeStream";
 
-export const StopStream = async (data: StopRequest) => {
+export const StopStream = async (data: StopStreamRequest) => {
   try {
-    const response = await axiosClient.post<StopResponse>(
+    const response = await axiosClient.post<StopStreamResponse>(
       `/secure/stream/stop`,
-      data
+      data,
     );
+
     return response;
   } catch (error: any) {
     throw error;

@@ -10,8 +10,7 @@ type RecordStatus = "none" | "on" | "off";
 export default function RecordingCamera({
   pathSlug,
   rtspUrl,
-  outputPath,
-}: Readonly<{ pathSlug: string; rtspUrl: string; outputPath: string }>) {
+}: Readonly<{ pathSlug: string; rtspUrl: string; }>) {
   const [statusRecord, setStatusRecord] = useState<RecordStatus>("none");
   const [isRecording, setIsRecording] = useState(false);
 

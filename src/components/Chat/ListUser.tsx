@@ -16,6 +16,7 @@ export default function ListUser({ setUserId }: ListUserProps) {
 
   return (
     <div className="p-4 h-96 overflow-y-scroll flex flex-col gap-3 hide-scrollbar">
+      <span className="font-medium">List User</span>
       {isLoading ? (
         <LoadingGetData />
       ) : (

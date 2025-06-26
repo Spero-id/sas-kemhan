@@ -32,7 +32,7 @@ export default function ChatUser({
   const isFetchingRef = useRef(false);
 
   useEffect(() => {
-    if (!session || !user) return;
+    if (status !== "authenticated" || isLoading) return;
 
     const room_id =
       parseInt(session.user.id) < user_id
@@ -49,7 +49,6 @@ export default function ChatUser({
       },
     });
 
-
     newSocket.emit("join_room", room_id, async () => {
       await fetchMessages(1, room_id);
     });
@@ -63,7 +62,7 @@ export default function ChatUser({
     return () => {
       newSocket.disconnect();
     };
-  }, [session, user]);
+  }, [status, isLoading]);
 
   const fetchMessages = async (pageToFetch: number, roomId?: string) => {
     if (isFetchingRef.current || !hasMore) return;
@@ -119,7 +118,7 @@ export default function ChatUser({
         <div className="avatar mr-3">
           <div className="w-10 rounded-full overflow-hidden">
             <Image
-              src={user?.data?.image ?? "/images/profile.png"}
+              src={user?.data?.image?.trim() ? user.data.image : "/images/profile.png"}
               alt="avatar"
               width={20}
               height={20}
@@ -163,7 +162,7 @@ export default function ChatUser({
       </div>
     </>
   ) : (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex justify-center items-center h-80">
       <p>Loading...</p>
     </div>
   );

@@ -14,6 +14,7 @@ import { hasPermission } from "@/utils/permissions";
 import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
 import { BodyWorm as BodyWormType } from "@/types/BodyWorm/TypeBodyWorm";
 import { useDeleteBodyWorm } from "@/services/api/body_worm/delete/delete.hooks";
+import ToggleStream from "@/components/StreamCard/ToggleStream";
 
 export default function TableBodyWorm() {
   const { isLoading, data, refetch } = useAllBodyWorm();
@@ -26,6 +27,20 @@ export default function TableBodyWorm() {
       id: "name",
       cell: (info) => info.getValue(),
       header: () => <span>Name</span>,
+    }),
+    columnHelper.accessor((row) => row?.status, {
+      id: "status_helmet",
+      cell: (info) => {
+        return (
+          <ToggleStream
+            path_slug={info.row.original.path_slug}
+            status={info.row.original.status}
+            rtsp={info.row.original.rtsp_url}
+            type={3}
+          />
+        );
+      },
+      header: () => <span>Status Helmet</span>,
     }),
     columnHelper.accessor((row) => row.id, {
       id: "action",

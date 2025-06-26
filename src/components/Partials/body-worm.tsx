@@ -17,7 +17,7 @@ export default function PartialsBodyWorm({
           <StreamCard
             path_slug={item?.path_slug}
             name={item?.name}
-            redirect={`/body-worm/${item?.user_id}`}
+            redirect={`/body-worm/${item?.id}`}
             type={3}
             star={item?.star}
           />
