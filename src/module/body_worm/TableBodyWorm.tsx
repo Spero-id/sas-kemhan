@@ -40,7 +40,7 @@ export default function TableBodyWorm() {
           />
         );
       },
-      header: () => <span>Status Helmet</span>,
+      header: () => <span>Status Body Worm</span>,
     }),
     columnHelper.accessor((row) => row.id, {
       id: "action",
