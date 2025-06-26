@@ -1,9 +1,9 @@
 import { axiosClient } from "@/common/utils/AxiosClient";
-import { StartRequest, StartResponse } from "@/types/Stream/TypeStream";
+import { StartRecordRequest, StartRecordResponse } from "@/types/Stream/TypeStream";
 
-export const StartRecord = async (data: StartRequest) => {
+export const StartRecord = async (data: StartRecordRequest) => {
   try {
-    const response = await axiosClient.post<StartResponse>(
+    const response = await axiosClient.post<StartRecordResponse>(
       `/secure/record/start`,
       data
     );

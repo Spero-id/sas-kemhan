@@ -4,6 +4,7 @@ export type BodyWorm = {
   path_slug: string;
   rtsp_url: string;
   star: boolean;
+  status: boolean;
   created_at: string;
   updated_at: string;
 };
