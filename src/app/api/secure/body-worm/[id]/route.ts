@@ -50,7 +50,7 @@ export async function PUT(
       },
       data: {
         name: name,
-        path_slug: path_slug,
+        path_slug: `body_worm_${path_slug}`,
         rtsp_url: rtsp_url,
       },
     });
