@@ -66,7 +66,8 @@ function buildStreamArgs(rtspUrl: string, pathSlug: string): string[] {
     "copy",
     "-c:a",
     "libopus",
-    "-f", `rtsp://mediamtx:8554/${pathSlug}`,
+    "-f", "rtsp",
+    `rtsp://mediamtx:8554/${pathSlug}`,
   ];
 }
 
