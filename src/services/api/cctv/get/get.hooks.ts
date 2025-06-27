@@ -4,14 +4,14 @@ import { getAllCctv, getDetailCctv, getRamdomCctv, getStarCctv } from "./get.ser
 export const useAllCctv = () => {
   return useQuery({
     queryFn: () => getAllCctv(),
-    queryKey: ["all"],
+    queryKey: ["all-cctv"],
   });
 };
 
 export const useDetailCctv = ({ id }: { id: string }) => {
   return useQuery({
     queryFn: () => getDetailCctv(id),
-    queryKey: ["detail", id],
+    queryKey: ["detail-cctv", id],
   });
 };
 

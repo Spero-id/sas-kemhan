@@ -4,13 +4,13 @@ import { getAllRole, getDetailRole } from "./get.service";
 export const useAllRole = () => {
   return useQuery({
     queryFn: () => getAllRole(),
-    queryKey: ["all"],
+    queryKey: ["all-role"],
   });
 };
 
 export const useDetailRole = ({ id }: { id: string }) => {
   return useQuery({
     queryFn: () => getDetailRole(id),
-    queryKey: ["detail", id],
+    queryKey: ["detail-role", id],
   });
 };

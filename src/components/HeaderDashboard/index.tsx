@@ -9,8 +9,6 @@ const HeaderDashboard = () => {
 
   const { data: session, status } = useSession();
 
-  console.log(session)
-
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -61,7 +59,7 @@ const HeaderDashboard = () => {
             <button className="btn border-0 bg-transparent text-left focus:bg-transparent">
               <div className="p-1 relative flex items-center justify-center">
                 <Image
-                  src={session?.user?.image ?? "/images/profile.png"}
+                  src={session?.user?.image?.trim() ? session.user.image : "/images/profile.png"}
                   alt="avatar"
                   width={50}
                   height={50}

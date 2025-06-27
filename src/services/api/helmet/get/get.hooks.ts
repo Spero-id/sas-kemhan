@@ -4,7 +4,7 @@ import { getAllHelmet, getDetailHelmet, getRamdomHelmet, getStarHelmet } from ".
 export const useAllHelmet = () => {
   return useQuery({
     queryFn: () => getAllHelmet(),
-    queryKey: ["all"],
+    queryKey: ["all-helmet"],
   });
 };
 
@@ -18,7 +18,7 @@ export const useGetRandomHelmet = (limit: number) => {
 export const useDetailHelmet = ({ id }: { id: string }) => {
   return useQuery({
     queryFn: () => getDetailHelmet(id),
-    queryKey: ["detail", id],
+    queryKey: ["detail-helmet", id],
   });
 };
 

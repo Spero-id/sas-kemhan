@@ -4,6 +4,6 @@ import { getAllPermission } from "./get.service";
 export const useAllPermission = () => {
   return useQuery({
     queryFn: () => getAllPermission(),
-    queryKey: ["all"],
+    queryKey: ["all-permission"],
   });
 };
