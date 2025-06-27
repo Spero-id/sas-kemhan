@@ -218,22 +218,6 @@ function buildRecordArgs(
   ];
 }
 
-export function stopRecording(streamId: string): Promise<void> {
-  return new Promise((resolve) => {
-    const containerName = `record-${streamId}`;
-    const proc = spawn("docker", ["stop", containerName]);
-
-    proc.stderr.on("data", (data) =>
-      console.error(`[${streamId}] stop: ${data}`)
-    );
-    proc.on("close", (code) => {
-      console.log(`[${streamId}] stopped container with code ${code}`);
-      recordProcesses.delete(streamId);
-      resolve();
-    });
-  });
-}
-
 export async function startRecording(
   streamId: string,
   rtspUrl: string
@@ -294,4 +278,20 @@ export async function startRecording(
     await stopRecording(streamId).catch(() => {});
     throw err;
   }
+}
+
+export function stopRecording(streamId: string): Promise<void> {
+  return new Promise((resolve) => {
+    const containerName = `record-${streamId}`;
+    const proc = spawn("docker", ["stop", containerName]);
+
+    proc.stderr.on("data", (data) =>
+      console.error(`[${streamId}] stop: ${data}`)
+    );
+    proc.on("close", (code) => {
+      console.log(`[${streamId}] stopped container with code ${code}`);
+      recordProcesses.delete(streamId);
+      resolve();
+    });
+  });
 }

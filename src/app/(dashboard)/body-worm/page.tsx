@@ -74,7 +74,7 @@ export default function BodyWorm() {
               <StreamCard
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
-                redirect={`/body-worm/${item?.data?.user_id}`}
+                redirect={`/body-worm/${item?.data?.id}`}
                 type={3}
                 star={item?.data?.star}
               />
