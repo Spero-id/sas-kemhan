@@ -72,7 +72,7 @@ export default function Helmet() {
               <StreamCard
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
-                redirect={`/helmet/${item?.data?.user_id}`}
+                redirect={`/helmet/${item?.data?.id}`}
                 type={2}
                 star={item?.data?.star}
               />
