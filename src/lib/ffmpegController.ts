@@ -52,7 +52,7 @@ function waitForContainerUp(
 function buildStreamArgs(rtspUrl: string, pathSlug: string): string[] {
   return [
     "run",
-    "--detach",
+    "--rm",
     "--name",
     pathSlug,
     "--network",
