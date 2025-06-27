@@ -66,8 +66,7 @@ function buildStreamArgs(rtspUrl: string, pathSlug: string): string[] {
     "copy",
     "-c:a",
     "libopus",
-    "-f",
-    `rtsp://mediamtx:8554/${pathSlug}`,
+    "-f", `rtsp://mediamtx:8554/${pathSlug}`,
   ];
 }
 
@@ -81,6 +80,7 @@ export async function startStream(
   const prisma = getPrismaClient();
 
   const args = buildStreamArgs(rtspUrl, pathSlug);
+  console.log(args)
   const proc = spawn("docker", args);
 
   proc.stderr.on("data", (data) =>
