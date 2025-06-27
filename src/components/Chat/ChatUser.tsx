@@ -7,6 +7,7 @@ import Message from "./Message";
 import { useDetailUser } from "@/services/api/user/get/get.hooks";
 import Image from "next/image";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import LoadingGetData from "../Loading/LoadingGetData";
 
 interface ChatUserProps {
   setUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -30,16 +31,14 @@ export default function ChatUser({
   const [hasMore, setHasMore] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const isFetchingRef = useRef(false);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
 
   useEffect(() => {
     if (status !== "authenticated" || isLoading) return;
+    console.log(user);
 
-    const room_id =
-      parseInt(session.user.id) < user_id
-        ? `${session.user.id}_${user_id}`
-        : `${user_id}_${session.user.id}`;
-
-    setRoomId(room_id);
+    const newRoomId = [session.user.id, user_id].sort().join("_");
+    setRoomId(newRoomId);
 
     fetch("/api/socket");
 
@@ -49,8 +48,11 @@ export default function ChatUser({
       },
     });
 
-    newSocket.emit("join_room", room_id, async () => {
-      await fetchMessages(1, room_id);
+    newSocket.emit("join_room", newRoomId);
+
+    // Setelah join_room, kita fetch pesan
+    newSocket.on("connect", async () => {
+      await fetchMessages(1, newRoomId);
     });
 
     newSocket.on("chat:message", (msg: string) => {
@@ -67,16 +69,23 @@ export default function ChatUser({
   const fetchMessages = async (pageToFetch: number, roomId?: string) => {
     if (isFetchingRef.current || !hasMore) return;
     isFetchingRef.current = true;
+    setIsLoadingMessages(true);
 
-    const res = await fetch(
-      `/api/secure/chat?page=${pageToFetch}&roomId=${roomId}`
-    );
-    const { data, hasMore: more } = await res.json();
+    try {
+      const res = await fetch(
+        `/api/secure/chat?page=${pageToFetch}&roomId=${roomId}`
+      );
+      const { data, hasMore: more } = await res.json();
 
-    setMessages((prev) => [...data, ...prev]);
-    setPage(pageToFetch + 1);
-    setHasMore(more);
-    isFetchingRef.current = false;
+      setMessages((prev) => [...data, ...prev]);
+      setPage(pageToFetch + 1);
+      setHasMore(more);
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+    } finally {
+      isFetchingRef.current = false;
+      setIsLoadingMessages(false);
+    }
   };
 
   const handleScroll = () => {
@@ -118,7 +127,11 @@ export default function ChatUser({
         <div className="avatar mr-3">
           <div className="w-10 rounded-full overflow-hidden">
             <Image
-              src={user?.data?.image?.trim() ? user.data.image : "/images/profile.png"}
+              src={
+                user?.data?.image?.trim()
+                  ? user.data.image
+                  : "/images/profile.png"
+              }
               alt="avatar"
               width={20}
               height={20}
@@ -134,25 +147,32 @@ export default function ChatUser({
         className="p-4 h-80 overflow-y-scroll flex flex-col gap-3"
         onScroll={handleScroll}
       >
-        {messages.map((msg, i) =>
-          msg.user_id == session?.user.id ? (
-            <div
-              className="flex items-end flex-col gap-2 text-cyan-neon"
-              key={i}
-            >
-              <p>{msg?.user?.name}</p>
-              {messageContent(msg)}
-            </div>
-          ) : (
-            <div
-              className="flex items-start flex-col gap-2 text-cyan-neon"
-              key={i}
-            >
-              <p>{msg?.user?.name}</p>
-              {messageContent(msg)}
-            </div>
-          )
+        {isLoadingMessages && (
+          <div className="flex flex-col gap-2">
+            <LoadingGetData />
+          </div>
         )}
+
+        {!isLoadingMessages &&
+          messages.map((msg, i) => 
+            msg.user_id == session?.user.id ? (
+              <div
+                className="flex items-end flex-col gap-2 text-cyan-neon"
+                key={i}
+              >
+                <p>{msg?.user?.name}</p>
+                {messageContent(msg)}
+              </div>
+            ) : (
+              <div
+                className="flex items-start flex-col gap-2 text-cyan-neon"
+                key={i}
+              >
+                <p>{msg?.user?.name}</p>
+                {messageContent(msg)}
+              </div>
+            )
+          )}
       </div>
 
       <div className="flex mt-2 p-2">

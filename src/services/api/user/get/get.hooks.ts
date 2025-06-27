@@ -4,7 +4,7 @@ import { allUser, getAllUser, getDetailUser } from "./get.service";
 export const useAllUser = () => {
   return useQuery({
     queryFn: () => getAllUser(),
-    queryKey: ["all"],
+    queryKey: ["get-all-user"],
   });
 };
 
@@ -18,6 +18,6 @@ export const useGetAllUser = () => {
 export const useDetailUser = ({ id }: { id: string }) => {
   return useQuery({
     queryFn: () => getDetailUser(id),
-    queryKey: ["detail", id],
+    queryKey: ["detail-user", id],
   });
 };

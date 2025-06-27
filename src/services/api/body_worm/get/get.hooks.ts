@@ -4,7 +4,7 @@ import { getAllBodyWorm, getDetailBodyWorm, getRamdomBodyWorm, getStarBodyWorm }
 export const useAllBodyWorm = () => {
   return useQuery({
     queryFn: () => getAllBodyWorm(),
-    queryKey: ["all"],
+    queryKey: ["all-body-worm"],
   });
 };
 
@@ -18,7 +18,7 @@ export const useGetRandomBodyWorm = (limit: number) => {
 export const useDetailBodyWorm = ({ id }: { id: string }) => {
   return useQuery({
     queryFn: () => getDetailBodyWorm(id),
-    queryKey: ["detail", id],
+    queryKey: ["detail-body-worm", id],
   });
 };
 
