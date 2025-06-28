@@ -204,21 +204,14 @@ function buildRecordArgs(
     "-v",
     `${baseDir}/${streamId}:/recordings`,
     "jrottenberg/ffmpeg:6.1-alpine",
-    "-rtsp_transport",
-    "tcp",
-    "-i",
-    rtspUrl,
-    "-c:v",
-    "copy",
-    "-c:a",
-    "aac",
-    "-movflags",
-    "+faststart",
-    "-1",
-    "-f",
-    "matroska",
-    "-y",
-    "-y",
+    "-rtsp_transport", "tcp",
+    "-i", rtspUrl,
+    "-c:v", "copy",
+    "-c:a", "aac",
+    "-movflags", "+faststart",
+    "-map_metadata", "-1", // ⚠️ Hapus semua metadata
+    "-f", "matroska",      // Pastikan output adalah MKV (Matroska)
+    "-y",                  // Overwrite jika sudah ada
     `/recordings/${outputFile}`,
   ];
 }
