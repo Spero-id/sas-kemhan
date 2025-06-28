@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/common/utils/Provider";
 import { SessionProvider } from "next-auth/react";
 import 'leaflet/dist/leaflet.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "EYESEE",
@@ -25,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>
+      <body>
         <SessionProvider>
           <Providers>{children}</Providers>
         </SessionProvider>
