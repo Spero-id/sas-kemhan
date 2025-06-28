@@ -7,13 +7,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const layouts = await prisma.layout.findMany({
-      where:{
-        name: {
-          not: "admin"
-        }
-      }
-    });
+    const layouts = await prisma.layout.findMany();
     return NextResponse.json({
       status: true,
       data: layouts,
