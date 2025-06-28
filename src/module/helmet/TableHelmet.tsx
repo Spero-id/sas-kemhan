@@ -46,6 +46,12 @@ export default function TableHelmet() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
+          <Link
+            href={`/manage/recording/helmet/${info.row.original.path_slug}`}
+            className="btn"
+          >
+            Recording
+          </Link>
           {hasPermission(dataSession?.user, "helmet.update") && (
             <Link
               href={`/manage/helmet/${info.getValue()}/edit`}
