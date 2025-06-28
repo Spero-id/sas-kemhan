@@ -52,6 +52,16 @@ export async function POST(request: Request) {
       },
     });
 
+    // update settings
+    await prisma.settings.update({
+      where: {
+        name: "regenerate_mediamtx",
+      },
+      data: {
+        value: 'false',
+      },
+    })
+
     return NextResponse.json({
       status: true,
       data: result,

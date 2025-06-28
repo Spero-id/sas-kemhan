@@ -6,19 +6,19 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { name: string } }
 ) {
   const prisma = getPrismaClient();
   try {
-    const helmet = await prisma.helmet.findFirst({
+    const data = await prisma.settings.findFirst({
       where: {
-        id: parseInt(params.id),
+        name: params.name,
       },
     });
 
     return NextResponse.json({
       status: true,
-      data: helmet,
+      data: data,
     });
   } catch (error) {
     console.error(error);
@@ -34,40 +34,25 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { name: string } }
 ) {
+  const data = await request.json();
   const prisma = getPrismaClient();
   try {
-    const req = await request.json();
+    const value = data.value as string;
 
-    const name = req.name as string;
-    const path_slug = req.path_slug as string;
-    const rtsp_url = req.rtsp_url as string;
-
-    const result = await prisma.helmet.update({
-      where: {
-        id: parseInt(params.id),
-      },
-      data: {
-        name: name,
-        path_slug: `helmet_${path_slug}`,
-        rtsp_url: rtsp_url,
-      },
-    });
-
-    // update settings
     await prisma.settings.update({
       where: {
-        name: "regenerate_mediamtx",
+        name: params.name,
       },
       data: {
-        value: "false",
+        value: value,
       },
     });
 
     return NextResponse.json({
       status: true,
-      data: result,
+      data: [],
     });
   } catch (error) {
     console.error(error);
@@ -87,19 +72,9 @@ export async function DELETE(
 ) {
   const prisma = getPrismaClient();
   try {
-    await prisma.helmet.delete({
+    await prisma.cctv.delete({
       where: {
         id: parseInt(params.id),
-      },
-    });
-
-    // update settings
-    await prisma.settings.update({
-      where: {
-        name: "regenerate_mediamtx",
-      },
-      data: {
-        value: "false",
       },
     });
 

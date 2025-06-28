@@ -214,6 +214,10 @@ function buildRecordArgs(
     "aac",
     "-movflags",
     "+faststart",
+    "-1",
+    "-f",
+    "matroska",
+    "-y",
     "-y",
     `/recordings/${outputFile}`,
   ];

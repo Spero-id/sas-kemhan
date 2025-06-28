@@ -7,6 +7,7 @@ export const useDeleteHelmet = ({id}: {id: string}) => {
     mutationFn: deleteHelmet,
     onSuccess: () => {
       queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["detail-settings", "regenerate_mediamtx"]);
     },
   });
 };

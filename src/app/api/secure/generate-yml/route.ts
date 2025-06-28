@@ -65,6 +65,15 @@ export async function POST() {
 
     execSync('docker restart mediamtx')
 
+    await prisma.settings.update({
+      where: {
+        name: 'regenerate_mediamtx',
+      },
+      data: {
+        value: 'true',
+      },
+    });
+
     return NextResponse.json({
       message: "mediamtx.yml generated",
       count: allDevices.length,

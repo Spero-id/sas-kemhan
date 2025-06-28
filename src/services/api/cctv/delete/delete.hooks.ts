@@ -7,6 +7,7 @@ export const useDeleteCctv = ({id}: {id: string}) => {
     mutationFn: deleteCctv,
     onSuccess: () => {
       queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["detail-settings", "regenerate_mediamtx"]);
     },
   });
 };

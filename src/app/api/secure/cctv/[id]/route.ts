@@ -50,8 +50,8 @@ export async function PUT(
         path_slug: path_slug,
         NOT: {
           id: parseInt(params.id),
-        }
-      }
+        },
+      },
     });
 
     if (check) {
@@ -74,6 +74,16 @@ export async function PUT(
         rtsp_url: rtsp_url,
         lat: lat,
         long: long,
+      },
+    });
+
+    // update settings
+    await prisma.settings.update({
+      where: {
+        name: "regenerate_mediamtx",
+      },
+      data: {
+        value: "false",
       },
     });
 
@@ -102,6 +112,16 @@ export async function DELETE(
     await prisma.cctv.delete({
       where: {
         id: parseInt(params.id),
+      },
+    });
+
+    // update settings
+    await prisma.settings.update({
+      where: {
+        name: "regenerate_mediamtx",
+      },
+      data: {
+        value: "false",
       },
     });
 

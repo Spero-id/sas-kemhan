@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const data = await prisma.body_worm.findMany();
+    const data = await prisma.cctv.findMany();
     return NextResponse.json({
       status: true,
       data: data,
@@ -29,9 +29,9 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   try {
-    const check = await prisma.body_worm.findFirst({
+    const check = await prisma.cctv.findFirst({
       where: {
-        path_slug: `body_worm_${body.path_slug}`,
+        path_slug: `cctv_${body.path_slug}`,
       },
     })
 
@@ -42,35 +42,27 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    const result = await prisma.body_worm.create({
+    const result = await prisma.cctv.create({
       data: {
         name: body.name,
-        path_slug: `body_worm_${body.path_slug}`,
+        path_slug: `cctv_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
+        lat: body.lat,
+        long: body.long,
       },
     });
-
-    // update settings
-    await prisma.settings.update({
-      where: {
-        name: "regenerate_mediamtx",
-      },
-      data: {
-        value: 'false',
-      },
-    })
 
     return NextResponse.json({
       status: true,
       data: result,
-      message: "Body worm created successfully",
+      message: "CCTV created successfully",
     });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       {
         status: false,
-        message: "Failed to create body worm",
+        message: "Failed to create CCTV",
       },
       { status: 500 }
     );
