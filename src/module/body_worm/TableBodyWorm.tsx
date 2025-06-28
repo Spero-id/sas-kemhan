@@ -47,7 +47,7 @@ export default function TableBodyWorm() {
       cell: (info) => (
         <div className="flex gap-2">
           <Link
-            href={`/manage/recording/body_worm/${info.row.original.path_slug}`}
+            href={`/manage/recording/body-worm/${info.row.original.path_slug}`}
             className="btn"
           >
             Recording

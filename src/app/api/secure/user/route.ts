@@ -15,7 +15,7 @@ export async function GET() {
       where: {
         role: {
           name: {
-            not: "admin",
+            not: "superadmin",
           },
         },
       },
