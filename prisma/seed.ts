@@ -111,10 +111,10 @@ async function main() {
     ],
   })
 
-  // Create Role Admin
-  const adminRole = await prisma.role.create({
+  // Create Role admin
+  const superadminRole = await prisma.role.create({
     data: {
-      name: 'admin',
+      name: 'superadmin',
     },
   })
   
@@ -124,7 +124,7 @@ async function main() {
 
   await prisma.role_permission.createMany({
     data: allPermissions.map((perm) => ({
-      roleId: adminRole.id,
+      roleId: superadminRole.id,
       permissionId: perm.id,
     })),
   })
@@ -166,7 +166,7 @@ async function main() {
         name: 'Admin',
         email: 'admin@example.com',
         password: password,
-        roleId: adminRole.id,
+        roleId: superadminRole.id,
       },
     ],
   })
@@ -187,6 +187,14 @@ async function main() {
         layout: []
       },
     ],
+  })
+
+  // Settings regenerate mediamtx
+  await prisma.settings.create({
+    data: {
+      name: 'regenerate_mediamtx',
+      value: 'false',
+    },
   })
 }
 

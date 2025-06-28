@@ -55,6 +55,16 @@ export async function PUT(
       },
     });
 
+    // update settings
+    await prisma.settings.update({
+      where: {
+        name: "regenerate_mediamtx",
+      },
+      data: {
+        value: "false",
+      },
+    });
+
     return NextResponse.json({
       status: true,
       data: result,
@@ -80,6 +90,16 @@ export async function DELETE(
     await prisma.body_worm.delete({
       where: {
         id: parseInt(params.id),
+      },
+    });
+
+    // update settings
+    await prisma.settings.update({
+      where: {
+        name: "regenerate_mediamtx",
+      },
+      data: {
+        value: "false",
       },
     });
 

@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import crypto from "crypto";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -42,7 +42,7 @@ export async function getMinioFileUrl(key: string | null): Promise<string> {
   if (!key) return "";
 
   const command = new GetObjectCommand({
-    Bucket: process.env.MINIO_BUCKET_NAME!,
+    Bucket: bucketName,
     Key: key,
   });
 
@@ -55,7 +55,7 @@ export async function deleteMinioFile(key: string): Promise<boolean> {
 
   try {
     const command = new DeleteObjectCommand({
-      Bucket: process.env.MINIO_BUCKET_NAME!,
+      Bucket: bucketName,
       Key: key,
     });
 
@@ -64,5 +64,20 @@ export async function deleteMinioFile(key: string): Promise<boolean> {
   } catch (error) {
     console.error("Gagal hapus file dari MinIO:", error);
     return false;
+  }
+}
+
+export async function listMinioFiles(prefix = "") {
+  const command = new ListObjectsV2Command({
+    Bucket: bucketName,
+    Prefix: prefix,
+  });
+
+  try {
+    const data = await s3.send(command);
+    return data.Contents || [];
+  } catch (error) {
+    console.error("Gagal mengambil daftar file:", error);
+    return [];
   }
 }

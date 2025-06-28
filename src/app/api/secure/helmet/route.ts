@@ -33,13 +33,16 @@ export async function POST(request: Request) {
       where: {
         path_slug: `helmet_${body.path_slug}`,
       },
-    })
+    });
 
     if (check) {
-      return NextResponse.json({
-        status: false,
-        message: "Path slug already exists",
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          status: false,
+          message: "Path slug already exists",
+        },
+        { status: 400 }
+      );
     }
 
     const result = await prisma.helmet.create({
@@ -47,6 +50,16 @@ export async function POST(request: Request) {
         name: body.name,
         path_slug: `helmet_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
+      },
+    });
+
+    // update settings
+    await prisma.settings.update({
+      where: {
+        name: "regenerate_mediamtx",
+      },
+      data: {
+        value: "false",
       },
     });
 

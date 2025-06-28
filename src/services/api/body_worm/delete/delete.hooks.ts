@@ -7,6 +7,7 @@ export const useDeleteBodyWorm = ({id}: {id: string}) => {
     mutationFn: deleteBodyWorm,
     onSuccess: () => {
       queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["detail-settings", "regenerate_mediamtx"]);
     },
   });
 };

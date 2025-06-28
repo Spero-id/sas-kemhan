@@ -45,3 +45,11 @@ export type StarRequest = Partial<{
 export type StarResponse = {
   message: string;
 };
+
+export type RecordFile = {
+  ETag: string;
+  Key: string;
+  LastModified: string;
+  size: number;
+  StorageClass: string;
+}
