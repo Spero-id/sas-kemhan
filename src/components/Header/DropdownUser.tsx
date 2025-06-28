@@ -13,7 +13,7 @@ const DropdownUser = () => {
         <div className="w-10 rounded-full">
           <Image
             alt="Awatar"
-            src={data?.user?.image ?? "/images/profile.png"}
+            src={data?.user?.image?.trim() ? data.user.image : "/images/profile.png"}
             width={40}
             height={40}
           />
