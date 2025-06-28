@@ -76,11 +76,11 @@ export default function TableListRecording({
         <TableCustom data={data?.data || []} columns={columns}></TableCustom>
       )}
       <dialog id="preview_record" className="modal">
-        <div className="modal-box">
+        <div className="modal-box" style={{ maxWidth: "75vw" }}>
           <div className="flex justify-between items-center mb-4">
-            <h3>Preview Video</h3>
+            <h3 className="text-xl">Preview Video</h3>
             <form method="dialog">
-              <button ><IoClose /></button>
+              <button className="text-2xl"><IoClose /></button>
             </form>
           </div>
           {isLoadingSigned ? (
