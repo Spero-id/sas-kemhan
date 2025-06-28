@@ -81,55 +81,55 @@ export async function startStream(
   const prisma = getPrismaClient();
 
   const args = buildStreamArgs(rtspUrl, pathSlug);
-  console.log(args)
+  console.log(args);
+
   const proc = spawn("docker", args);
 
+  // Log error output dari container
   proc.stderr.on("data", (data) =>
-    console.error(`[${pathSlug}] stream: ${data}`)
+    console.error(`[${pathSlug}] stream stderr: ${data}`)
   );
-  proc.on("close", (code) => async () => {
-    if (type == 2) {
-      await prisma.helmet.update({
-        where: {
-          path_slug: pathSlug,
-        },
-        data: {
-          status: false,
-        },
-      });
-    } else {
-      await prisma.body_worm.update({
-        where: {
-          path_slug: pathSlug,
-        },
-        data: {
-          status: false,
-        },
-      });
+
+  // Event handler untuk ketika proses selesai
+  proc.on("close", async (code) => {
+    console.log(`[${pathSlug}] Container exited with code ${code}`);
+
+    try {
+      if (type === 2) {
+        await prisma.helmet.update({
+          where: { path_slug: pathSlug },
+          data: { status: false },
+        });
+      } else {
+        await prisma.body_worm.update({
+          where: { path_slug: pathSlug },
+          data: { status: false },
+        });
+      }
+      console.log(`[${pathSlug}] Status di database diubah menjadi offline`);
+    } catch (err) {
+      console.error(`[${pathSlug}] Gagal update status ke offline di DB`, err);
     }
+  });
+
+  // Optional: handle error saat spawn docker
+  proc.on("error", (err) => {
+    console.error(`[${pathSlug}] Gagal menjalankan perintah docker`, err);
   });
 
   try {
     // Tunggu sampai container benar-benar running
     await waitForContainerUp(pathSlug);
 
-    if (type == 2) {
+    if (type === 2) {
       await prisma.helmet.update({
-        where: {
-          path_slug: pathSlug,
-        },
-        data: {
-          status: true,
-        },
+        where: { path_slug: pathSlug },
+        data: { status: true },
       });
     } else {
       await prisma.body_worm.update({
-        where: {
-          path_slug: pathSlug,
-        },
-        data: {
-          status: true,
-        },
+        where: { path_slug: pathSlug },
+        data: { status: true },
       });
     }
 
@@ -204,21 +204,14 @@ function buildRecordArgs(
     "-v",
     `${baseDir}/${streamId}:/recordings`,
     "jrottenberg/ffmpeg:6.1-alpine",
-    "-rtsp_transport",
-    "tcp",
-    "-i",
-    rtspUrl,
-    "-c:v",
-    "copy",
-    "-c:a",
-    "aac",
-    "-movflags",
-    "+faststart",
-    "-1",
-    "-f",
-    "matroska",
-    "-y",
-    "-y",
+    "-rtsp_transport", "tcp",
+    "-i", rtspUrl,
+    "-c:v", "copy",
+    "-c:a", "aac",
+    "-movflags", "+faststart",
+    "-map_metadata", "-1", // ⚠️ Hapus semua metadata
+    "-f", "matroska",      // Pastikan output adalah MKV (Matroska)
+    "-y",                  // Overwrite jika sudah ada
     `/recordings/${outputFile}`,
   ];
 }
