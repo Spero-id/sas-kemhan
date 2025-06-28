@@ -2,19 +2,19 @@
 
 import Link from "next/link";
 import FilterNavigation from "@/components/Navigation/Filter";
-import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import StreamCard from "@/components/StreamCard";
 import PartialsBodyWorm from "@/components/Partials/body-worm";
 import PartialsHelmet from "@/components/Partials/helmet";
 import PartialsCctv from "@/components/Partials/cctv";
+import { useDetailHelmet } from "@/services/api/helmet/get/get.hooks";
 
-export default function DetailCctv({
+export default function DetailHelmet({
   params,
 }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
 
-  const { data, isLoading } = useDetailCctv({ id });
+  const { data, isLoading } = useDetailHelmet({ id });
 
   if (isLoading) return <LoadingGetData />;
 

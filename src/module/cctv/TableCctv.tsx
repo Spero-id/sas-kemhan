@@ -31,6 +31,12 @@ export default function TableCctv() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
+          <Link
+            href={`/manage/recording/cctv/${info.row.original.path_slug}`}
+            className="btn"
+          >
+            Recording
+          </Link>
           {hasPermission(dataSession?.user, "cctv.update") && (
             <Link
               href={`/manage/cctv/${info.getValue()}/edit`}
