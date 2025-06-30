@@ -52,7 +52,7 @@ function waitForContainerUp(
 function buildStreamArgs(rtspUrl: string, pathSlug: string, audio: boolean): string[] {
   const ffmpegArgs = [
     "run",
-    "-d",
+    "--rm",
     "--name",
     pathSlug,
     "--network",
