@@ -37,6 +37,7 @@ export default function TableBodyWorm() {
             status={info.row.original.status}
             rtsp={info.row.original.rtsp_url}
             type={3}
+            audio={true}
           />
         );
       },

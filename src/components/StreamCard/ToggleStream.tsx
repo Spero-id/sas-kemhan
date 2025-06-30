@@ -10,11 +10,13 @@ export default function ToggleStream({
   path_slug,
   rtsp,
   type,
+  audio
 }: Readonly<{
   status: boolean;
   path_slug: string;
   rtsp: string;
   type: 2 | 3;
+  audio: boolean;
 }>) {
   const [checked, setChecked] = useState(status);
 
@@ -54,6 +56,7 @@ export default function ToggleStream({
         pathSlug: path_slug,
         rtspUrl: rtsp,
         type: type,
+        audio: audio
       });
     }
   };

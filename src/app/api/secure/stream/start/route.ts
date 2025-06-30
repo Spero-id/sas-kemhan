@@ -6,12 +6,13 @@ export async function POST(req: NextRequest) {
     pathSlug,
     rtspUrl,
     type,
-  }: { pathSlug: string; rtspUrl: string; type: 2 | 3 } = await req.json();
+    audio
+  }: { pathSlug: string; rtspUrl: string; type: 2 | 3, audio: boolean } = await req.json();
 
   if (!rtspUrl || !type || !pathSlug) {
     return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
   }
 
-  startStream(pathSlug, rtspUrl, type);
+  startStream(pathSlug, rtspUrl, type, audio);
   return NextResponse.json({ message: "Stream started" });
 }
