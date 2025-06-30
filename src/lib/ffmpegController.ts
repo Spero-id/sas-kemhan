@@ -49,10 +49,10 @@ function waitForContainerUp(
   });
 }
 
-function buildStreamArgs(rtspUrl: string, pathSlug: string): string[] {
-  return [
+function buildStreamArgs(rtspUrl: string, pathSlug: string, audio: boolean): string[] {
+  const ffmpegArgs = [
     "run",
-    "--rm",
+    "-d",
     "--name",
     pathSlug,
     "--network",
@@ -64,24 +64,30 @@ function buildStreamArgs(rtspUrl: string, pathSlug: string): string[] {
     rtspUrl,
     "-c:v",
     "copy",
-    "-c:a",
-    "libopus",
-    "-f", "rtsp",
-    `rtsp://mediamtx:8554/${pathSlug}`,
   ];
+
+  if (audio) {
+    ffmpegArgs.push("-c:a", "libopus");
+  } else {
+    ffmpegArgs.push("-an");
+  }
+
+  ffmpegArgs.push("-f", "rtsp", `rtsp://mediamtx:8554/${pathSlug}`);
+
+  return ffmpegArgs;
 }
 
 export async function startStream(
   pathSlug: string,
   rtspUrl: string,
-  type: 2 | 3
+  type: 2 | 3,
+  audio: boolean
 ): Promise<void> {
   stopStream(pathSlug, type);
 
   const prisma = getPrismaClient();
 
-  const args = buildStreamArgs(rtspUrl, pathSlug);
-  console.log(args);
+  const args = buildStreamArgs(rtspUrl, pathSlug, audio);
 
   const proc = spawn("docker", args);
 

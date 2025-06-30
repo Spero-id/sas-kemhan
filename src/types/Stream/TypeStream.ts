@@ -30,6 +30,7 @@ export type StartStreamRequest = Partial<{
   pathSlug: string;
   rtspUrl: string;
   type: 2 | 3;
+  audio: boolean;
 }>;
 
 export type StartStreamResponse = {
@@ -52,4 +53,4 @@ export type RecordFile = {
   LastModified: string;
   size: number;
   StorageClass: string;
-}
+};
