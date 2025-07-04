@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: false,
-          message: "Path slug already exists",
+          message: "Stream ID already exists",
         },
       );
     }
