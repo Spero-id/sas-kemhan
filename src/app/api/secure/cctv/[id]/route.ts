@@ -58,7 +58,7 @@ export async function PUT(
       return NextResponse.json(
         {
           status: false,
-          message: "Path slug already exists",
+          message: "Stream ID already exists",
         },
         { status: 400 }
       );
