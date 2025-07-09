@@ -33,6 +33,7 @@ export default function DetailCctv({
               redirect="/"
               type={1}
               star={data?.data?.star}
+              pin={true}
             />
           )}
         </div>
