@@ -29,6 +29,7 @@ export default function DetailBodyWorm({
               redirect="/"
               type={3}
               star={data?.data?.star}
+              pin={true}
             />
           )}
         </div>

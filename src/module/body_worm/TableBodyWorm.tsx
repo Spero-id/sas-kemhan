@@ -47,12 +47,6 @@ export default function TableBodyWorm() {
       id: "action",
       cell: (info) => (
         <div className="flex gap-2">
-          <Link
-            href={`/manage/recording/body-worm/${info.row.original.path_slug}`}
-            className="btn"
-          >
-            Recording
-          </Link>
           {hasPermission(dataSession?.user, "body_worm.update") && (
             <Link
               href={`/manage/body-worm/${info.getValue()}/edit`}
@@ -69,6 +63,12 @@ export default function TableBodyWorm() {
               Delete
             </Button>
           )}
+          <Link
+            href={`/manage/recording/body-worm/${info.row.original.path_slug}`}
+            className="btn"
+          >
+            Recording Logs
+          </Link>
         </div>
       ),
       header: () => <span>Action</span>,

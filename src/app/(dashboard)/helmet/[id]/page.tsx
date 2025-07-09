@@ -29,6 +29,7 @@ export default function DetailHelmet({
               redirect="/"
               type={2}
               star={data?.data?.star ?? false}
+              pin={true}
             />
           )}
         </div>

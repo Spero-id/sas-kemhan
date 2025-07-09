@@ -3,8 +3,8 @@
 import Image from "next/image";
 import RecordingCamera from "../RecordingCamera";
 import Link from "next/link";
-import { MdPushPin } from "react-icons/md";
 import StarStream from "./StarStream";
+import { FaEye } from "react-icons/fa";
 
 interface Props {
   path_slug: string;
@@ -55,9 +55,9 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
         />
         <Link
           href={redirect}
-          className={`p-1 rounded text-2xl cursor-pointer pointer-events-auto ${pin ? "text-yellow-500" : ''}`}
+          className={`p-1 rounded text-xl cursor-pointer pointer-events-auto ${pin ? "text-yellow-500" : ''}`}
         >
-          <MdPushPin />
+          <FaEye />
         </Link>
       </div>
     </div>

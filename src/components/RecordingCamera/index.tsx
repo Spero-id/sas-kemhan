@@ -4,6 +4,7 @@ import { StartRecord } from "@/services/api/stream/post/StartRecord";
 import { StopRecord } from "@/services/api/stream/post/StopRecord";
 import { FaStopCircle, FaSpinner } from "react-icons/fa";
 import { AiFillVideoCamera } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 type RecordStatus = "none" | "on" | "off";
 
@@ -17,24 +18,24 @@ export default function RecordingCamera({
   const startRecord = useMutation({
     mutationFn: StartRecord,
     onSuccess: () => {
-      console.log("Start recording success");
       setIsRecording(true);
+      toast.success("Start recording success");
     },
     onError: () => {
-      console.log("Start recording error");
       setStatusRecord("none");
+      toast.error("Start recording error");
     },
   });
 
   const stopRecord = useMutation({
     mutationFn: StopRecord,
     onSuccess: () => {
-      console.log("Stop recording success");
       setStatusRecord("none");
       setIsRecording(false);
+      toast.success("Stop recording success");
     },
     onError: () => {
-      console.log("Stop recording error");
+      toast.error("Stop recording error");
     },
   });
 
