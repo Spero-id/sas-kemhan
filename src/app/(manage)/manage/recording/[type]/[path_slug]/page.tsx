@@ -12,12 +12,6 @@ export default function Recording({
 
   const { isLoading: isLoadingSpaceDisk, data: dataSpaceDisk } = useGetSpaceDisk();
 
-  useEffect(() => {
-    if (!isLoadingSpaceDisk) {
-      console.log(dataSpaceDisk);
-    }
-  }, [isLoadingSpaceDisk]);
-
   return (
     <div className="container mt-5 mx-auto">
       <div className="w-full shadow rounded bg-white p-6">
