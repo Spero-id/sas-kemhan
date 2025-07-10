@@ -6,7 +6,7 @@ export const useDeleteCctv = ({id}: {id: string}) => {
   return useMutation({
     mutationFn: deleteCctv,
     onSuccess: () => {
-      queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["all-cctv"]);
       queryClient.invalidateQueries(["detail-settings", "regenerate_mediamtx"]);
     },
   });

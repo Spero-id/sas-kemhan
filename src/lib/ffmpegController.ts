@@ -142,8 +142,6 @@ export async function startStream(
     console.log(`[${pathSlug}] Container berhasil dijalankan`);
   } catch (err) {
     console.error(`[${pathSlug}] Gagal menunggu container start`, err);
-    // Stop container jika gagal
-    await stopRecording(pathSlug).catch(() => {});
     throw err;
   }
 }
@@ -199,12 +197,13 @@ function getTimestampFilename(): string {
 function buildRecordArgs(
   rtspUrl: string,
   outputFile: string,
-  streamId: string
+  streamId: string,
+  uniqueName: string
 ): string[] {
-  const containerName = `record-${streamId}`;
+  const containerName = `record-${uniqueName}`;
   return [
     "run",
-    "--rm",
+    "--detach",
     "--name",
     containerName,
     "-v",
@@ -224,9 +223,10 @@ function buildRecordArgs(
 
 export async function startRecording(
   streamId: string,
-  rtspUrl: string
+  rtspUrl: string,
+  uniqueName: string
 ): Promise<void> {
-  await stopRecording(streamId); // stop dulu jika ada
+  await stopRecording(streamId, uniqueName); // stop dulu jika ada
 
   const streamDir = join(baseDir, streamId);
 
@@ -241,7 +241,7 @@ export async function startRecording(
 
   const filename = getTimestampFilename();
 
-  const args = buildRecordArgs(rtspUrl, filename, streamId);
+  const args = buildRecordArgs(rtspUrl, filename, streamId, uniqueName);
 
   const proc = spawn("docker", args);
 
@@ -279,14 +279,15 @@ export async function startRecording(
   } catch (err) {
     console.error(`[${streamId}] Gagal menunggu container start`, err);
     // Stop container jika gagal
-    await stopRecording(streamId).catch(() => {});
+    await stopRecording(streamId, uniqueName).catch(() => {});
     throw err;
   }
 }
 
-export function stopRecording(streamId: string): Promise<void> {
+export function stopRecording(streamId: string, uniqueName: string): Promise<void> {
+  console.log(uniqueName)
   return new Promise((resolve) => {
-    const containerName = `record-${streamId}`;
+    const containerName = `record-${uniqueName}`;
     const proc = spawn("docker", ["stop", containerName]);
 
     proc.stderr.on("data", (data) =>

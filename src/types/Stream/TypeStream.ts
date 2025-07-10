@@ -1,7 +1,6 @@
 export type StopRecordRequest = Partial<{
   pathSlug: string;
-  rtspUrl: string;
-  outputPath: string;
+  uniqueName: string;
 }>;
 
 export type StopRecordResponse = {
@@ -11,6 +10,7 @@ export type StopRecordResponse = {
 export type StartRecordRequest = Partial<{
   pathSlug: string;
   rtspUrl: string;
+  uniqueName: string;
 }>;
 
 export type StartRecordResponse = {
