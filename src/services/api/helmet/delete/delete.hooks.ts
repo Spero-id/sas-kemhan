@@ -6,7 +6,7 @@ export const useDeleteHelmet = ({id}: {id: string}) => {
   return useMutation({
     mutationFn: deleteHelmet,
     onSuccess: () => {
-      queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["all-helmet"]);
       queryClient.invalidateQueries(["detail-settings", "regenerate_mediamtx"]);
     },
   });

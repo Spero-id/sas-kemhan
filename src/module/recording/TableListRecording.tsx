@@ -9,6 +9,13 @@ import { RecordFile } from "@/types/Stream/TypeStream";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import { useSignedUrl } from "@/services/api/signed_url/get/get.hooks";
 import { IoClose } from "react-icons/io5";
+import { useAtom } from "jotai";
+import {
+  isConfirmDeleteAtom,
+  paramsDeleteAtom,
+} from "@/common/module/SettingsJotai";
+import { useDeleteRecording } from "@/services/api/recording/delete/delete.hooks";
+import ConfirmDeleteModal from "@/components/Modal/ConfirmDeleteModal";
 
 export default function TableListRecording({
   path_slug,
@@ -16,7 +23,7 @@ export default function TableListRecording({
   path_slug: string;
 }>) {
   const [pathRecording, setpathRecording] = useState<string>("");
-  const { isLoading, data } = useAllRecording({
+  const { isLoading, data, refetch } = useAllRecording({
     path_slug: path_slug,
   });
 
@@ -53,6 +60,12 @@ export default function TableListRecording({
           >
             Preview
           </button>
+          <button
+            className="btn btn-error"
+            onClick={() => handleDelete(encodeURIComponent(info.getValue()))}
+          >
+            Delete
+          </button>
         </div>
       ),
       header: () => <span>Action</span>,
@@ -66,6 +79,17 @@ export default function TableListRecording({
     )?.showModal();
   };
 
+  const [isConfirmDelete, setIsConfirmDelete] = useAtom(isConfirmDeleteAtom);
+  const [paramsDelete, setParamsDelete] = useAtom(paramsDeleteAtom);
+  const deleteHooks = useDeleteRecording(paramsDelete);
+
+  const handleDelete = (path: string) => {
+    setIsConfirmDelete(true);
+    setParamsDelete({
+      id: path,
+    });
+  };
+
   return (
     <>
       {isLoading ? (
@@ -73,12 +97,17 @@ export default function TableListRecording({
       ) : (
         <TableCustom data={data?.data || []} columns={columns}></TableCustom>
       )}
+      {isConfirmDelete && (
+        <ConfirmDeleteModal hooks={deleteHooks} refetch={refetch} />
+      )}
       <dialog id="preview_record" className="modal">
         <div className="modal-box" style={{ maxWidth: "75vw" }}>
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl">Preview Video</h3>
             <form method="dialog">
-              <button className="text-2xl"><IoClose /></button>
+              <button className="text-2xl">
+                <IoClose />
+              </button>
             </form>
           </div>
           {isLoadingSigned ? (

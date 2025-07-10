@@ -6,7 +6,7 @@ export const useDeleteRole = ({id}: {id: string}) => {
   return useMutation({
     mutationFn: deleteRole,
     onSuccess: () => {
-      queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["all-role"]);
     },
   });
 };

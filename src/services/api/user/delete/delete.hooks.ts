@@ -6,7 +6,7 @@ export const useDeleteUser = ({id}: {id: string}) => {
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: () => {
-      queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["get-all-user"]);
     },
   });
 };

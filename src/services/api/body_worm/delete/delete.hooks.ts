@@ -6,7 +6,7 @@ export const useDeleteBodyWorm = ({id}: {id: string}) => {
   return useMutation({
     mutationFn: deleteBodyWorm,
     onSuccess: () => {
-      queryClient.invalidateQueries(["all"]);
+      queryClient.invalidateQueries(["all-body-worm"]);
       queryClient.invalidateQueries(["detail-settings", "regenerate_mediamtx"]);
     },
   });
