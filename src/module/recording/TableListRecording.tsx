@@ -11,10 +11,8 @@ import { useSignedUrl } from "@/services/api/signed_url/get/get.hooks";
 import { IoClose } from "react-icons/io5";
 
 export default function TableListRecording({
-  type,
   path_slug,
 }: Readonly<{
-  type: string;
   path_slug: string;
 }>) {
   const [pathRecording, setpathRecording] = useState<string>("");
