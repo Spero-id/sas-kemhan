@@ -24,7 +24,7 @@ export default function Recording({
           </div>
           {!isLoadingSpaceDisk && (
             <p className="text text-slate-600 font-bold">
-              Disk: {dataSpaceDisk?.usage}
+              Disk Usage: {dataSpaceDisk?.usage}
             </p>
           )}
         </div>
