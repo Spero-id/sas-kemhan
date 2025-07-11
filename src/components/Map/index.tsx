@@ -14,7 +14,7 @@ const NEXT_PUBLIC_MAPS = process.env.NEXT_PUBLIC_MAPS;
 // Inisialisasi icon
 const cctvIcon = L.icon({
   iconUrl: "/images/map/cctv.png",
-  iconSize: [100, 100],
+  iconSize: [40, 40],
 });
 
 // Komponen untuk mengatur view berdasarkan marker
@@ -87,6 +87,7 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
           key={i}
           position={[parseFloat(item.lat), parseFloat(item.long)]}
           icon={cctvIcon}
+          title={item.name}
         >
           <Popup
             maxWidth={800}
