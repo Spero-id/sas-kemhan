@@ -203,7 +203,7 @@ function buildRecordArgs(
   const containerName = `record-${uniqueName}`;
   return [
     "run",
-    "--detach",
+    "--rm",
     "--name",
     containerName,
     "-v",
