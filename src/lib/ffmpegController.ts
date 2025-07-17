@@ -252,7 +252,7 @@ export async function startRecording(
     console.log(`[${streamId}] container exited with code ${code}`);
     recordProcesses.delete(streamId);
 
-    const filePath = path.join(PATH_HOST_APP, "recordings", streamId, filename);
+    const filePath = path.join(process.cwd(), "recordings", streamId, filename);
 
     try {
       const buffer = fs.readFileSync(filePath);
