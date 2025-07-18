@@ -15,6 +15,7 @@ export type StartRecordRequest = Partial<{
 
 export type StartRecordResponse = {
   message: string;
+  uniqueName: string;
 };
 
 export type StopStreamRequest = Partial<{

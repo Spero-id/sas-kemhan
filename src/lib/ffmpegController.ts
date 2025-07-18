@@ -273,7 +273,7 @@ export async function startRecording(
 
   try {
     // Tunggu sampai container benar-benar running
-    await waitForContainerUp(`record-${streamId}`);
+    await waitForContainerUp(`record-${uniqueName}`);
 
     console.log(`[${streamId}] Container berhasil dijalankan`);
   } catch (err) {
@@ -285,7 +285,6 @@ export async function startRecording(
 }
 
 export function stopRecording(streamId: string, uniqueName: string): Promise<void> {
-  console.log(uniqueName)
   return new Promise((resolve) => {
     const containerName = `record-${uniqueName}`;
     const proc = spawn("docker", ["stop", containerName]);
