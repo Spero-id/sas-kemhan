@@ -9,5 +9,5 @@ export async function POST(req: NextRequest) {
   }
 
   await startRecording(pathSlug, rtspUrl, uniqueName);
-  return NextResponse.json({ message: 'Recording started' });
+  return NextResponse.json({ message: 'Recording started', uniqueName: uniqueName });
 }

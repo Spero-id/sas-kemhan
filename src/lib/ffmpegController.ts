@@ -252,7 +252,7 @@ export async function startRecording(
     console.log(`[${streamId}] container exited with code ${code}`);
     recordProcesses.delete(streamId);
 
-    const filePath = path.join(PATH_HOST_APP, "recordings", streamId, filename);
+    const filePath = path.join(process.cwd(), "recordings", streamId, filename);
 
     try {
       const buffer = fs.readFileSync(filePath);
@@ -273,7 +273,7 @@ export async function startRecording(
 
   try {
     // Tunggu sampai container benar-benar running
-    await waitForContainerUp(`record-${streamId}`);
+    await waitForContainerUp(`record-${uniqueName}`);
 
     console.log(`[${streamId}] Container berhasil dijalankan`);
   } catch (err) {
@@ -285,7 +285,6 @@ export async function startRecording(
 }
 
 export function stopRecording(streamId: string, uniqueName: string): Promise<void> {
-  console.log(uniqueName)
   return new Promise((resolve) => {
     const containerName = `record-${uniqueName}`;
     const proc = spawn("docker", ["stop", containerName]);

@@ -20,19 +20,18 @@ export default function RecordingCamera({
 }: Readonly<{ pathSlug: string; rtspUrl: string }>) {
   const [recordState, setRecordState] = useState<RecordStatus>("none");
   const [activeRecordings, setActiveRecordings] = useAtom(activeRecordingsAtom);
-  const uniqueName = `${pathSlug}-${generateRandomSuffix()}`;
 
   const recordingInfo = activeRecordings[pathSlug];
   const isRecording = !!recordingInfo?.status;
 
   const startRecord = useMutation({
     mutationFn: StartRecord,
-    onSuccess: () => {
+    onSuccess: (res) => {
       setActiveRecordings((prev) => ({
         ...prev,
         [pathSlug]: {
           status: true,
-          name: uniqueName,
+          name: res.data.uniqueName,
         },
       }));
       toast.success(`Start recording success`);
@@ -72,7 +71,8 @@ export default function RecordingCamera({
 
   useEffect(() => {
     if (recordState === "on" && !isRecording && !startRecord.isLoading) {
-      startRecord.mutate({ pathSlug, rtspUrl, uniqueName });
+      const generateName = `${pathSlug}-${generateRandomSuffix()}`;
+      startRecord.mutate({ pathSlug, rtspUrl, uniqueName: generateName });
     } else if (recordState === "off" && isRecording && !stopRecord.isLoading) {
       const uniqName = activeRecordings[pathSlug]['name'];
       stopRecord.mutate({ pathSlug, uniqueName: uniqName });
