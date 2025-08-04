@@ -39,6 +39,8 @@ export const config = {
           },
         });
 
+        console.log(user);
+
         // Verifikasi password (pastikan Anda meng-hash password di database)
         if (
           user &&

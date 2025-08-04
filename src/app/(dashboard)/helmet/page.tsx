@@ -5,7 +5,7 @@ import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
 import { useAtom } from "jotai";
 import GridLayout from "react-grid-layout";
-import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
+import { useDetailLayout, useLayoutByUser } from "@/services/api/layout/get/get.hooks";
 import { useEffect, useState } from "react";
 import { useAllHelmet } from "@/services/api/helmet/get/get.hooks";
 import { Helmet as HelmetType } from "@/types/Helmet/TypeHelmet";
@@ -14,10 +14,14 @@ import StreamCard from "@/components/StreamCard";
 export default function Helmet() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllHelmet();
-
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
-    id: "2", // layout helmet
+    id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "helmet")?.id || "3",
+  }, {
+    enabled: !isLoadingUserLayout && !!dataUserLayout
   });
+
+
 
   const [layout, setLayout] = useState<any[]>();
 
@@ -60,13 +64,12 @@ export default function Helmet() {
           {layout?.map((item, i: number) => (
             <div
               data-grid={layout[i]}
-              className={`h-full w-full ${
-                item.data.name
-                  .toLowerCase()
-                  .includes(searchDashboard.toLowerCase())
-                  ? ""
-                  : "hidden"
-              }`}
+              className={`h-full w-full ${item.data.name
+                .toLowerCase()
+                .includes(searchDashboard.toLowerCase())
+                ? ""
+                : "hidden"
+                }`}
               key={i}
             >
               <StreamCard

@@ -1,85 +1,79 @@
 "use client";
 
 import Link from "next/link";
-import FilterNavigation from "@/components/Navigation/Filter";
+import { MdDashboard } from "react-icons/md";
+import DetailFilterNavigation from "@/components/Navigation/DetailFilter";
+import { FaMap } from "react-icons/fa";
+import { useDetailCctv } from "@/services/api/cctv/get/get.hooks";
 import LoadingGetData from "@/components/Loading/LoadingGetData";
 import StreamCard from "@/components/StreamCard";
+import PartialsBodyWorm from "@/components/Partials/body-worm";
 import PartialsHelmet from "@/components/Partials/helmet";
 import PartialsCctv from "@/components/Partials/cctv";
-import PartialsBodyWorm from "@/components/Partials/body-worm";
-import { useDetailBodyWorm } from "@/services/api/body_worm/get/get.hooks";
+import MapComponent from "@/components/Map";
+import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 
-export default function DetailBodyWorm({
+
+const MEDIAMTX_RTSP = process.env.NEXT_PUBLIC_MEDIAMTX_RTSP;
+
+export default function DetailCctv({
   params,
 }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
 
-  const { data, isLoading } = useDetailBodyWorm({ id });
+  const { data, isLoading } = useDetailCctv({ id });
+  const { isLoading: isLoadingMarker, data: dataMarker } = useAllCctv();
 
-  if (isLoading) return <LoadingGetData />;
+
+  if (isLoading || isLoadingMarker || !dataMarker) {
+    return <LoadingGetData />;
+  }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-      <div>
-        <div className="relative h-[28.5rem] h-">
-          {data && (
-            <StreamCard
-              path_slug={data?.data?.path_slug ?? ""}
-              name={data?.data?.name ?? ""}
-              redirect="/"
-              type={3}
-              star={data?.data?.star}
-              pin={true}
-            />
-          )}
-        </div>
-        <div className="mt-4 gap-3">
-          <PartialsBodyWorm
-            classParent="flex gap-3"
-            classStream="h-56"
-          />
-        </div>
+    <div>
+      <div className="py-3">
+        <DetailFilterNavigation urlManage="/manage/body-worm" permissionManage="body_worm.view" />
       </div>
-      <div>
-        <div className="flex justify-between gap-4">
-          <div className="flex items-center justify-between w-1/2">
-            <p className="text-yellow-400 font-semibold text-lg">Body Worm</p>
-            <div className="flex text-white gap-1">
-              <Link href="/body-worm">Lainnya</Link>
-            </div>
-          </div>
-          <span className="h-12 w-[2px] bg-cyan-neon"></span>
-          <div className="w-1/2">
-            <FilterNavigation urlManage="/manage/body-worm" permissionManage="body_worm.view"/>
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <div className="w-1/2">
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-yellow-400 font-semibold text-lg">CCTV</p>
-              <Link href="/" className="text-white text-lg">
-                Lainnya
-              </Link>
-            </div>
-            <PartialsCctv
-              classParent="flex flex-col gap-4"
-              classStream="h-48"
-            />
-          </div>
-          <div className="w-1/2">
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-yellow-400 font-semibold text-lg">Helmet</p>
-              <Link href="/helmet" className="text-white text-lg">
-                Lainnya
-              </Link>
-            </div>
-            <div className="mt-2">
-              <PartialsHelmet
-                classParent="flex flex-col gap-3"
-                classStream="h-48"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+
+        <div>
+          <div className="relative h-[28.5rem] h-">
+            {data && (
+              <StreamCard
+                path_slug={data?.data?.path_slug ?? ""}
+                name={data?.data?.name ?? ""}
+                redirect="/"
+                type={1}
+                star={data?.data?.star}
+                pin={true}
               />
-            </div>
+            )}
           </div>
+          <div className="mt-5 gap-3">
+
+            <PartialsBodyWorm classParent="grid grid-cols-3 gap-3" classStream="h-36" />
+          </div>
+
+        </div>
+        <div>
+
+          <div className="relative h-[28.5rem] h-">
+            {/* {data && (
+              <iframe src="http://localhost:3000/peta" className="w-full h-full border-none"></iframe>
+            )} */}
+
+            {isLoadingMarker ? (
+              <p>Loading map...</p>
+            ) : (
+              <MapComponent data={dataMarker} />
+            )}
+
+          </div>
+          <div className="mt-5 gap-3">
+
+            <PartialsCctv classParent="grid grid-cols-3 gap-3" classStream="h-36" />
+          </div>
+
         </div>
       </div>
     </div>

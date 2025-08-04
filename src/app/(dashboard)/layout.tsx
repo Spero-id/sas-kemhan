@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import HeaderDashboard from "@/components/HeaderDashboard";
 import Chat from "@/components/Chat";
+import StreamFullScreenModal from "@/components/Modal/StreamModal";
+import { Button } from "react-daisyui";
 
 export default function RootLayout({
   children,
@@ -14,6 +16,10 @@ export default function RootLayout({
 }>) {
   const router = useRouter();
   const { status } = useSession();
+
+
+
+
 
   useEffect(() => {
     if (status !== "loading" && status !== "authenticated") {
@@ -39,6 +45,9 @@ export default function RootLayout({
             <HeaderDashboard />
             {/* <!-- ===== Header End ===== --> */}
 
+
+
+
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
               {children}
@@ -47,8 +56,26 @@ export default function RootLayout({
           </div>
           {/* <!-- ===== Content Area End ===== --> */}
           <Chat />
+          <StreamFullScreenModal />
+
+
+          {/* <Button
+            className="btn btn-primary"
+            onClick={() => handleFullscreen({ name: "Sample Stream" })}
+          >
+            Open Fullscreen Stream
+          </Button>
+
+           */}
         </div>
+
       )}
     </div>
   );
 }
+
+
+
+
+
+

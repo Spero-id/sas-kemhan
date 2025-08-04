@@ -1,5 +1,3 @@
-// Perubahan pada schema.prisma
-
 generator client {
   provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
@@ -11,116 +9,111 @@ datasource db {
 }
 
 model user {
-  id            Int       @id @default(autoincrement())
-  name          String
-  email         String    @unique
-  password      String
-  image         String?
-  roleId        String
-  last_login    DateTime?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
-
-  chats         chat[]
-  role          role      @relation(fields: [roleId], references: [id])
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  password   String
+  image      String?
+  roleId     String
+  last_login DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  chats      chat[]
+  layouts    layout[]
+  role       role      @relation(fields: [roleId], references: [id])
 }
 
 model chat {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   user_id    Int
   content    String
+  created_at DateTime @default(now())
+  type       ChatType @default(TEXT)
   room_id    String
-  created_at DateTime  @default(now())
-  type       ChatType  @default(TEXT)
-
-  user       user @relation(fields: [user_id], references: [id])
+  user       user     @relation(fields: [user_id], references: [id])
 }
 
 model cctv {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   name       String
-  path_slug  String    @unique
+  path_slug  String   @unique
   rtsp_url   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   lat        String
   long       String
-  star       Boolean   @default(false)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  star       Boolean  @default(false)
 }
 
 model helmet {
-  id         Int       @id @default(autoincrement())
   name       String
-  path_slug  String    @unique
+  path_slug  String   @unique
   rtsp_url   String
-  status     Boolean   @default(false)
-  star       Boolean   @default(false)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  status     Boolean  @default(false)
+  id         Int      @id @default(autoincrement())
+  star       Boolean  @default(false)
 }
 
 model body_worm {
-  id         Int       @id @default(autoincrement())
   name       String
-  path_slug  String    @unique
-  rtsp_url   String 
-  status     Boolean   @default(false)
-  star       Boolean   @default(false)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  path_slug  String   @unique
+  rtsp_url   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  star       Boolean  @default(false)
+  status     Boolean  @default(false)
 }
 
 model role {
-  id          String       @id @default(uuid())
-  name        String       @unique
+  id          String            @id @default(uuid())
+  name        String            @unique
+  created_at  DateTime          @default(now())
+  updated_at  DateTime          @updatedAt
   permissions role_permission[]
   users       user[]
-
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
 }
 
 model permission {
-  id    Int    @id @default(autoincrement())
-  name  String
-  code  String @unique
-  roles role_permission[]
-
-  created_at DateTime  @default(now())
+  id         Int               @id @default(autoincrement())
+  name       String
+  code       String            @unique
+  created_at DateTime          @default(now())
+  roles      role_permission[]
 }
 
 model role_permission {
   roleId       String
   permissionId Int
+  created_at   DateTime   @default(now())
+  permission   permission @relation(fields: [permissionId], references: [id])
+  role         role       @relation(fields: [roleId], references: [id])
 
-  role       role       @relation(fields: [roleId], references: [id])
-  permission permission @relation(fields: [permissionId], references: [id])
-
-  @@id([roleId, permissionId]) // composite primary key
-
-  created_at DateTime  @default(now())
+  @@id([roleId, permissionId])
 }
 
-model layout{
-  id         Int    @id @default(autoincrement())
+model layout {
+  id         Int      @id @default(autoincrement())
   name       String
-  layout     Json  
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt 
+  layout     Json
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id    Int
+  user       user     @relation(fields: [user_id], references: [id])
 }
 
-// Enum type chat
+model settings {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  value      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
 enum ChatType {
   TEXT
   VIDEO
   AUDIO
-}
-
-model settings {
-  id          String       @id @default(uuid())
-  name        String       @unique
-  value       String
-
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
 }

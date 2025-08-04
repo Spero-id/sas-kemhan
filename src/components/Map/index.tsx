@@ -13,7 +13,7 @@ const NEXT_PUBLIC_MAPS = process.env.NEXT_PUBLIC_MAPS;
 
 // Inisialisasi icon
 const cctvIcon = L.icon({
-  iconUrl: "/images/map/cctv.png",
+  iconUrl: "/images/map/cctv_v2.png",
   iconSize: [40, 40],
 });
 

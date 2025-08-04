@@ -12,6 +12,7 @@ const Header = () => {
       <div className="flex-none">
         <DropdownUser />
       </div>
+
     </div>
   );
 };
