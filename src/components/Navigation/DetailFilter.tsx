@@ -13,20 +13,17 @@ import { BsArrowBarLeft } from "react-icons/bs";
 import { FaCaretLeft } from "react-icons/fa";
 
 export default function DetailFilterNavigation({
+  backURL,
   urlManage,
   permissionManage
-}: Readonly<{ urlManage: string; permissionManage: string }>) {
+}: Readonly<{ backURL: string; urlManage: string; permissionManage: string }>) {
   const [, setsearchDashboardAtom] = useAtom(searchDashboardAtom);
   const { data, status } = useSession();
   return status === "authenticated" && (
     <div className="flex justify-between pt-3">
       <Link
         className="bg-deep-teal bg-opacity-50 rounded text-white flex items-center justify-center p-3 cursor-pointer"
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          window.history.back();
-        }}
+        href={backURL}
       >
         <FaCaretLeft size={24} /> Kembali
       </Link>

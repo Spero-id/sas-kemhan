@@ -32,7 +32,7 @@ export default function DetailCctv({
   return (
     <div>
       <div className="py-3">
-        <DetailFilterNavigation urlManage="/manage/body-worm" permissionManage="body_worm.view" />
+        <DetailFilterNavigation backURL="/" urlManage="/manage/body-worm" permissionManage="body_worm.view" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 
