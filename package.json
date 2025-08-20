@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:with-ping": "node script/dev-with-ping.js",
     "build": "next build",
-    "start": "next start",
+    "start": "next start && ",
+    "start:with-ping": "concurrently \"npm run start\" \"npm run ping:start\"",
+    "ping-cctv:standalone": "node script/ipcheck_cctv.js",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
@@ -68,6 +71,7 @@
     "@types/react-grid-layout": "^1.3.5",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "autoprefixer": "10.4.21",
+    "concurrently": "^9.2.0",
     "daisyui": "4.12.24",
     "eslint": "8.57.1",
     "eslint-config-next": "14.0.4",
@@ -75,6 +79,7 @@
     "prisma": "^6.6.0",
     "tailwindcss": "3.4.17",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wait-on": "^8.0.4"
   }
 }

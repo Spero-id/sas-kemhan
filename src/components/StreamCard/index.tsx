@@ -27,7 +27,7 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
   return (
     <div className="relative h-full w-full">
 
-      {/* 
+
       {!active ? (
         <div className=" inset-0 flex flex-col items-center justify-center w-full h-full bg-gray-200 rounded-lg ">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -37,15 +37,15 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
           <span className="text-gray-500 text-sm">Camera Offline</span>
         </div>
       ) : (
-        
-      )} */}
+        <iframe
+          src={`${MEDIAMTX_URL}/${path_slug}`}
+          allow="fullscreen; autoplay; encrypted-media"
+          className="w-full h-full pointer-events-auto border-none"
+          title={path_slug}
+        />
+      )}
 
-      <iframe
-        src={`${MEDIAMTX_URL}/${path_slug}`}
-        allow="fullscreen; autoplay; encrypted-media"
-        className="w-full h-full pointer-events-auto border-none"
-        title={path_slug}
-      />
+
       {!active ? (
         <Image
           src="/images/frame.png"

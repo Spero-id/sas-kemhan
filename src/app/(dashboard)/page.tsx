@@ -7,13 +7,13 @@ import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
 import { useAtom } from "jotai";
 import GridLayout from "react-grid-layout";
-import { useDetailLayout,useLayoutByUser } from "@/services/api/layout/get/get.hooks";
+import { useDetailLayout, useLayoutByUser } from "@/services/api/layout/get/get.hooks";
 import { useEffect, useState } from "react";
 import StreamCard from "@/components/StreamCard";
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
-  const { isLoading, data } = useAllCctv();
+  const { isLoading, data } = useAllCctv(1000);
 
   // const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
   //   id: "4", // layout cctv
@@ -72,14 +72,15 @@ export default function Home() {
             <div
               data-grid={layout[i]}
               className={`h-full w-full ${item.data.name
-                  .toLowerCase()
-                  .includes(searchDashboard.toLowerCase())
-                  ? ""
-                  : "hidden"
+                .toLowerCase()
+                .includes(searchDashboard.toLowerCase())
+                ? ""
+                : "hidden"
                 }`}
               key={i}
             >
               <StreamCard
+                active={item?.data?.status}
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
                 redirect={`/cctv/${item?.data?.id}`}

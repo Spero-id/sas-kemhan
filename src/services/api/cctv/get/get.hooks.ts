@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllCctv, getDetailCctv, getRamdomCctv, getStarCctv } from "./get.service";
 
-export const useAllCctv = () => {
+export const useAllCctv = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getAllCctv(),
     queryKey: ["all-cctv"],
+    ...(refetchInterval && { refetchInterval }), 
   });
 };
 

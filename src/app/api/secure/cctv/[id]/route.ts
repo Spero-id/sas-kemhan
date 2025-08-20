@@ -87,6 +87,27 @@ export async function PUT(
       },
     });
 
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/patch/cctv_${path_slug}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source: rtsp_url,
+      }),
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
+
+
+
+
     return NextResponse.json({
       status: true,
       data: [],
@@ -109,6 +130,42 @@ export async function DELETE(
 ) {
   const prisma = getPrismaClient();
   try {
+
+
+    const cctv = await prisma.cctv.findFirst({
+      where: {
+        id: parseInt(params.id),
+      },
+    });
+
+
+
+    if (!cctv) {
+      return NextResponse.json(
+        {
+          status: false,
+          message: "CCTV not found",
+        },
+        { status: 404 }
+      );
+    }
+
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/delete/${cctv.path_slug}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
+
+
     await prisma.cctv.delete({
       where: {
         id: parseInt(params.id),

@@ -6,8 +6,8 @@ import path from "path";
 import { execSync } from "child_process";
 
 export const dynamic = "force-dynamic";
-const MEDIAMTX_STUN=process.env.MEDIAMTX_STUN
-const MEDIAMTX_ADDITIONAL_HOSTS=(process.env.MEDIAMTX_ADDITIONAL_HOSTS ?? '').split(',').map(h => h.trim()).filter(Boolean);
+const MEDIAMTX_STUN = process.env.MEDIAMTX_STUN
+const MEDIAMTX_ADDITIONAL_HOSTS = (process.env.MEDIAMTX_ADDITIONAL_HOSTS ?? '').split(',').map(h => h.trim()).filter(Boolean);
 
 export async function POST() {
   const prisma = getPrismaClient();
@@ -22,6 +22,8 @@ export async function POST() {
       webrtcTrustedProxies: [],
       webrtcLocalUDPAddress: ":8189",
       webrtcLocalTCPAddress: '',
+      api: true,
+      apiAddress: ':9997',
       webrtcIPsFromInterfaces: false,
       webrtcIPsFromInterfacesList: [],
       webrtcAdditionalHosts: [MEDIAMTX_ADDITIONAL_HOSTS.join(',')],
@@ -29,6 +31,16 @@ export async function POST() {
         {
           url: MEDIAMTX_STUN,
         },
+      ],
+      authInternalUsers: [
+        {
+          user: "any",
+          permissions: [
+            { action: "api" },
+            { action: "publish" },
+            { action: "read" }
+          ]
+        }
       ],
       webrtcHandshakeTimeout: "10s",
       webrtcTrackGatherTimeout: "2s",
@@ -48,9 +60,9 @@ export async function POST() {
         };
       }
     }
-    
+
     const allDevices = [...bodyWorm, ...helmet];
-    
+
     for (const device of allDevices) {
       if (device.path_slug && device.rtsp_url) {
         config.paths[device.path_slug] = {

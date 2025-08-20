@@ -65,6 +65,25 @@ export async function PUT(
       },
     });
 
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/patch/body_worm_${path_slug}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source: rtsp_url,
+      }),
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
+
+
     return NextResponse.json({
       status: true,
       data: result,
@@ -87,6 +106,42 @@ export async function DELETE(
 ) {
   const prisma = getPrismaClient();
   try {
+
+    const body_worm = await prisma.body_worm.findFirst({
+      where: {
+        id: parseInt(params.id),
+      },
+    });
+
+
+
+
+    if (!body_worm) {
+      return NextResponse.json(
+        {
+          status: false,
+          message: "Body Worm not found",
+        },
+        { status: 404 }
+      );
+    }
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/delete/${body_worm.path_slug}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
+
+
+
     await prisma.body_worm.delete({
       where: {
         id: parseInt(params.id),
@@ -102,6 +157,9 @@ export async function DELETE(
         value: "false",
       },
     });
+
+
+
 
     return NextResponse.json({
       status: true,

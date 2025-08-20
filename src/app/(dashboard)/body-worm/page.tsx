@@ -14,7 +14,7 @@ import StreamCard from "@/components/StreamCard";
 
 export default function BodyWorm() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
-  const { isLoading, data } = useAllBodyWorm();
+  const { isLoading, data } = useAllBodyWorm(1000);
   const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
     id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "body_worm")?.id || "3",

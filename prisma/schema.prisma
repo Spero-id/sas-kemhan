@@ -42,6 +42,7 @@ model cctv {
   updated_at DateTime @updatedAt
   lat        String
   long       String
+  status  Boolean @default(false)
   star       Boolean  @default(false)
 }
 
