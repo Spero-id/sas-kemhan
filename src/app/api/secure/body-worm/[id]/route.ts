@@ -43,6 +43,7 @@ export async function PUT(
     const name = req.name as string;
     const path_slug = req.path_slug as string;
     const rtsp_url = req.rtsp_url as string;
+    const need_convert = req.need_convert as boolean;
 
     const result = await prisma.body_worm.update({
       where: {
@@ -52,6 +53,7 @@ export async function PUT(
         name: name,
         path_slug: `body_worm_${path_slug}`,
         rtsp_url: rtsp_url,
+        need_convert: need_convert,
       },
     });
 
@@ -73,7 +75,7 @@ export async function PUT(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        source: rtsp_url,
+        source: need_convert ? "publisher" : rtsp_url,
       }),
     });
 

@@ -66,6 +66,7 @@ model body_worm {
   id         Int      @id @default(autoincrement())
   star       Boolean  @default(false)
   status     Boolean  @default(false)
+  need_convert Boolean @default(false)
 }
 
 model role {

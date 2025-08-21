@@ -29,7 +29,7 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
 
 
       {!active ? (
-        <div className=" inset-0 flex flex-col items-center justify-center w-full h-full bg-gray-200 rounded-lg ">
+        <div className=" inset-0 flex flex-col items-center justify-center w-full h-full bg-gray-300 rounded-lg ">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V8a2 2 0 00-2-2H4z" />
             <line x1="4" y1="20" x2="20" y2="4" stroke="currentColor" strokeWidth="2" />
@@ -69,11 +69,8 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
       </div>
 
 
-      {/* <button className="btn" onClick={()=>}>open modal</button> */}
-
-
       <button
-        className=" absolute top-4 left-2 px-4 py-1 rounded  z-20 cursor-pointer pointer-events-auto"
+        className=" absolute top-4 left-2 px-4 py-1 rounded text-white  z-20 cursor-pointer pointer-events-auto"
         onClick={() => {
           const dialog = document.getElementById('my_modal_1') as HTMLDialogElement | null;
           const modalTitle = document.getElementById('modal-title');
@@ -94,7 +91,6 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
 
       <div className="absolute bottom-12 right-4 flex flex-col gap-1 z-20">
         <StarStream type={type} path_slug={path_slug} star={star} />
-        {/* tambahkan button fullscreen */}
 
 
         <RecordingCamera
@@ -105,7 +101,7 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
           href={redirect}
           className={`p-1 rounded text-xl cursor-pointer pointer-events-auto ${pin ? "text-yellow-500" : ''}`}
         >
-          <FaEye />
+          <FaEye className="text-white" />
         </Link>
       </div>
     </div>

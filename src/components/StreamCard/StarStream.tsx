@@ -32,7 +32,7 @@ export default function StarStream({
 
   const getButtonLabel = () => {
     return (
-      <FaStar className={statusStar ? "text-yellow-500" : "text-slate-400"} />
+      <FaStar className={statusStar ? "text-yellow-500" : "text-white"} />
     );
   };
 

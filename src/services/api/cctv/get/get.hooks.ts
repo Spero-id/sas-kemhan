@@ -5,14 +5,16 @@ export const useAllCctv = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getAllCctv(),
     queryKey: ["all-cctv"],
-    ...(refetchInterval && { refetchInterval }), 
+    ...(refetchInterval && { refetchInterval }),
   });
 };
 
-export const useDetailCctv = ({ id }: { id: string }) => {
+export const useDetailCctv = ({ id, refetchInterval }: { id: string; refetchInterval?: number }) => {
   return useQuery({
     queryFn: () => getDetailCctv(id),
     queryKey: ["detail-cctv", id],
+    ...(refetchInterval && { refetchInterval }),
+
   });
 };
 

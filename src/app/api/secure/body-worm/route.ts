@@ -61,11 +61,15 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
+
+    // console.log(body)
+
     const result = await prisma.body_worm.create({
       data: {
         name: body.name,
         path_slug: `body_worm_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
+        need_convert: body.need_convert,
       },
     });
 
@@ -76,7 +80,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        source: body.rtsp_url,
+        source: body.need_convert ? "publisher" : body.rtsp_url,
       }),
     });
 
