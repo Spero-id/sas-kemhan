@@ -25,9 +25,10 @@ export const useGetRandomCctv = (limit: number) => {
   });
 };
 
-export const useGetStarCctv = () => {
+export const useGetStarCctv = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getStarCctv(),
     queryKey: ["star-cctv"],
+    ...(refetchInterval && { refetchInterval }),
   });
 };

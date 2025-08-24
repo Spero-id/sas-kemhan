@@ -40,6 +40,7 @@ export default function DetailCctv({
           <div className="relative h-[28.5rem] h-">
             {data && (
               <StreamCard
+                is_detail={false}
                 path_slug={data?.data?.path_slug ?? ""}
                 name={data?.data?.name ?? ""}
                 redirect="/"

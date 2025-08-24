@@ -15,12 +15,13 @@ interface Props {
   pin?: boolean;
   type: 1 | 2 | 3; // 1 = cctv, 2 = helmet, 3 = body_worm,
   star: boolean
+  is_detail: boolean
 }
 
 const MEDIAMTX_URL = process.env.NEXT_PUBLIC_MEDIAMTX_URL;
 const MEDIAMTX_RTSP = process.env.NEXT_PUBLIC_MEDIAMTX_RTSP;
 
-const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star }: Props) => {
+const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star, is_detail = false }: Props) => {
 
 
 
@@ -90,8 +91,7 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
 
 
       <div className="absolute bottom-12 right-4 flex flex-col gap-1 z-20">
-        <StarStream type={type} path_slug={path_slug} star={star} />
-
+        <StarStream type={type} path_slug={path_slug} star={star} is_detail={is_detail} />
 
         <RecordingCamera
           pathSlug={path_slug ?? ""}

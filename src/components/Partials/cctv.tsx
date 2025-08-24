@@ -4,7 +4,7 @@ import StreamCard from "../StreamCard";
 import { Cctv } from "@/types/Cctv/TypeCctv";
 
 export default function PartialsCctv({ classParent, classStream }: Readonly<{ classParent: string, classStream: string }>) {
-  const { data, isLoading } = useGetStarCctv();
+  const { data, isLoading } = useGetStarCctv(1000);
 
   return isLoading ? (
     <LoadingGetData />
@@ -13,6 +13,7 @@ export default function PartialsCctv({ classParent, classStream }: Readonly<{ cl
       {data?.data?.map((item: Cctv, i: number) => (
         <div className={classStream} key={i}>
           <StreamCard
+            is_detail={true}
             path_slug={item?.path_slug}
             name={item?.name}
             redirect={`/cctv/${item?.id}`}
