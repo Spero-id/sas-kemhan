@@ -6,7 +6,7 @@
     "dev": "next dev",
     "dev:with-ping": "node script/dev-with-ping.js",
     "build": "next build",
-    "start": "next start && ",
+    "start": "next start",
     "start:with-ping": "concurrently \"npm run start\" \"npm run ping:start\"",
     "ping-cctv:standalone": "node script/ipcheck_cctv.js",
     "lint": "next lint",
