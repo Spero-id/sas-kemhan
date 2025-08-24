@@ -10,6 +10,7 @@ services:
       - "8889:8889"
       - "554:554"
       - "554:554/udp"
+      - "9997:9997"
       - "8189:8189/udp"
     volumes:
       - ./config/mediamtx.yml:/mediamtx.yml
@@ -22,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: app
-    image: sas-hajid:latest
+    # image: sas-baturaja110:latest
     restart: always
     ports:
       - "3000:3000"
