@@ -24,6 +24,7 @@ export default function DetailHelmet({
         <div className="relative h-[28.5rem]">
           {data && (
             <StreamCard
+              is_detail={false}
               path_slug={data?.data?.path_slug ?? ""}
               name={data?.data?.name ?? ""}
               redirect="/"

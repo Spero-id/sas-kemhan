@@ -122,6 +122,7 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
               <div className="w-96">
                 <div className="relative h-48">
                   <StreamCard
+                    is_detail={false}
                     path_slug={item?.path_slug}
                     name={item?.name}
                     redirect={`/cctv/${item?.id}`}

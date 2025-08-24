@@ -73,6 +73,7 @@ export default function Helmet() {
               key={i}
             >
               <StreamCard
+                is_detail={false}
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
                 redirect={`/helmet/${item?.data?.id}`}

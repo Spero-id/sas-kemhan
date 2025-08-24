@@ -12,6 +12,7 @@ export default function PartialsHelmet({ classParent, classStream }: Readonly<{ 
       {data?.data?.map((item: any, i: number) => (
         <div className={classStream} key={i}>
           <StreamCard
+            is_detail={false}
             path_slug={item?.path_slug}
             name={item?.name}
             redirect={`/helmet/${item?.id}`}

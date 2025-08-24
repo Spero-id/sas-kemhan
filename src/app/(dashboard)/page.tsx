@@ -80,6 +80,7 @@ export default function Home() {
               key={i}
             >
               <StreamCard
+                is_detail={false}
                 active={item?.data?.status}
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
