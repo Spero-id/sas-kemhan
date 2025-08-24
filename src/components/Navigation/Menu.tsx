@@ -41,7 +41,7 @@ export default function MenuNavigation() {
           Body-Worm Camera
         </Link>
       )}
-      {hasPermission(data?.user, "dashboard.helmet.view") && (
+      {/* {hasPermission(data?.user, "dashboard.helmet.view") && (
         <Link
           href="/helmet"
           className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${
@@ -64,7 +64,7 @@ export default function MenuNavigation() {
       >
         <MdCamera />
         Other
-      </Link>
+      </Link> */}
     </div>
   );
 }

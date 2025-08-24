@@ -5,6 +5,7 @@ export type BodyWorm = {
   rtsp_url: string;
   star: boolean;
   status: boolean;
+  need_convert: boolean;
   created_at: string;
   updated_at: string;
 };

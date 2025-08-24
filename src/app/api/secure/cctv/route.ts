@@ -6,10 +6,33 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const data = await prisma.cctv.findMany();
+
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+    const body = await response.json();
+    const cctvList = body.items || [];
+
+    const data = await prisma.cctv.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+
+    const mergedData = data.map(cctv => {
+      const cctvItem = cctvList.find((item: any) => item.name === cctv.path_slug);
+      return {
+        ...cctv,
+        status: cctvItem?.ready || false,
+      };
+    });
+
+
+
     return NextResponse.json({
       status: true,
-      data: data,
+      data: mergedData,
     });
   } catch (error) {
     console.log(error);
@@ -51,6 +74,22 @@ export async function POST(request: Request) {
         long: body.long,
       },
     });
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/add/cctv_${body.path_slug}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source: body.rtsp_url,
+      }),
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
 
     // update settings
     await prisma.settings.update({

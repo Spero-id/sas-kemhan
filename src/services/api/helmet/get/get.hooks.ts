@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllHelmet, getDetailHelmet, getRamdomHelmet, getStarHelmet } from "./get.service";
 
-export const useAllHelmet = () => {
+export const useAllHelmet = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getAllHelmet(),
     queryKey: ["all-helmet"],
+    ...(refetchInterval && { refetchInterval }),
   });
 };
 

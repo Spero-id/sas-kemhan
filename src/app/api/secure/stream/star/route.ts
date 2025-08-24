@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
       where: { star: true },
     });
 
-    if (currentCount >= 3) {
+    if (currentCount >= 6) {
       return NextResponse.json(
-        { error: "Maximum 3 items can be starred" },
+        { error: "Maximum 6 items can be starred" },
         { status: 400 }
       );
     }

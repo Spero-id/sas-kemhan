@@ -31,15 +31,21 @@ export default function TableBodyWorm() {
     columnHelper.accessor((row) => row?.status, {
       id: "status_helmet",
       cell: (info) => {
-        return (
-          <ToggleStream
-            path_slug={info.row.original.path_slug}
-            status={info.row.original.status}
-            rtsp={info.row.original.rtsp_url}
-            type={3}
-            audio={true}
-          />
-        );
+        if (info.row.original.need_convert) {
+          return (
+            <ToggleStream
+              path_slug={info.row.original.path_slug}
+              status={info.row.original.status}
+              rtsp={info.row.original.rtsp_url}
+              type={3}
+              audio={true}
+            />
+          );
+        } else {
+          return (<p>-</p>)
+
+        }
+
       },
       header: () => <span>Status Body Worm</span>,
     }),

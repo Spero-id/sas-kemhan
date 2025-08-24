@@ -20,7 +20,7 @@ export async function GET() {
         },
       },
     });
-    
+
     return NextResponse.json({
       status: true,
       data: users,
@@ -50,6 +50,7 @@ export async function POST(request: Request) {
     const image = formData.get("image") as File;
 
     const passwordHash = await bcrypt.hash(password, saltRounds);
+    // const fileUrl = "http://localhost:3000/images/profile.png";
     const fileUrl = await uploadToMinio(image, "uploads/profile");
 
     const data = await prisma.user.create({
@@ -61,6 +62,26 @@ export async function POST(request: Request) {
         roleId: roleId,
       },
     });
+
+    await prisma.layout.createMany({
+      data: [
+        {
+          name: `cctv`,
+          user_id: data.id,
+          layout: [], // Initialize with an empty layout
+        }, {
+          name: `helmet`,
+          user_id: data.id,
+          layout: [], // Initialize with an empty layout
+        }, {
+          name: `body_worm`,
+          user_id: data.id,
+          layout: [], // Initialize with an empty layout
+        }
+      ],
+    });
+
+
 
     return NextResponse.json({
       status: true,

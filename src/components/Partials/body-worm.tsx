@@ -15,6 +15,7 @@ export default function PartialsBodyWorm({
       {data?.data?.map((item: any, i: number) => (
         <div className={classStream} key={i}>
           <StreamCard
+            is_detail={true}
             path_slug={item?.path_slug}
             name={item?.name}
             redirect={`/body-worm/${item?.id}`}

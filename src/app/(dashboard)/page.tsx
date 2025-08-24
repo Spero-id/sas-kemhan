@@ -7,17 +7,28 @@ import { useAllCctv } from "@/services/api/cctv/get/get.hooks";
 import { Cctv } from "@/types/Cctv/TypeCctv";
 import { useAtom } from "jotai";
 import GridLayout from "react-grid-layout";
-import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
+import { useDetailLayout, useLayoutByUser } from "@/services/api/layout/get/get.hooks";
 import { useEffect, useState } from "react";
 import StreamCard from "@/components/StreamCard";
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
-  const { isLoading, data } = useAllCctv();
+  const { isLoading, data } = useAllCctv(1000);
 
+  // const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
+  //   id: "4", // layout cctv
+  // });
+
+
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
-    id: "1", // layout cctv
+    id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "cctv")?.id || "3",
+  }, {
+    enabled: !isLoadingUserLayout && !!dataUserLayout
   });
+
+
+
 
   const [layout, setLayout] = useState<any[]>();
 
@@ -60,16 +71,16 @@ export default function Home() {
           {layout?.map((item, i: number) => (
             <div
               data-grid={layout[i]}
-              className={`h-full w-full ${
-                item.data.name
-                  .toLowerCase()
-                  .includes(searchDashboard.toLowerCase())
-                  ? ""
-                  : "hidden"
-              }`}
+              className={`h-full w-full ${item.data.name
+                .toLowerCase()
+                .includes(searchDashboard.toLowerCase())
+                ? ""
+                : "hidden"
+                }`}
               key={i}
             >
               <StreamCard
+                active={item?.data?.status}
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
                 redirect={`/cctv/${item?.data?.id}`}

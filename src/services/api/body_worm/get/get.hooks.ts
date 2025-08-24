@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllBodyWorm, getDetailBodyWorm, getRamdomBodyWorm, getStarBodyWorm } from "./get.service";
 
-export const useAllBodyWorm = () => {
+export const useAllBodyWorm = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getAllBodyWorm(),
     queryKey: ["all-body-worm"],
+    ...(refetchInterval && { refetchInterval }),
   });
 };
 

@@ -6,10 +6,29 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const prisma = getPrismaClient();
   try {
-    const data = await prisma.body_worm.findMany();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+    const body = await response.json();
+    const cctvList = body.items || [];
+
+    const data = await prisma.body_worm.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+
+    const mergedData = data.map(cctv => {
+      const cctvItem = cctvList.find((item: any) => item.name === cctv.path_slug);
+      return {
+        ...cctv,
+        status: cctvItem?.ready || false,
+      };
+    });
+
+
     return NextResponse.json({
       status: true,
-      data: data,
+      data: mergedData,
     });
   } catch (error) {
     console.log(error);
@@ -42,13 +61,33 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
+
+    // console.log(body)
+
     const result = await prisma.body_worm.create({
       data: {
         name: body.name,
         path_slug: `body_worm_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
+        need_convert: body.need_convert,
       },
     });
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/add/body_worm_${body.path_slug}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source: body.need_convert ? "publisher" : body.rtsp_url,
+      }),
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
 
     // update settings
     await prisma.settings.update({

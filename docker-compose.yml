@@ -22,6 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: app
+    image: sas-hajid:latest
     restart: always
     ports:
       - "3000:3000"

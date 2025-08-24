@@ -65,6 +65,26 @@ export async function PUT(
       },
     });
 
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/patch/helmet_${path_slug}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source: rtsp_url,
+      }),
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
+
+
+
+
     return NextResponse.json({
       status: true,
       data: result,
@@ -87,6 +107,41 @@ export async function DELETE(
 ) {
   const prisma = getPrismaClient();
   try {
+
+
+    const helmet = await prisma.helmet.findFirst({
+      where: {
+        id: parseInt(params.id),
+      },
+    });
+
+
+
+    if (!helmet) {
+      return NextResponse.json(
+        {
+          status: false,
+          message: "Helmet not found",
+        },
+        { status: 404 }
+      );
+    }
+
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/delete/${helmet.path_slug}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+
+    if (!response.ok) {
+      throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);
+    }
+
+
     await prisma.helmet.delete({
       where: {
         id: parseInt(params.id),

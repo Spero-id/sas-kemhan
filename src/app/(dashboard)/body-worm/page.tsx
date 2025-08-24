@@ -5,7 +5,8 @@ import LoadingGetData from "@/components/Loading/LoadingGetData";
 import Navigation from "@/components/Navigation/Navigation";
 import { useAtom } from "jotai";
 import GridLayout from "react-grid-layout";
-import { useDetailLayout } from "@/services/api/layout/get/get.hooks";
+import { useDetailLayout, useLayoutByUser } from "@/services/api/layout/get/get.hooks";
+
 import { useEffect, useState } from "react";
 import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
 import { BodyWorm as BodyWormType } from "@/types/BodyWorm/TypeBodyWorm";
@@ -13,10 +14,12 @@ import StreamCard from "@/components/StreamCard";
 
 export default function BodyWorm() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
-  const { isLoading, data } = useAllBodyWorm();
-
+  const { isLoading, data } = useAllBodyWorm(1000);
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
-    id: "3", // layout bodyWorm
+    id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "body_worm")?.id || "3",
+  }, {
+    enabled: !isLoadingUserLayout && !!dataUserLayout
   });
 
   const [layout, setLayout] = useState<any[]>();
@@ -40,6 +43,7 @@ export default function BodyWorm() {
           return item;
         });
 
+
       setLayout(mappingLayout);
     }
   }, [isLoadingLayout, isLoading, data, dataLayout]);
@@ -62,13 +66,12 @@ export default function BodyWorm() {
           {layout?.map((item, i: number) => (
             <div
               data-grid={layout[i]}
-              className={`h-full w-full ${
-                item.data.name
-                  .toLowerCase()
-                  .includes(searchDashboard.toLowerCase())
-                  ? ""
-                  : "hidden"
-              }`}
+              className={`h-full w-full ${item.data.name
+                .toLowerCase()
+                .includes(searchDashboard.toLowerCase())
+                ? ""
+                : "hidden"
+                }`}
               key={i}
             >
               <StreamCard

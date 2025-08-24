@@ -12,21 +12,30 @@ export async function GET(
   const prisma = getPrismaClient();
   try {
     let data : LayoutEdit[] = [];
-    if (params.id == "1") {
+   
+    const layout = await prisma.layout.findFirst(
+      {
+        where: {
+          id: parseInt(params.id),
+        },
+      }
+    );
+
+    if (layout?.name === "cctv") {
       data = await prisma.cctv.findMany({
         select: {
           path_slug: true,
           name: true,
         },
       });
-    }else if (params.id == "2") {
+    } else if (layout?.name === "helmet") {
       data = await prisma.helmet.findMany({
         select: {
           path_slug: true,
           name: true,
         },
       });
-    }else{
+    } else if (layout?.name === "body_worm") {
       data = await prisma.body_worm.findMany({
         select: {
           path_slug: true,
@@ -35,13 +44,7 @@ export async function GET(
       });
     }
 
-    const layout = await prisma.layout.findFirst(
-      {
-        where: {
-          id: parseInt(params.id),
-        },
-      }
-    );
+
 
     return NextResponse.json({
       status: true,

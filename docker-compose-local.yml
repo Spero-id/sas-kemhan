@@ -10,35 +10,35 @@ services:
       - "8889:8889"
       - "554:554"
       - "554:554/udp"
+      - "9997:9997"
       - "8189:8189/udp"
     volumes:
       - ./config/mediamtx.yml:/mediamtx.yml
       - ./public/recordings:/recordings
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: app
-    restart: always
-    ports:
-      - "3000:3000"
-    environment:
-      AUTH_URL: ${AUTH_URL}
-      AUTH_SECRET: ${AUTH_SECRET}
-      NODE_ENV: ${NODE_ENV}
-      BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
-      DATABASE_URL: ${DATABASE_URL}
-      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
-      NEXT_PUBLIC_MEDIAMTX_URL: ${NEXT_PUBLIC_MEDIAMTX_URL}
-      NEXT_PUBLIC_MEDIAMTX_RTSP: ${NEXT_PUBLIC_MEDIAMTX_RTSP}
-      NEXT_PUBLIC_MAPS: ${NEXT_PUBLIC_MAPS}
-      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
-      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
-      MEDIAMTX_STUN: ${MEDIAMTX_STUN}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./config:/app/config
-    network_mode: host
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: app
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     AUTH_URL: ${AUTH_URL}
+  #     AUTH_SECRET: ${AUTH_SECRET}
+  #     NODE_ENV: ${NODE_ENV}
+  #     BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
+  #     NEXT_PUBLIC_MEDIAMTX_URL: ${NEXT_PUBLIC_MEDIAMTX_URL}
+  #     NEXT_PUBLIC_MEDIAMTX_RTSP: ${NEXT_PUBLIC_MEDIAMTX_RTSP}
+  #     NEXT_PUBLIC_MAPS: ${NEXT_PUBLIC_MAPS}
+  #     MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+  #     MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+  #     MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+  #     MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+  #     MEDIAMTX_STUN: ${MEDIAMTX_STUN}
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./config:/app/config
+  #   network_mode: host

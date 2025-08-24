@@ -1,17 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllCctv, getDetailCctv, getRamdomCctv, getStarCctv } from "./get.service";
 
-export const useAllCctv = () => {
+export const useAllCctv = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getAllCctv(),
     queryKey: ["all-cctv"],
+    ...(refetchInterval && { refetchInterval }),
   });
 };
 
-export const useDetailCctv = ({ id }: { id: string }) => {
+export const useDetailCctv = ({ id, refetchInterval }: { id: string; refetchInterval?: number }) => {
   return useQuery({
     queryFn: () => getDetailCctv(id),
     queryKey: ["detail-cctv", id],
+    ...(refetchInterval && { refetchInterval }),
+
   });
 };
 
@@ -22,9 +25,10 @@ export const useGetRandomCctv = (limit: number) => {
   });
 };
 
-export const useGetStarCctv = () => {
+export const useGetStarCctv = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getStarCctv(),
     queryKey: ["star-cctv"],
+    ...(refetchInterval && { refetchInterval }),
   });
 };
