@@ -51,10 +51,8 @@ export default function DetailCctv({
             )}
           </div>
           <div className="mt-5 gap-3">
-
             <PartialsCctv classParent="grid grid-cols-3 gap-3" classStream="h-36" />
           </div>
-
         </div>
         <div>
 

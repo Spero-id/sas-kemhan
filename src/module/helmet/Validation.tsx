@@ -19,6 +19,10 @@ const defaultSchema = z.object({
   rtsp_url: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
+
+  region_id: z.string({
+    required_error: REQUIRED_FIELD.message,
+  }),
 });
 
 const HelmetPostValidation = z

@@ -44,6 +44,7 @@ export async function PUT(
     const path_slug = req.path_slug as string;
     const rtsp_url = req.rtsp_url as string;
     const need_convert = req.need_convert as boolean;
+    const region_id = req.region_id as string;
 
     const result = await prisma.body_worm.update({
       where: {
@@ -54,6 +55,7 @@ export async function PUT(
         path_slug: `body_worm_${path_slug}`,
         rtsp_url: rtsp_url,
         need_convert: need_convert,
+        region_id: parseInt(region_id),
       },
     });
 

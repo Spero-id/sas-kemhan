@@ -1,11 +1,11 @@
 export type ResponseAllLayout = {
   status: boolean;
-  data: Layout[];
+  data: Layouts[];
 };
 
 export type ResponseUserLayout = {
   status: boolean;
-   data: {
+  data: {
     layout: UserLayout[];
   };
 };
@@ -29,6 +29,17 @@ export type Layout = Partial<{
   layout: string;
   created_at: string;
   updated_at: string;
+}>;
+
+export type Layouts = Partial<{
+  id: string;
+  name: string;
+  layout: string;
+  created_at: string;
+  updated_at: string;
+  regions: {
+    name: string;
+  };
 }>;
 
 export type UserLayout = Partial<{

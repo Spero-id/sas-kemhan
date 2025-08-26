@@ -43,6 +43,7 @@ export async function PUT(
     const name = req.name as string;
     const path_slug = req.path_slug as string;
     const rtsp_url = req.rtsp_url as string;
+    const region_id = req.region_id as string;
 
     const result = await prisma.helmet.update({
       where: {
@@ -52,6 +53,7 @@ export async function PUT(
         name: name,
         path_slug: `helmet_${path_slug}`,
         rtsp_url: rtsp_url,
+        region_id: parseInt(region_id),
       },
     });
 

@@ -8,105 +8,121 @@ async function main() {
   // Create Permission
   await prisma.permission.createMany({
     data: [
-      { 
+      {
         name: 'View User',
-        code: 'user.view' 
+        code: 'user.view'
       },
-      { 
+      {
         name: 'Create User',
-        code: 'user.create' 
+        code: 'user.create'
       },
-      { 
+      {
         name: 'Update User',
-        code: 'user.update' 
+        code: 'user.update'
       },
-      { 
+      {
         name: 'Delete User',
-        code: 'user.delete' 
+        code: 'user.delete'
       },
-      { 
+      {
         name: 'View Role',
-        code: 'role.view' 
+        code: 'role.view'
       },
-      { 
+      {
         name: 'Create Role',
-        code: 'role.create' 
+        code: 'role.create'
       },
-      { 
+      {
         name: 'Update Role',
-        code: 'role.update' 
+        code: 'role.update'
       },
-      { 
+      {
         name: 'Delete Role',
-        code: 'role.delete' 
+        code: 'role.delete'
       },
-      { 
+      {
+        name: 'View Region',
+        code: 'region.view'
+      },
+      {
+        name: 'Create Region',
+        code: 'region.create'
+      },
+      {
+        name: 'Update Region',
+        code: 'region.update'
+      },
+      {
+        name: 'Delete Region',
+        code: 'region.delete'
+      },
+      {
         name: 'View CCTV',
-        code: 'cctv.view' 
+        code: 'cctv.view'
       },
-      { 
+      {
         name: 'Create CCTV',
-        code: 'cctv.create' 
+        code: 'cctv.create'
       },
-      { 
+      {
         name: 'Update CCTV',
-        code: 'cctv.update' 
+        code: 'cctv.update'
       },
-      { 
+      {
         name: 'Delete CCTV',
-        code: 'cctv.delete' 
+        code: 'cctv.delete'
       },
-      { 
+      {
         name: 'View Body Worm',
-        code: 'body_worm.view' 
+        code: 'body_worm.view'
       },
-      { 
+      {
         name: 'Create Body Worm',
-        code: 'body_worm.create' 
+        code: 'body_worm.create'
       },
-      { 
+      {
         name: 'Update Body Worm',
-        code: 'body_worm.update' 
+        code: 'body_worm.update'
       },
-      { 
+      {
         name: 'Delete Body Worm',
-        code: 'body_worm.delete' 
+        code: 'body_worm.delete'
       },
-      { 
+      {
         name: 'View Helmet',
-        code: 'helmet.view' 
+        code: 'helmet.view'
       },
-      { 
+      {
         name: 'Create Helmet',
-        code: 'helmet.create' 
+        code: 'helmet.create'
       },
-      { 
+      {
         name: 'Update Helmet',
-        code: 'helmet.update' 
+        code: 'helmet.update'
       },
-      { 
+      {
         name: 'Delete Helmet',
-        code: 'helmet.delete' 
+        code: 'helmet.delete'
       },
-      { 
+      {
         name: 'View Layout',
-        code: 'layout.view' 
+        code: 'layout.view'
       },
-      { 
+      {
         name: 'Update Layout',
-        code: 'layout.update' 
+        code: 'layout.update'
       },
-      { 
+      {
         name: 'Dashboard CCTV',
-        code: 'dashboard.cctv.view' 
+        code: 'dashboard.cctv.view'
       },
-      { 
+      {
         name: 'Dashboard Body Worn',
-        code: 'dashboard.body_worm.view' 
+        code: 'dashboard.body_worm.view'
       },
-      { 
+      {
         name: 'Dashboard Helmet',
-        code: 'dashboard.helmet.view' 
+        code: 'dashboard.helmet.view'
       },
     ],
   })
@@ -117,7 +133,7 @@ async function main() {
       name: 'superadmin',
     },
   })
-  
+
   const allPermissions = await prisma.permission.findMany({
     select: { id: true },
   })
@@ -171,23 +187,34 @@ async function main() {
 
   // Now you can use adminUser.id for any operations that need the user ID
 
+
+  const region = await prisma.regions.create({
+    data: {
+      name: 'base',
+    }
+  })
+
+
   // Create Layout
   await prisma.layout.createMany({
     data: [
       {
         name: 'cctv',
         user_id: adminUser.id,
-        layout: []
+        layout: [],
+        region_id: region.id
       },
       {
         name: 'helmet',
         user_id: adminUser.id,
-        layout: []
+        layout: [],
+        region_id: region.id
       },
       {
         name: 'body_worm',
         user_id: adminUser.id,
-        layout: []
+        layout: [],
+        region_id: region.id
       },
     ],
   })

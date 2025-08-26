@@ -21,7 +21,12 @@ const defaultSchema = z.object({
   }),
   need_convert: z.boolean({
     required_error: REQUIRED_FIELD.message,
+  }).optional(),
+  region_id: z.string({
+    required_error: REQUIRED_FIELD.message,
   }),
+
+
 });
 
 const BodyWormPostValidation = z

@@ -17,6 +17,7 @@ export default function Helmet() {
   const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
     id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "helmet")?.id || "3",
+    refetchInterval: 1000
   }, {
     enabled: !isLoadingUserLayout && !!dataUserLayout
   });

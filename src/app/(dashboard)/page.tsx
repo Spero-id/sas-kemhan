@@ -10,19 +10,19 @@ import GridLayout from "react-grid-layout";
 import { useDetailLayout, useLayoutByUser } from "@/services/api/layout/get/get.hooks";
 import { useEffect, useState } from "react";
 import StreamCard from "@/components/StreamCard";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllCctv(1000);
 
-  // const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
-  //   id: "4", // layout cctv
-  // });
+  const searchParams = useSearchParams();
+  const region = searchParams?.get("region");
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser(region != null ? parseInt(region) : undefined);
 
-
-  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
     id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "cctv")?.id || "3",
+    refetchInterval: 1000
   }, {
     enabled: !isLoadingUserLayout && !!dataUserLayout
   });

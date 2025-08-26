@@ -38,10 +38,12 @@ export default function FormEditBodyWorm({ id }: Readonly<FormBodyWormProps>) {
         name: data?.data.name,
         path_slug: data?.data.path_slug?.replace("body_worm_", "") || "",
         rtsp_url: data?.data.rtsp_url,
+        need_convert: data?.data.need_convert || false,
+        region_id: data?.data.region_id!.toString() ,
       });
     }
   }, [data, isLoading, reset]);
-  
+
   const onSubmit: SubmitHandler<BodyWormEditSchema> = (values: BodyWormEditSchema) => {
     updateRole.mutate(
       {

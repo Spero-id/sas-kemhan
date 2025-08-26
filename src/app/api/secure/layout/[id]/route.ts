@@ -11,8 +11,8 @@ export async function GET(
 ) {
   const prisma = getPrismaClient();
   try {
-    let data : LayoutEdit[] = [];
-   
+    let data: LayoutEdit[] = [];
+
     const layout = await prisma.layout.findFirst(
       {
         where: {
@@ -23,6 +23,9 @@ export async function GET(
 
     if (layout?.name === "cctv") {
       data = await prisma.cctv.findMany({
+        where: layout.region_id === 1 ? {} : {
+          region_id: layout.region_id,
+        },
         select: {
           path_slug: true,
           name: true,
@@ -30,6 +33,9 @@ export async function GET(
       });
     } else if (layout?.name === "helmet") {
       data = await prisma.helmet.findMany({
+        where: layout.region_id === 1 ? {} : {
+          region_id: layout.region_id,
+        },
         select: {
           path_slug: true,
           name: true,
@@ -37,6 +43,9 @@ export async function GET(
       });
     } else if (layout?.name === "body_worm") {
       data = await prisma.body_worm.findMany({
+        where: layout.region_id === 1 ? {} : {
+          region_id: layout.region_id,
+        },
         select: {
           path_slug: true,
           name: true,
@@ -80,7 +89,7 @@ export async function PUT(
       data: {
         layout: layout,
       },
-    })  
+    })
 
     return NextResponse.json({
       status: true,

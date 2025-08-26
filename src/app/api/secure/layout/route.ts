@@ -22,11 +22,17 @@ export async function GET() {
     }
 
     const userId = parseInt(session.user.id as string);
-    
     const layouts = await prisma.layout.findMany({
       where: {
         user_id: userId,
-      }
+      },
+      include: {
+        regions: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json({

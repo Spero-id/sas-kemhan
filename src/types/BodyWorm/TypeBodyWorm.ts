@@ -6,6 +6,7 @@ export type BodyWorm = {
   star: boolean;
   status: boolean;
   need_convert: boolean;
+  region_id: number;
   created_at: string;
   updated_at: string;
 };

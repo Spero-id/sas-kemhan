@@ -11,13 +11,18 @@ import { useEffect, useState } from "react";
 import { useAllBodyWorm } from "@/services/api/body_worm/get/get.hooks";
 import { BodyWorm as BodyWormType } from "@/types/BodyWorm/TypeBodyWorm";
 import StreamCard from "@/components/StreamCard";
+import { useSearchParams } from "next/navigation";
 
 export default function BodyWorm() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllBodyWorm(1000);
-  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
+  const searchParams = useSearchParams();
+  const region = searchParams?.get("region");
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser(region != null ? parseInt(region) : undefined);
+
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
     id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "body_worm")?.id || "3",
+    refetchInterval: 1000
   }, {
     enabled: !isLoadingUserLayout && !!dataUserLayout
   });
@@ -75,6 +80,7 @@ export default function BodyWorm() {
               key={i}
             >
               <StreamCard
+                active={item?.data?.status}
                 is_detail={false}
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}

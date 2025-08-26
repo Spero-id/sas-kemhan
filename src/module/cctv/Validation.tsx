@@ -22,6 +22,9 @@ const CctvValidation = z.object({
   long: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
+  region_id: z.string({
+    required_error: REQUIRED_FIELD.message,
+  }),
 });
 
 export { CctvValidation };
