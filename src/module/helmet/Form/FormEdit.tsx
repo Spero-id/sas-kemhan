@@ -38,10 +38,11 @@ export default function FormEditHelmet({ id }: Readonly<FormHelmetProps>) {
         name: data?.data.name,
         path_slug: data?.data.path_slug?.replace("helmet_", "") || "",
         rtsp_url: data?.data.rtsp_url,
+        region_id: data?.data.region_id.toString(),
       });
     }
   }, [data, isLoading, reset]);
-  
+
   const onSubmit: SubmitHandler<HelmetEditSchema> = (values: HelmetEditSchema) => {
     updateRole.mutate(
       {

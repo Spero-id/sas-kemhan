@@ -8,17 +8,18 @@ export const useAllLayout = () => {
   });
 };
 
-export const useDetailLayout = ({ id }: { id: string }, options?: { enabled?: boolean }) => {
+export const useDetailLayout = ({ id, refetchInterval }: { id: string, refetchInterval?: number }, options?: { enabled?: boolean }) => {
   return useQuery({
     queryFn: () => getDetailLayout(id),
     queryKey: ["detail-layout", id],
     enabled: options?.enabled ?? true,
+    ...(refetchInterval && { refetchInterval }),
   });
 };
 
-export const useLayoutByUser = () => {
+export const useLayoutByUser = (regionId?: number) => {
   return useQuery({
-    queryFn: () => getUserLayout(),
+    queryFn: () => getUserLayout(regionId),
     queryKey: ["layout-by-user"],
   });
 };

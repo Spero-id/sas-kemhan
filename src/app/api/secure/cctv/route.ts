@@ -3,17 +3,21 @@ import { getPrismaClient } from "../../../../../lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: Request) {
   const prisma = getPrismaClient();
   try {
-
-
+    // Get region from query parameters
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
     const body = await response.json();
     const cctvList = body.items || [];
 
+
+    const { searchParams } = new URL(request.url);
+    const regionId = searchParams.get('region');
+    const whereClause = regionId ? { region_id: parseInt(regionId) } : {};
     const data = await prisma.cctv.findMany({
+      where: whereClause,
       orderBy: {
         name: 'asc',
       },
@@ -72,6 +76,7 @@ export async function POST(request: Request) {
         rtsp_url: body.rtsp_url,
         lat: body.lat,
         long: body.long,
+        region_id: parseInt(body.region_id),
       },
     });
 

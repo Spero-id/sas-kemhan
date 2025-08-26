@@ -2,7 +2,7 @@ import LoadingTableCustom from "@/components/Loading/LoadingTableCustom";
 import TableCustom from "@/components/Table/TableCustom";
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
-import { Role as RoleType } from "@/types/Role/TypeRole";
+import { Layouts as LayoutType } from "@/types/Layout/TypeLayout";
 import { useAllLayout } from "@/services/api/layout/get/get.hooks";
 import { useSession } from "next-auth/react";
 import { hasPermission } from "@/utils/permissions";
@@ -11,13 +11,18 @@ export default function TableLayout() {
   const { isLoading, data } = useAllLayout();
   const { status, data: dataSession } = useSession();
 
-  const columnHelper = createColumnHelper<RoleType>();
+  const columnHelper = createColumnHelper<LayoutType>();
 
   const columns = [
     columnHelper.accessor((row) => row.name, {
       id: "name",
       cell: (info) => info.getValue(),
       header: () => <span>Name</span>,
+    }),
+    columnHelper.accessor((row) => row.regions?.name, {
+      id: "region",
+      cell: (info) => info.getValue(),
+      header: () => <span>Region</span>,
     }),
     columnHelper.accessor((row) => row.id, {
       id: "action",

@@ -48,7 +48,7 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
         (position) => {
           const { latitude, longitude } = position.coords;
           setPosition([latitude, longitude] as LatLngTuple);
-          setZoom(13); // Zoom lebih dekat ke lokasi user
+          setZoom(15); // Zoom lebih dekat ke lokasi user
           console.log(position);
         },
         (error) => {

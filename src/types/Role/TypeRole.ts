@@ -1,3 +1,4 @@
+
 export type ResponseAllRole = {
   status: boolean;
   data: Role[];

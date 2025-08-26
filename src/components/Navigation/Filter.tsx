@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
+import RegionSelector from "./RegionSelector";
 
 export default function FilterNavigation({
   urlManage,
@@ -27,6 +28,7 @@ export default function FilterNavigation({
         />
         <CiSearch />
       </label>
+      <RegionSelector />
       {hasPermission(data?.user, permissionManage) && (
         <Link
           className="bg-deep-teal bg-opacity-50 rounded text-white flex items-center justify-center p-3"

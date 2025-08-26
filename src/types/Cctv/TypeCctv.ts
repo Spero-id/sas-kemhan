@@ -7,6 +7,7 @@ export type Cctv = {
   long: string;
   created_at: string;
   updated_at: string;
+  region_id: string;
   star: boolean;
 };
 
@@ -37,6 +38,7 @@ export type ResponseDetailCctv = {
     lat: string;
     long: string;
     star: boolean;
+    region_id: string;
     created_at: string;
     updated_at: string;
   };

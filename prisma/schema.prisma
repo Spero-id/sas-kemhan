@@ -42,8 +42,10 @@ model cctv {
   updated_at DateTime @updatedAt
   lat        String
   long       String
-  status  Boolean @default(false)
+  status     Boolean  @default(false)
   star       Boolean  @default(false)
+  region_id  Int
+  regions    regions  @relation(fields: [region_id], references: [id])
 }
 
 model helmet {
@@ -55,18 +57,24 @@ model helmet {
   status     Boolean  @default(false)
   id         Int      @id @default(autoincrement())
   star       Boolean  @default(false)
+  region_id  Int
+
+  regions regions @relation(fields: [region_id], references: [id])
 }
 
 model body_worm {
-  name       String
-  path_slug  String   @unique
-  rtsp_url   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  id         Int      @id @default(autoincrement())
-  star       Boolean  @default(false)
-  status     Boolean  @default(false)
-  need_convert Boolean @default(false)
+  name         String
+  path_slug    String   @unique
+  rtsp_url     String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  star         Boolean  @default(false)
+  status       Boolean  @default(false)
+  need_convert Boolean  @default(false)
+  region_id    Int
+
+  regions regions @relation(fields: [region_id], references: [id])
 }
 
 model role {
@@ -104,6 +112,8 @@ model layout {
   updated_at DateTime @updatedAt
   user_id    Int
   user       user     @relation(fields: [user_id], references: [id])
+  region_id  Int
+  regions    regions  @relation(fields: [region_id], references: [id])
 }
 
 model settings {
@@ -112,6 +122,17 @@ model settings {
   value      String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+model regions {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  cctv       cctv[]
+  helmet     helmet[]
+  body_worm  body_worm[]
+  layout     layout[]
 }
 
 enum ChatType {

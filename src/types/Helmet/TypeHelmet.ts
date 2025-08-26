@@ -5,6 +5,7 @@ export type Helmet = {
   rtsp_url: string;
   status: boolean;
   star: boolean;
+  region_id: string;
   created_at: string;
   updated_at: string;
 };

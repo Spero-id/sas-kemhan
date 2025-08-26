@@ -40,10 +40,11 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
         rtsp_url: data?.data.rtsp_url,
         lat: data?.data.lat,
         long: data?.data.long,
+        region_id: data?.data.region_id,
       });
     }
   }, [data, isLoading, reset]);
-  
+
   const onSubmit: SubmitHandler<CctvSchema> = (values: CctvSchema) => {
     updateRole.mutate(
       {

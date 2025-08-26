@@ -1,13 +1,17 @@
 import { Button } from "react-daisyui";
 import InputForm from "@/components/FormGroup/Input";
 import InputWithPrefixForm from "@/components/FormGroup/InputWithPrefix";
+import SelectCustom from "@/components/FormGroup/Select";
+import { useEffect, useState } from "react";
+import { useAllRegion } from "@/services/api/region/get/get.hooks";
+import { Region } from "@/types/Region/TypeRegion";
 
 export default function FormElement({
   control,
   onSubmit,
   valuePhotos = [],
-  handleSubmit = () => {},
-  hooksDeleteFile = () => {},
+  handleSubmit = () => { },
+  hooksDeleteFile = () => { },
 }: Readonly<{
   control: any;
   onSubmit: any;
@@ -15,6 +19,26 @@ export default function FormElement({
   handleSubmit?: any;
   hooksDeleteFile?: any;
 }>) {
+
+
+  const [optionRegion, setOptionRegion] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const { data, isLoading } = useAllRegion();
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      const optionsParse = data.data.map((region: Region) => ({
+        value: region.id!.toString(),
+        label: region.name!,
+      }));
+
+      setOptionRegion(optionsParse);
+    }
+  }, [data, isLoading]);
+
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputForm
@@ -42,6 +66,16 @@ export default function FormElement({
         label="RTSP URL"
         placeholder="RTSP URL"
       ></InputForm>
+      <SelectCustom
+        control={control}
+        name="region_id"
+        label="Region"
+        flexDir="column"
+        isRequired={true}
+        options={optionRegion}
+        isClearable={true}
+        isMulti={false}
+      />
       <Button type="submit" className="mt-3">
         Save
       </Button>

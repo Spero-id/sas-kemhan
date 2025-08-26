@@ -50,8 +50,8 @@ export async function POST(request: Request) {
     const image = formData.get("image") as File;
 
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    // const fileUrl = "http://localhost:3000/images/profile.png";
-    const fileUrl = await uploadToMinio(image, "uploads/profile");
+    const fileUrl = "http://localhost:3000/images/profile.png";
+    // const fileUrl = await uploadToMinio(image, "uploads/profile");
 
     const data = await prisma.user.create({
       data: {
@@ -63,25 +63,33 @@ export async function POST(request: Request) {
       },
     });
 
+
+    const regions = await prisma.regions.findMany({});
+
     await prisma.layout.createMany({
-      data: [
-        {
-          name: `cctv`,
-          user_id: data.id,
-          layout: [], // Initialize with an empty layout
-        }, {
-          name: `helmet`,
-          user_id: data.id,
-          layout: [], // Initialize with an empty layout
-        }, {
-          name: `body_worm`,
-          user_id: data.id,
-          layout: [], // Initialize with an empty layout
-        }
-      ],
+      data: regions.map((region) => ({
+        name: `cctv`,
+        user_id: data.id,
+        layout: [],
+        region_id: region.id,
+      })),
     });
-
-
+    await prisma.layout.createMany({
+      data: regions.map((region) => ({
+        name: `helmet`,
+        user_id: data.id,
+        layout: [],
+        region_id: region.id,
+      })),
+    });
+    await prisma.layout.createMany({
+      data: regions.map((region) => ({
+        name: `body_worm`,
+        user_id: data.id,
+        layout: [],
+        region_id: region.id,
+      })),
+    });
 
     return NextResponse.json({
       status: true,
