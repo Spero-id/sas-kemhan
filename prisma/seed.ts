@@ -223,7 +223,7 @@ async function main() {
   await prisma.settings.create({
     data: {
       name: 'regenerate_mediamtx',
-      value: 'false',
+      value: 'true',
     },
   })
 }

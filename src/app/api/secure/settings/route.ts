@@ -49,6 +49,7 @@ export async function POST(request: Request) {
         rtsp_url: body.rtsp_url,
         lat: body.lat,
         long: body.long,
+        regions: body.regions, // Ensure body.regions matches regionsCreateNestedOneWithoutCctvInput type
       },
     });
 
