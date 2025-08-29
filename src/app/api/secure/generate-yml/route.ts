@@ -62,11 +62,11 @@ export async function POST() {
     }
 
     const allDevices = [...bodyWorm, ...helmet];
-1
+
     for (const device of allDevices) {
       if (device.path_slug && device.rtsp_url) {
         config.paths[device.path_slug] = {
-          source: 'publisher',
+          source: !('need_convert' in device) || device.need_convert ? "publisher" : device.rtsp_url,
         };
       }
     }
