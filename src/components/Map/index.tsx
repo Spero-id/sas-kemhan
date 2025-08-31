@@ -122,6 +122,7 @@ export default function MapComponent({ data }: Readonly<MapProps>) {
               <div className="w-96">
                 <div className="relative h-48">
                   <StreamCard
+                    active={item?.status ?? false}
                     is_detail={false}
                     path_slug={item?.path_slug}
                     name={item?.name}

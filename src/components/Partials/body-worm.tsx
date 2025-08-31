@@ -6,7 +6,7 @@ export default function PartialsBodyWorm({
   classParent,
   classStream,
 }: Readonly<{ classParent: string; classStream: string }>) {
-  const { data, isLoading } = useGetStarBodyWorm();
+  const { data, isLoading } = useGetStarBodyWorm(1000);
 
   return isLoading ? (
     <LoadingGetData />
@@ -15,6 +15,7 @@ export default function PartialsBodyWorm({
       {data?.data?.map((item: any, i: number) => (
         <div className={classStream} key={i}>
           <StreamCard
+            active={item?.status}
             is_detail={true}
             path_slug={item?.path_slug}
             name={item?.name}
