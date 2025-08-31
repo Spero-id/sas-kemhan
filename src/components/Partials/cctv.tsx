@@ -13,6 +13,7 @@ export default function PartialsCctv({ classParent, classStream }: Readonly<{ cl
       {data?.data?.map((item: Cctv, i: number) => (
         <div className={classStream} key={i}>
           <StreamCard
+            active={item?.status}
             is_detail={true}
             path_slug={item?.path_slug}
             name={item?.name}

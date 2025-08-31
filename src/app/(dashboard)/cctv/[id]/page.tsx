@@ -21,8 +21,8 @@ export default function DetailCctv({
 }: Readonly<{ params: { id: string } }>) {
   const id = params.id;
 
-  const { data, isLoading } = useDetailCctv({ id });
-  const { isLoading: isLoadingMarker, data: dataMarker } = useAllCctv();
+  const { data, isLoading } = useDetailCctv({ id: id, refetchInterval: 1000 });
+  const { isLoading: isLoadingMarker, data: dataMarker } = useAllCctv(1000);
 
   if (isLoading || isLoadingMarker || !dataMarker) {
     return <LoadingGetData />;
@@ -40,6 +40,7 @@ export default function DetailCctv({
           <div className="relative h-[28.5rem] h-">
             {data && (
               <StreamCard
+                active={data?.data?.status ?? false}
                 is_detail={false}
                 path_slug={data?.data?.path_slug ?? ""}
                 name={data?.data?.name ?? ""}

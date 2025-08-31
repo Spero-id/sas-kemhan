@@ -10,16 +10,32 @@ export async function GET(
 ) {
   const prisma = getPrismaClient();
   try {
-    const helmet = await prisma.helmet.findFirst({
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+    const body = await response.json();
+    const cctvList = body.items || [];
+
+    const data = await prisma.helmet.findFirst({
       where: {
         id: parseInt(params.id),
       },
     });
 
+    let mergedData = null;
+    if (data) {
+      const cctvItem = cctvList.find((item: any) => item.name === data.path_slug);
+      mergedData = {
+        ...data,
+        status: cctvItem?.ready || false,
+      };
+    }
+
+
     return NextResponse.json({
       status: true,
-      data: helmet,
+      data: mergedData,
     });
+
   } catch (error) {
     console.error(error);
     return NextResponse.json(

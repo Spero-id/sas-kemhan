@@ -7,16 +7,33 @@ export async function GET() {
   const prisma = getPrismaClient();
 
   try {
+
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+    const body = await response.json();
+    const cctvList = body.items || [];
+
     const data = await prisma.body_worm.findMany({
       where: {
         star: true,
       },
     });
 
+
+    const mergedData = data.map(cctv => {
+      const cctvItem = cctvList.find((item: any) => item.name === cctv.path_slug);
+      return {
+        ...cctv,
+        status: cctvItem?.ready || false,
+      };
+    });
+
+
     return NextResponse.json({
       status: true,
-      data,
+      data: mergedData,
     });
+
   } catch (error) {
     console.error("Error fetching body worm data:", error);
     return NextResponse.json(

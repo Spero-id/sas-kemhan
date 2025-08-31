@@ -23,9 +23,10 @@ export const useDetailBodyWorm = ({ id }: { id: string }) => {
   });
 };
 
-export const useGetStarBodyWorm = () => {
+export const useGetStarBodyWorm = (refetchInterval?: number) => {
   return useQuery({
     queryFn: () => getStarBodyWorm(),
     queryKey: ["star-body-worm"],
+    ...(refetchInterval && { refetchInterval }),
   });
 };

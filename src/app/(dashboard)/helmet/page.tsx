@@ -74,6 +74,7 @@ export default function Helmet() {
               key={i}
             >
               <StreamCard
+                active={item?.data?.status ?? false}
                 is_detail={false}
                 path_slug={item?.data?.path_slug}
                 name={item?.data?.name}
