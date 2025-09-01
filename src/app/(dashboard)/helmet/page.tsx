@@ -10,11 +10,15 @@ import { useEffect, useState } from "react";
 import { useAllHelmet } from "@/services/api/helmet/get/get.hooks";
 import { Helmet as HelmetType } from "@/types/Helmet/TypeHelmet";
 import StreamCard from "@/components/StreamCard";
+import { useSearchParams } from "next/navigation";
 
 export default function Helmet() {
   const [searchDashboard] = useAtom(searchDashboardAtom);
   const { isLoading, data } = useAllHelmet(1000);
-  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser();
+  const searchParams = useSearchParams();
+  const region = searchParams?.get("region");
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser(region != null ? parseInt(region) : 1);
+
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
     id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "helmet")?.id || "3",
     refetchInterval: 1000

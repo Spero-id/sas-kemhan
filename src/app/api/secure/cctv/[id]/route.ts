@@ -11,7 +11,7 @@ export async function GET(
   const prisma = getPrismaClient();
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+    const response = await fetch(`http://192.168.200.103:9997/v3/paths/list`);
     const body = await response.json();
     const cctvList = body.items || [];
 

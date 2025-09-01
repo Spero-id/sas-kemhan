@@ -18,7 +18,7 @@ export default function Home() {
 
   const searchParams = useSearchParams();
   const region = searchParams?.get("region");
-  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser(region != null ? parseInt(region) : undefined);
+  const { data: dataUserLayout, isLoading: isLoadingUserLayout } = useLayoutByUser(region != null ? parseInt(region) : 1);
 
   const { data: dataLayout, isLoading: isLoadingLayout } = useDetailLayout({
     id: dataUserLayout?.data?.layout?.find((layout: any) => layout.name === "cctv")?.id || "3",

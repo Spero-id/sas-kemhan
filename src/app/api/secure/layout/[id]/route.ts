@@ -21,6 +21,8 @@ export async function GET(
       }
     );
 
+
+
     if (layout?.name === "cctv") {
       data = await prisma.cctv.findMany({
         where: layout.region_id === 1 ? {} : {
