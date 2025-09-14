@@ -1,10 +1,11 @@
 
 "use client";
 
+import { Container } from "@/components/common/container";
 import TableRole from "@/module/role/TableRole";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -19,22 +20,27 @@ export default function Role() {
     ) {
       router.push("/");
     }
-  }, [status, data]);
+  }, [status, data, router]);
 
   return (
-    <div className="container mt-5 mx-auto">
-      <div className="w-full shadow rounded bg-white p-6">
-        <div className="flex justify-between items-center">
-          <h5 className="text-xl font-bold text-slate-600">Role</h5>
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+
           {status === "authenticated" &&
             hasPermission(data?.user, "role.create") && (
-              <Link href={"/manage/role/create"} className="btn">
+              <a href={"/manage/role/create"} className="btn">
                 Create
-              </Link>
+              </a>
             )}
-        </div>
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <TableRole />
-      </div>
+      </Container>
     </div>
   );
 }

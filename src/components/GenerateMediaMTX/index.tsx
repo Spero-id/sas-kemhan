@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { PostGenerateMediaMTX } from "@/services/api/generateMediaMTX/post/PostGenerateMediaMTX";
 import { useDetailSettings } from "@/services/api/settings/get/get.hooks";
+import { Button } from "react-daisyui";
 
 export default function ButtonGenerateMediaMTX() {
   const postGenerate = useMutation({
@@ -26,12 +27,12 @@ export default function ButtonGenerateMediaMTX() {
   };
 
   return !isLoading && (
-    <button
+    <Button
       onClick={onClickGenerate}
       className={`btn ${data?.data?.value == 'false' && "btn-warning"}`}
       disabled={postGenerate.isLoading}
     >
       {postGenerate.isLoading ? "Loading..." : "Regenerate MediaMTX"}
-    </button>
+    </Button>
   );
 }

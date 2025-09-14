@@ -1,7 +1,9 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { Container } from "@/components/common/container";
 import FormEditHelmet from "@/module/helmet/Form/FormEdit";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -23,21 +25,20 @@ export default function EditHelmet({
       router.push("/");
     }
   }, [status, data, router]);
-  
-  return (
-    <div className="container mx-auto mt-5">
-      <Breadcrumb
-        pageName="Edit Helmet"
-        linkPrevious={[
-          { href: "/manage/helmet", name: "Helmet / " },
-          { href: "/manage/helmet/edit", name: "Edit", active: true },
-        ]}
-      />
 
-      <div className="w-full shadow rounded bg-white p-6">
-        <h5 className="text-xl font-bold text-slate-600 mb-2">Edit Helmet</h5>
+  return (
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <FormEditHelmet id={id}></FormEditHelmet>
-      </div>
+      </Container>
     </div>
   );
 }

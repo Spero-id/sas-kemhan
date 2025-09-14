@@ -95,11 +95,16 @@ export default function TableListRecording({
       {isLoading ? (
         <LoadingTableCustom />
       ) : (
+        
         <TableCustom data={data?.data || []} columns={columns}></TableCustom>
+
       )}
       {isConfirmDelete && (
         <ConfirmDeleteModal hooks={deleteHooks} refetch={refetch} />
       )}
+
+
+
       <dialog id="preview_record" className="modal">
         <div className="modal-box" style={{ maxWidth: "75vw" }}>
           <div className="flex justify-between items-center mb-4">

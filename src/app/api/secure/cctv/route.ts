@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../lib/prisma";
+import { AddPathMediaMTX } from "@/services/AddPathMediaMTX";
 
 export const dynamic = "force-dynamic";
 
@@ -90,6 +91,7 @@ export async function POST(request: Request) {
       }),
     });
 
+    AddPathMediaMTX("cctv", { path_slug: `cctv_${body.path_slug}`, rtsp_url: body.rtsp_url, need_convert: body.need_convert });
 
     if (!response.ok) {
       throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);

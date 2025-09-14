@@ -1,7 +1,9 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { Container } from "@/components/common/container";
 import FormPostRegion from "@/module/region/Form/FormPost";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -21,19 +23,18 @@ export default function CreateRegion() {
   }, [status, data, router]);
 
   return (
-    <div className="container mx-auto mt-5">
-      <Breadcrumb
-        pageName="Create Region"
-        linkPrevious={[
-          { href: "/manage/region", name: "Region / " },
-          { href: "/manage/region/create", name: "Create", active: true },
-        ]}
-      />
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
 
-      <div className="w-full shadow rounded bg-white p-6">
-        <h5 className="text-xl font-bold text-slate-600 mb-2">Create Region</h5>
+        <ToolbarActions>
+
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <FormPostRegion></FormPostRegion>
-      </div>
+      </Container>
     </div>
   );
 }

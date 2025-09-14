@@ -1,6 +1,8 @@
 "use client";
 
+import { Container } from "@/components/common/container";
 import TableLayout from "@/module/layout/TableLayout";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -20,13 +22,17 @@ export default function Layout() {
   }, [status, data, router]);
 
   return (
-    <div className="container mt-5 mx-auto">
-      <div className="w-full shadow rounded bg-white p-6">
-        <div className="flex justify-between items-center">
-          <h5 className="text-xl font-bold text-slate-600">Layout</h5>
-        </div>
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+         
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <TableLayout />
-      </div>
+      </Container>
     </div>
   );
 }

@@ -40,7 +40,7 @@ export default function FormEditCctv({ id }: Readonly<FormCctvProps>) {
         rtsp_url: data?.data.rtsp_url,
         lat: data?.data.lat,
         long: data?.data.long,
-        region_id: data?.data.region_id,
+        region_id: data?.data.region_id!.toString() ,
       });
     }
   }, [data, isLoading, reset]);

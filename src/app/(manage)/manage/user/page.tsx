@@ -1,6 +1,8 @@
 "use client";
 
+import { Container } from "@/components/common/container";
 import TableUser from "@/module/user/TableUser";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -19,21 +21,24 @@ export default function User() {
   }, [status, data, router]);
 
   return (
-    <div className="container mt-5 mx-auto">
-      <div className="w-full shadow rounded bg-white p-6">
-        <div className="flex justify-between items-center">
-          <h5 className="text-xl font-bold text-slate-600">User</h5>
-          <div className="flex gap-3">
-            {status === "authenticated" &&
-              hasPermission(data?.user, "user.create") && (
-                <Link href={"/manage/user/create"} className="btn">
-                  Create
-                </Link>
-              )}
-          </div>
-        </div>
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+
+          {status === "authenticated" &&
+            hasPermission(data?.user, "user.create") && (
+              <a href={"/manage/user/create"} className="btn">
+                Create
+              </a>
+            )}
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <TableUser />
-      </div>
+      </Container>
     </div>
   );
 }
