@@ -26,7 +26,7 @@ export default function MenuNavigation() {
       {hasPermission(data?.user, "dashboard.cctv.view") && (
         <Link
           href={buildHrefWithQuery("/")}
-          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${pathname === "/"
+          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg md:text-lg text-sm border w-auto ${pathname === "/"
             ? "border-cyan-neon"
             : "border-transparent opacity-50"
             }`}
@@ -38,7 +38,7 @@ export default function MenuNavigation() {
       {hasPermission(data?.user, "dashboard.body_worm.view") && (
         <Link
           href={buildHrefWithQuery("/body-worm")}
-          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${pathname?.includes("body-worm")
+          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg md:text-lg text-sm border w-auto whitespace-nowrap ${pathname?.includes("body-worm")
             ? "border-cyan-neon"
             : "border-transparent opacity-50"
             }`}
@@ -50,7 +50,7 @@ export default function MenuNavigation() {
       {hasPermission(data?.user, "dashboard.helmet.view") && (
         <Link
           href="/helmet"
-          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg border ${pathname?.includes("helmet")
+          className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg md:text-lg text-sm border w-auto ${pathname?.includes("helmet")
             ? "border-cyan-neon"
             : "border-transparent opacity-50"
             }`}

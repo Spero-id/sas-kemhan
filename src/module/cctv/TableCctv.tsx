@@ -24,12 +24,6 @@ export default function TableCctv() {
 
   const columns = [
 
-    // columnHelper.accessor((row) => row.id, {
-    //   id: "id",
-    //   cell: (info) => info.getValue(),
-
-    // }),
-
     columnHelper.accessor((row) => row.name, {
       id: "name",
       enableSorting: true,

@@ -34,41 +34,20 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="min-h-screen bg-dark-ocean p-8 overflow-x-hidden">
+    <div className="min-h-screen bg-dark-ocean lg:p-8 overflow-x-hidden">
       {loading ? (
         <Loader />
       ) : (
         <div className="flex min-h-screen">
-          {/* <!-- ===== Content Area Start ===== --> */}
           <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-            {/* <!-- ===== Header Start ===== --> */}
             <HeaderDashboard />
-            {/* <!-- ===== Header End ===== --> */}
-
-
-
-
-            {/* <!-- ===== Main Content Start ===== --> */}
-            <main>
+            <main className="px-4 lg:p-0">
               {children}
             </main>
-            {/* <!-- ===== Main Content End ===== --> */}
           </div>
-          {/* <!-- ===== Content Area End ===== --> */}
           <Chat />
           <StreamFullScreenModal />
-
-
-          {/* <Button
-            className="btn btn-primary"
-            onClick={() => handleFullscreen({ name: "Sample Stream" })}
-          >
-            Open Fullscreen Stream
-          </Button>
-
-           */}
         </div>
-
       )}
     </div>
   );

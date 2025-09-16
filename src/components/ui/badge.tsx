@@ -67,7 +67,8 @@ const badgeVariants = cva(
         appearance: 'outline',
         className:
           'border bg-green-100 text-green-700 border-green-200 dark:text-green-600 dark:bg-green-950/50 dark:border-green-950',
-      },
+      
+        },
       {
         variant: 'warning',
         appearance: 'outline',
@@ -89,7 +90,7 @@ const badgeVariants = cva(
       {
         variant: 'destructive',
         appearance: 'outline',
-        className: 'bg-destructive/10 border-destructive/10 text-destructive',
+        className: 'bg-red-500/10 border-red-800/10 text-destructive',
       },
 
       {

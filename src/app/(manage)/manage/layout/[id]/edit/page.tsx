@@ -256,7 +256,7 @@ export default function EditLayout({
                           layout={layout}
                           cols={12}
                           rowHeight={30}
-                          width={1400}
+                          width={1240}
                           onLayoutChange={setLayout}
                           isDraggable={true}
                           isResizable={true}
@@ -265,7 +265,6 @@ export default function EditLayout({
                             const item = data?.data?.data?.find(
                               (d) => d.path_slug === l.i
                             );
-                            // Only render if item exists in database
                             return item ? (
                               <div key={l.i} className="bg-white border-2 border-gray-300 p-2 rounded shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex justify-between items-start">
