@@ -19,11 +19,10 @@ export function SidebarHeader() {
   const pathname = usePathname();
   const [selectedMenuItem, setSelectedMenuItem] = useState(MENU_ROOT[1]);
 
-  const handleInputChange = () => { };
 
   useEffect(() => {
     MENU_ROOT.forEach((item) => {
-      if (item.rootPath && pathname.includes(item.rootPath)) {
+      if (item.rootPath && pathname?.includes(item.rootPath)) {
         setSelectedMenuItem(item);
       }
     });

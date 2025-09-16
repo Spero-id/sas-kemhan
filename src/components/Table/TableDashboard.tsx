@@ -122,7 +122,7 @@ export default function TableCustom({ data, columns, Toolbar, pageSize }: Readon
 
   const filteredData = useMemo(() => {
     if (!searchQuery) return data;
-    return data.filter((item) => {
+    return data.filter((item: any) => {
       // Filter by search query (case-insensitive)
       const searchLower = searchQuery.toLowerCase();
       const matchesSearch =

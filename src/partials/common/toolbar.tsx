@@ -33,7 +33,7 @@ function ToolbarActions({ children }: { children?: ReactNode }) {
 
 function ToolbarBreadcrumbs() {
   const pathname = usePathname();
-  const { getBreadcrumb, isActive } = useMenu(pathname);
+  const { getBreadcrumb, isActive } = useMenu(pathname ?? '');
   const items: MenuItem[] = getBreadcrumb(MENU_SIDEBAR_COMPACT);
 
   if (items.length === 0) {
@@ -79,7 +79,7 @@ function ToolbarBreadcrumbs() {
 
 const ToolbarHeading = ({ title = '' }: ToolbarHeadingProps) => {
   const pathname = usePathname();
-  const { getCurrentItem } = useMenu(pathname);
+  const { getCurrentItem } = useMenu(pathname ?? '');
   const item = getCurrentItem(MENU_SIDEBAR_COMPACT);
 
   return (

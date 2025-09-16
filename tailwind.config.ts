@@ -8,9 +8,7 @@ const config: Config = {
     "node_modules/daisyui/dist/**/*.js",
     "node_modules/react-daisyui/dist/**/*.js",
   ],
-  plugins: [
-    require("daisyui"),
-  ],
+  
   theme: {
     extend: {
       fontFamily: {
@@ -92,7 +90,7 @@ const config: Config = {
   plugins: [
     require("daisyui"),
     require('tailwindcss-animate'),
-    require('tailwindcss/plugin')(function({ addBase }) {
+    require('tailwindcss/plugin')(function ({ addBase }: any) {
       addBase({
         ':root': {
           '--background': 'oklch(1 0 0)',
