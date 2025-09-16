@@ -1,7 +1,9 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { Container } from "@/components/common/container";
 import FormEditRole from "@/module/role/Form/FormEdit";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -24,19 +26,18 @@ export default function EditUser({
   }, [status, data, router]);
   
   return (
-    <div className="container mx-auto mt-5">
-      <Breadcrumb
-        pageName="Edit User"
-        linkPrevious={[
-          { href: "/manage/user", name: "User / " },
-          { href: "/manage/user/edit", name: "Edit", active: true },
-        ]}
-      />
+   <div>
+      <Toolbar>
+        <ToolbarHeading />
 
-      <div className="w-full shadow rounded bg-white p-6">
-        <h5 className="text-xl font-bold text-slate-600 mb-2">Edit User</h5>
+        <ToolbarActions>
+
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <FormEditRole id={id}></FormEditRole>
-      </div>
+      </Container>
     </div>
   );
 }

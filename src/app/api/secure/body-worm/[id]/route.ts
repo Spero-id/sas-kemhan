@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../lib/prisma";
+import { RemovePathMediaMTX } from "@/services/RemovePathMediaMTX";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -154,6 +155,8 @@ export async function DELETE(
       },
     });
 
+
+    RemovePathMediaMTX(body_worm.path_slug);
 
     if (!response.ok) {
       throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);

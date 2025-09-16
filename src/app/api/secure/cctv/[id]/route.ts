@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../lib/prisma";
+import { RemovePathMediaMTX } from "@/services/RemovePathMediaMTX";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ export async function GET(
   const prisma = getPrismaClient();
   try {
 
-    const response = await fetch(`http://192.168.200.103:9997/v3/paths/list`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
     const body = await response.json();
     const cctvList = body.items || [];
 
@@ -179,6 +180,7 @@ export async function DELETE(
       },
     });
 
+    RemovePathMediaMTX(cctv.path_slug);
 
     if (!response.ok) {
       throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);

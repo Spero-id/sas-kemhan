@@ -1,10 +1,11 @@
 
 "use client";
 
+import { Container } from "@/components/common/container";
 import TableRegion from "@/module/region/TableRegion";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -19,22 +20,24 @@ export default function Region() {
     ) {
       router.push("/");
     }
-  }, [status, data]);
+  }, [status, data, router]);
 
   return (
-    <div className="container mt-5 mx-auto">
-      <div className="w-full shadow rounded bg-white p-6">
-        <div className="flex justify-between items-center">
-          <h5 className="text-xl font-bold text-slate-600">Region</h5>
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+        <ToolbarActions>
           {status === "authenticated" &&
             hasPermission(data?.user, "region.create") && (
-              <Link href={"/manage/region/create"} className="btn">
+              <a href={"/manage/region/create"} className="btn">
                 Create
-              </Link>
+              </a>
             )}
-        </div>
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <TableRegion />
-      </div>
+      </Container>
     </div>
   );
 }

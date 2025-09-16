@@ -14,6 +14,7 @@ import { Cctv as CctvType } from "@/types/Cctv/TypeCctv";
 import { useDeleteCctv } from "@/services/api/cctv/delete/delete.hooks";
 import { useSession } from "next-auth/react";
 import { hasPermission } from "@/utils/permissions";
+import { DataGridColumnHeader } from "@/components/ui/data-grid-column-header";
 
 export default function TableCctv() {
   const { isLoading, data, refetch } = useAllCctv();
@@ -22,11 +23,18 @@ export default function TableCctv() {
   const columnHelper = createColumnHelper<CctvType>();
 
   const columns = [
+
     columnHelper.accessor((row) => row.name, {
       id: "name",
+      enableSorting: true,
       cell: (info) => info.getValue(),
-      header: () => <span>Name</span>,
+      header: ({ column }) => (
+        <DataGridColumnHeader title="Name" column={column} />
+      ),
+
     }),
+
+
     columnHelper.accessor((row) => row.id, {
       id: "action",
       cell: (info) => (
@@ -72,7 +80,7 @@ export default function TableCctv() {
 
   return (
     <>
-      {isLoading && status !== "authenticated" ? (
+      {isLoading ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data || []} columns={columns}></TableCustom>
@@ -84,3 +92,5 @@ export default function TableCctv() {
     </>
   );
 }
+
+

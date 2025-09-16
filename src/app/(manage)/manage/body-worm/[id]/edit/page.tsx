@@ -1,7 +1,9 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { Container } from "@/components/common/container";
 import FormEditBodyWorm from "@/module/body_worm/Form/FormEdit";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -25,19 +27,18 @@ export default function EditBodyWorm({
   }, [status, data, router]);
   
   return (
-    <div className="container mx-auto mt-5">
-      <Breadcrumb
-        pageName="Edit Body Worm"
-        linkPrevious={[
-          { href: "/manage/body-worm", name: "Body Worm / " },
-          { href: "/manage/body-worm/edit", name: "Edit", active: true },
-        ]}
-      />
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
 
-      <div className="w-full shadow rounded bg-white p-6">
-        <h5 className="text-xl font-bold text-slate-600 mb-2">Edit Body Worm</h5>
+        <ToolbarActions>
+
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <FormEditBodyWorm id={id}></FormEditBodyWorm>
-      </div>
+      </Container>
     </div>
   );
 }

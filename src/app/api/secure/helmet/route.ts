@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../lib/prisma";
+import { AddPathMediaMTX } from "@/services/AddPathMediaMTX";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,8 @@ export async function POST(request: Request) {
       }),
     });
 
+
+    AddPathMediaMTX("helmet", { path_slug: `helmet_${body.path_slug}`, rtsp_url: body.rtsp_url });
 
     if (!response.ok) {
       throw new Error(`MediaMTX API error: ${response.status} ${response.statusText}`);

@@ -1,7 +1,9 @@
 "use client";
 
+import { Container } from "@/components/common/container";
 import ButtonGenerateMediaMTX from "@/components/GenerateMediaMTX";
 import TableBodyWorm from "@/module/body_worm/TableBodyWorm";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -19,22 +21,26 @@ export default function BodyWorm() {
   }, [status, data, router]);
 
   return (
-    <div className="container mt-5 mx-auto">
-      <div className="w-full shadow rounded bg-white p-6">
-        <div className="flex justify-between items-center">
-          <h5 className="text-xl font-bold text-slate-600">Body Worm</h5>
-          <div className="flex gap-3">
-            <ButtonGenerateMediaMTX />
-            {status === "authenticated" &&
-              hasPermission(data?.user, "body_worm.create") && (
-                <Link href={"/manage/body-worm/create"} className="btn">
-                  Create
-                </Link>
-              )}
-          </div>
-        </div>
+  
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+
+          <ButtonGenerateMediaMTX />
+          {status === "authenticated" &&
+            hasPermission(data?.user, "body_worm.create") && (
+              <Link href={"/manage/body-worm/create"} className="btn">
+                Create
+              </Link>
+            )}
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <TableBodyWorm />
-      </div>
+      </Container>
     </div>
   );
 }

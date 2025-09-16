@@ -9,8 +9,9 @@ const Navigation = ({
   return (
     <div className="flex justify-between my-4">
       <MenuNavigation />
-      <FilterNavigation urlManage={urlManage} permissionManage={permissionManage} />
-      
+      <div className="hidden md:block">
+        <FilterNavigation urlManage={urlManage} permissionManage={permissionManage} />
+      </div>
 
     </div>
   );

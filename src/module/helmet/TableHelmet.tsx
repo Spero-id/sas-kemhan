@@ -88,7 +88,7 @@ export default function TableHelmet() {
 
   return (
     <>
-      {isLoading && status !== "authenticated" ? (
+      {isLoading ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data || []} columns={columns}></TableCustom>

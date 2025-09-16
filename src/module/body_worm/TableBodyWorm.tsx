@@ -54,12 +54,12 @@ export default function TableBodyWorm() {
       cell: (info) => (
         <div className="flex gap-2">
           {hasPermission(dataSession?.user, "body_worm.update") && (
-            <Link
+            <a
               href={`/manage/body-worm/${info.getValue()}/edit`}
               className="btn btn-warning"
             >
               Edit
-            </Link>
+            </a>
           )}
           {hasPermission(dataSession?.user, "body_worm.delete") && (
             <Button
@@ -69,12 +69,12 @@ export default function TableBodyWorm() {
               Delete
             </Button>
           )}
-          <Link
+          <a
             href={`/manage/recording/body-worm/${info.row.original.path_slug}`}
             className="btn"
           >
             Recording Logs
-          </Link>
+          </a>
         </div>
       ),
       header: () => <span>Action</span>,
@@ -94,7 +94,7 @@ export default function TableBodyWorm() {
 
   return (
     <>
-      {isLoading && status !== "authenticated" ? (
+      {isLoading ? (
         <LoadingTableCustom />
       ) : (
         <TableCustom data={data?.data || []} columns={columns}></TableCustom>

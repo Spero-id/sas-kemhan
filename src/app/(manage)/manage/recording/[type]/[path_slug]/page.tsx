@@ -1,6 +1,8 @@
 "use client";
 
+import { Container } from "@/components/common/container";
 import TableListRecording from "@/module/recording/TableListRecording";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { useGetSpaceDisk } from "@/services/api/disk/get/get.hooks";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -13,24 +15,22 @@ export default function Recording({
   const { isLoading: isLoadingSpaceDisk, data: dataSpaceDisk } = useGetSpaceDisk();
 
   return (
-    <div className="container mt-5 mx-auto">
-      <div className="w-full shadow rounded bg-white p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Link href={`/manage/${params.type}`}>
-              <MdOutlineKeyboardArrowLeft className="text-2xl text-slate-600" /> 
-            </Link>
-            <h5 className="text-xl font-bold text-slate-600">List recording ({params.path_slug})</h5>
-          </div>
+
+
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+        <ToolbarActions>
           {!isLoadingSpaceDisk && (
             <p className="text text-slate-600 font-bold">
               Disk Usage: {dataSpaceDisk?.usage}
             </p>
           )}
-        </div>
-
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <TableListRecording path_slug={params.path_slug} />
-      </div>
+      </Container>
     </div>
   );
 }

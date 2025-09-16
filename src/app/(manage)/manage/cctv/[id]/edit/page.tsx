@@ -1,7 +1,9 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { Container } from "@/components/common/container";
 import FormEditCctv from "@/module/cctv/Form/FormEdit";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -23,21 +25,20 @@ export default function EditCctv({
       router.push("/");
     }
   }, [status, data, router]);
-  
-  return (
-    <div className="container mx-auto mt-5">
-      <Breadcrumb
-        pageName="Edit Cctv"
-        linkPrevious={[
-          { href: "/manage/cctv", name: "CCTV / " },
-          { href: "/manage/cctv/edit", name: "Edit", active: true },
-        ]}
-      />
 
-      <div className="w-full shadow rounded bg-white p-6">
-        <h5 className="text-xl font-bold text-slate-600 mb-2">Edit CCTV</h5>
+  return (
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <FormEditCctv id={id}></FormEditCctv>
-      </div>
+      </Container>
     </div>
   );
 }

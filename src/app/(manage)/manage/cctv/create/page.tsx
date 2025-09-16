@@ -1,7 +1,10 @@
 "use client";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { Container } from "@/components/common/container";
+import ButtonGenerateMediaMTX from "@/components/GenerateMediaMTX";
 import FormPostCctv from "@/module/cctv/Form/FormPost";
+import { Toolbar, ToolbarActions, ToolbarHeading } from "@/partials/common/toolbar";
 import { hasPermission } from "@/utils/permissions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -21,19 +24,19 @@ export default function CreateCctv() {
   }, [status, data, router]);
 
   return (
-    <div className="container mx-auto mt-5">
-      <Breadcrumb
-        pageName="Create CCTV"
-        linkPrevious={[
-          { href: "/manage/cctv", name: "CCTV / " },
-          { href: "/manage/cctv/create", name: "Create", active: true },
-        ]}
-      />
 
-      <div className="w-full shadow rounded bg-white p-6">
-        <h5 className="text-xl font-bold text-slate-600 mb-2">Create CCTV</h5>
+    <div>
+      <Toolbar>
+        <ToolbarHeading />
+
+        <ToolbarActions>
+
+
+        </ToolbarActions>
+      </Toolbar>
+      <Container>
         <FormPostCctv></FormPostCctv>
-      </div>
+      </Container>
     </div>
   );
 }
