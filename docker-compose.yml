@@ -17,6 +17,8 @@ services:
       - ./recordings:/recordings
     networks:
       - sas
+    env_file:
+      - ./.env
 
   app:
     build:
