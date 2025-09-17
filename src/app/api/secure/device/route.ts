@@ -32,7 +32,7 @@ export async function GET(request: Request) {
             ...helmetData.map(item => ({ ...item, type: 'helmet' })),
         ];
 
-        // Gabungkan status dari API eksternal
+        
         const mergedData = allDevices.map(device => {
             const cctvItem = cctvList.find((item: any) => item.name === device.path_slug);
             return {

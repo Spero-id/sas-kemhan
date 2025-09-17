@@ -25,6 +25,8 @@ webrtcHandshakeTimeout: 10s
 webrtcTrackGatherTimeout: 2s
 webrtcSTUNGatherTimeout: 5s
 paths:
+  cctv_TESTING_MEDIAMTX:
+    source: rtsp://123123123
   cctv_x_60_menara:
     source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
   2cctv_x_60_menara:
@@ -41,25 +43,23 @@ paths:
     source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
   cctv_123123:
     source: rtsp://123123123
-  cctv_12312312323:
-    source: rtsp://123123123
-  cctv_ASDASD:
-    source: rtsp://123123123
-  cctv_ASDASD22:
-    source: rtsp://12312312399123123222222
   cctv_ASDASD2212:
     source: rtsp://12312312399123123222222
   cctv_ASDASD2212fff:
     source: rtsp://12312312399123123222222
   cctv_ASDASD2212fff123123:
     source: rtsp://12312312399123123222222
-  cctv_TESTING_MEDIAMTX:
+  cctv_ASDASD:
     source: rtsp://123123123
+  cctv_12312312323:
+    source: rtsp://123123123
+  cctv_ASDASD22:
+    source: rtsp://12312312399123123222222
   body_worm_jhjh:
     source: rtsp://544
   body_worm_no_need_convert:
     source: rtsp://123123
   body_worm_need_convert:
     source: publisher
-  helmet_kjk:
+  helmet_bodycam06:
     source: publisher

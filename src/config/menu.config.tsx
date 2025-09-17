@@ -466,7 +466,7 @@ export const MENU_SIDEBAR_COMPACT: MenuConfig = [
   {
     title: 'DASHBOARD',
     icon: LayoutGrid,
-    path: '/manage/dashboard',
+    path: '/',
     sidebar: true
 
   },
