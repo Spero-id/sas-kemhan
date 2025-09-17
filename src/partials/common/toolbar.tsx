@@ -87,7 +87,7 @@ const ToolbarHeading = ({ title = '' }: ToolbarHeadingProps) => {
 
 
       <h1 className="font-medium text-lg text-mono">{title || item?.title}</h1>
-      <ToolbarBreadcrumbs />
+      {/* <ToolbarBreadcrumbs /> */}
     </div>
   );
 };
