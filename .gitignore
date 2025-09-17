@@ -35,7 +35,6 @@ next-env.d.ts
 .env
 
 recordings
-config
 
 
 docker-compose-local.yml

@@ -1,0 +1,65 @@
+rtmp: true
+rtmpAddress: ':1935'
+webrtc: true
+webrtcAddress: ':8889'
+webrtcEncryption: false
+webrtcAllowOrigin: '*'
+webrtcTrustedProxies: []
+webrtcLocalUDPAddress: ':8189'
+webrtcLocalTCPAddress: ''
+api: true
+apiAddress: ':9997'
+webrtcIPsFromInterfaces: false
+webrtcIPsFromInterfacesList: []
+webrtcAdditionalHosts:
+  - localhost
+webrtcICEServers2:
+  - url: stun:localhost:3478
+authInternalUsers:
+  - user: any
+    permissions:
+      - action: api
+      - action: publish
+      - action: read
+webrtcHandshakeTimeout: 10s
+webrtcTrackGatherTimeout: 2s
+webrtcSTUNGatherTimeout: 5s
+paths:
+  cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  2cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  5cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  8cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  11cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  14cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  17cctv_x_60_menara:
+    source: rtsp://admin:admin123@192.168.1.109/cam/realmonitor?channel=1&subtype=0
+  cctv_123123:
+    source: rtsp://123123123
+  cctv_12312312323:
+    source: rtsp://123123123
+  cctv_ASDASD:
+    source: rtsp://123123123
+  cctv_ASDASD22:
+    source: rtsp://12312312399123123222222
+  cctv_ASDASD2212:
+    source: rtsp://12312312399123123222222
+  cctv_ASDASD2212fff:
+    source: rtsp://12312312399123123222222
+  cctv_ASDASD2212fff123123:
+    source: rtsp://12312312399123123222222
+  cctv_TESTING_MEDIAMTX:
+    source: rtsp://123123123
+  body_worm_jhjh:
+    source: rtsp://544
+  body_worm_no_need_convert:
+    source: rtsp://123123
+  body_worm_need_convert:
+    source: publisher
+  helmet_kjk:
+    source: publisher
