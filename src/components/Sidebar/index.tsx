@@ -20,7 +20,7 @@ const Sidebar = () => {
          <li>
             <Link
               href="/"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark 
             >
               Dashboard
             </Link>
@@ -29,7 +29,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/cctv"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("cctv") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("cctv") && "bg-graydark "
                 }`}
             >
               CCTV
@@ -40,7 +40,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/helmet"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("helmet") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("helmet") && "bg-graydark "
                 }`}
             >
               Helmet
@@ -51,7 +51,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/body-worm"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("body_worm") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("body_worm") && "bg-graydark "
                 }`}
             >
               Body Worm
@@ -62,7 +62,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/user"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("user") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("user") && "bg-graydark "
                 }`}
             >
               User
@@ -73,7 +73,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/role"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("role") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("role") && "bg-graydark "
                 }`}
             >
               Role
@@ -84,7 +84,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/layout"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("layout") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("layout") && "bg-graydark "
                 }`}
             >
               Layout
@@ -95,7 +95,7 @@ const Sidebar = () => {
           <li>
             <Link
               href="/manage/region"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname?.includes("layout") && "bg-graydark dark:bg-meta-4"
+              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark  ${pathname?.includes("layout") && "bg-graydark "
                 }`}
             >
               Region

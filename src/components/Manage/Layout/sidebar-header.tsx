@@ -35,12 +35,12 @@ export function SidebarHeader() {
         {/* <a href="/">
           <img
             src={'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Seal_of_the_Ministry_of_Defense_of_the_Republic_of_Indonesia_%282022%29.svg/960px-Seal_of_the_Ministry_of_Defense_of_the_Republic_of_Indonesia_%282022%29.svg.png'}
-            className="dark:hidden h-[42px]"
+            className=" h-[42px]"
             alt=""
           />
           <img
             src={'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Seal_of_the_Ministry_of_Defense_of_the_Republic_of_Indonesia_%282022%29.svg/960px-Seal_of_the_Ministry_of_Defense_of_the_Republic_of_Indonesia_%282022%29.svg.png'}
-            className="hidden dark:inline-block h-[42px]"
+            className="hidden  h-[42px]"
             alt=""
           />
         </a> */}

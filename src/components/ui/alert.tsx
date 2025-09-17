@@ -69,7 +69,7 @@ const alertVariants = cva('flex items-stretch w-full gap-2 group-[.toaster]:w-(-
       variant: 'mono',
       appearance: 'solid',
       className:
-        'bg-zinc-950 text-white dark:bg-zinc-300 dark:text-black *:data-alert-close:text-white dark:*:data-alert-close:text-black',
+        'bg-zinc-950 text-white   *:data-alert-close:text-white ',
     },
 
     {
@@ -164,19 +164,19 @@ const alertVariants = cva('flex items-stretch w-full gap-2 group-[.toaster]:w-(-
       variant: 'success',
       appearance: 'light',
       className:
-        'bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-950/50 text-foreground [&>div:first-of-type>svg]:text-green-500',
+        'bg-green-50  border border-green-200  text-foreground [&>div:first-of-type>svg]:text-green-500',
     },
     {
       variant: 'info',
       appearance: 'light',
       className:
-        'bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-950/50 text-foreground [&>div:first-of-type>svg]:text-violet-600',
+        'bg-violet-50  border border-violet-200  text-foreground [&>div:first-of-type>svg]:text-violet-600',
     },
     {
       variant: 'warning',
       appearance: 'light',
       className:
-        'bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-950/50 text-foreground [&>div:first-of-type>svg]:text-yellow-500',
+        'bg-yellow-50  border border-yellow-200  text-foreground [&>div:first-of-type>svg]:text-yellow-500',
     },
 
     {

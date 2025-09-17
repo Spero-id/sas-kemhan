@@ -58,7 +58,7 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full xl:w-1/2">
         <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-          <h2 className="mb-5  text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+          <h2 className="mb-5  text-2xl font-bold text-black sm:text-title-xl2">
             Sign In
           </h2>
 
