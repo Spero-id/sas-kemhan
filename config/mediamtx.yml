@@ -62,4 +62,6 @@ paths:
   body_worm_need_convert:
     source: publisher
   helmet_bodycam06:
+    source: rtsp://65654356
+  helmet_123123123:
     source: publisher

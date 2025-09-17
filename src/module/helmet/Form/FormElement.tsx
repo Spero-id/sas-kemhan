@@ -5,6 +5,7 @@ import SelectCustom from "@/components/FormGroup/Select";
 import { useEffect, useState } from "react";
 import { useAllRegion } from "@/services/api/region/get/get.hooks";
 import { Region } from "@/types/Region/TypeRegion";
+import ToggleForm from "@/components/FormGroup/Toggle";
 
 export default function FormElement({
   control,
@@ -66,6 +67,11 @@ export default function FormElement({
         label="RTSP URL"
         placeholder="RTSP URL"
       ></InputForm>
+      <ToggleForm
+        control={control}
+        name="need_convert"
+        label="Need Convert"
+      ></ToggleForm>
       <SelectCustom
         control={control}
         name="region_id"

@@ -8,6 +8,7 @@ export type Helmet = {
   region_id: string;
   created_at: string;
   updated_at: string;
+  need_convert: boolean;
 };
 
 export type ResponseAllHelmet = {

@@ -36,7 +36,6 @@ export async function GET(request: Request) {
       data: mergedData,
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       {
         status: false,
@@ -74,6 +73,7 @@ export async function POST(request: Request) {
         name: body.name,
         path_slug: `helmet_${body.path_slug}`,
         rtsp_url: body.rtsp_url,
+        need_convert: body.need_convert,
         region_id: parseInt(body.region_id)
       },
     });

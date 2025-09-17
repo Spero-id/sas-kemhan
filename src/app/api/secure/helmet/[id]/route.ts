@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../lib/prisma";
 import { RemovePathMediaMTX } from "@/services/RemovePathMediaMTX";
+import { EditPathMediaMTX } from "@/services/EditPathMediaMTX";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -61,7 +62,7 @@ export async function PUT(
     const path_slug = req.path_slug as string;
     const rtsp_url = req.rtsp_url as string;
     const region_id = req.region_id as string;
-
+    const need_convert = req.need_convert as boolean;
     const result = await prisma.helmet.update({
       where: {
         id: parseInt(params.id),
@@ -70,11 +71,14 @@ export async function PUT(
         name: name,
         path_slug: `helmet_${path_slug}`,
         rtsp_url: rtsp_url,
+        need_convert: need_convert,
         region_id: parseInt(region_id),
       },
     });
 
-    // update settings
+
+
+    EditPathMediaMTX(`helmet_${path_slug}`, result);
     await prisma.settings.update({
       where: {
         name: "regenerate_mediamtx",
@@ -91,7 +95,7 @@ export async function PUT(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        source: rtsp_url,
+        source: need_convert ? "publisher" : rtsp_url,
       }),
     });
 

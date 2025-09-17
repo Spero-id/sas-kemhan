@@ -57,6 +57,7 @@ model helmet {
   status     Boolean  @default(false)
   id         Int      @id @default(autoincrement())
   star       Boolean  @default(false)
+  need_convert Boolean  @default(false)
   region_id  Int
 
   regions regions @relation(fields: [region_id], references: [id])

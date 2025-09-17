@@ -28,21 +28,28 @@ export default function TableHelmet() {
       cell: (info) => info.getValue(),
       header: () => <span>Name</span>,
     }),
+   
     columnHelper.accessor((row) => row?.status, {
-      id: "status_helmet",
-      cell: (info) => {
-        return (
-          <ToggleStream
-            path_slug={info.row.original.path_slug}
-            status={info.row.original.status}
-            rtsp={info.row.original.rtsp_url}
-            type={2}
-            audio={false}
-          />
-        );
-      },
-      header: () => <span>Status Helmet</span>,
-    }),
+          id: "status_helmet",
+          cell: (info) => {
+            if (info.row.original.need_convert) {
+              return (
+                <ToggleStream
+                  path_slug={info.row.original.path_slug}
+                  status={info.row.original.status}
+                  rtsp={info.row.original.rtsp_url}
+                  type={3}
+                  audio={true}
+                />
+              );
+            } else {
+              return (<p>-</p>)
+    
+            }
+    
+          },
+          header: () => <span>Status Body Worm</span>,
+        }),
     columnHelper.accessor((row) => row.id, {
       id: "action",
       cell: (info) => (

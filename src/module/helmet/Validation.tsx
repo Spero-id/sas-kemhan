@@ -19,6 +19,9 @@ const defaultSchema = z.object({
   rtsp_url: z.string({
     required_error: REQUIRED_FIELD.message,
   }),
+  need_convert: z.boolean({
+    required_error: REQUIRED_FIELD.message,
+  }).optional(),
 
   region_id: z.string({
     required_error: REQUIRED_FIELD.message,

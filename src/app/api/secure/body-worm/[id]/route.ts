@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPrismaClient } from "../../../../../../lib/prisma";
 import { RemovePathMediaMTX } from "@/services/RemovePathMediaMTX";
+import { EditPathMediaMTX } from "@/services/EditPathMediaMTX";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,6 +76,8 @@ export async function PUT(
         region_id: parseInt(region_id),
       },
     });
+
+    EditPathMediaMTX(`body_worm_${path_slug}`, result);
 
     // update settings
     await prisma.settings.update({
