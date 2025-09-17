@@ -13,7 +13,7 @@ export function Footer() {
             <a
               className="text-secondaryForeground hover:text-primary"
             >
-              Eyesee
+              EYESEE
             </a>
           </div>
           <nav className="flex order-1 md:order-2 gap-4 font-normal text-sm text-mutedForeground">

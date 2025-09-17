@@ -46,7 +46,7 @@ export function SidebarHeader() {
         </a> */}
 
         <h1 className="cursor-pointer font-bold text-2xl tracking-tight flex items-center justify-between gap-2 w-[180px]">
-          Eysee 
+          EYESEE 
         </h1>
 
       </div>
