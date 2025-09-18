@@ -61,7 +61,15 @@ paths:
     source: rtsp://123123
   body_worm_need_convert:
     source: publisher
-  helmet_bodycam06:
-    source: rtsp://65654356
+  body_worm_75:
+    source: rtsp://admin:admin123@10.100.255.75/cam/realmonitor?channel=1&subtype=0
+  body_worm_752:
+    source: rtsp://admin:admin123@10.100.255.75/cam/realmonitor?channel=1&subtype=0
+  body_worm_BW_14:
+    source: rtsp://admin:admin123@10.100.255.14:554/cam/realmonitor?channel=1&subtype=0
   helmet_123123123:
     source: publisher
+  helmet_91:
+    source: rtsp://65654356
+  body_worm_123wad:
+    source: rtsp://123123123123

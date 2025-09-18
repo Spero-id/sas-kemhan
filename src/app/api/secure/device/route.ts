@@ -6,25 +6,27 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
     const prisma = getPrismaClient();
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`, { cache: "no-store" });
         const body = await response.json();
         const cctvList = body.items || [];
 
 
-            const [cctvData, bodyWormData, helmetData] = await Promise.all([
-                prisma.cctv.findMany({
-                    orderBy: { name: 'asc' },
-                    include: { regions: true }
-                }),
-                prisma.body_worm.findMany({
-                    orderBy: { name: 'asc' },
-                    include: { regions: true }
-                }),
-                prisma.helmet.findMany({
-                    orderBy: { name: 'asc' },
-                    include: { regions: true }
-                }),
-            ]);
+
+
+        const [cctvData, bodyWormData, helmetData] = await Promise.all([
+            prisma.cctv.findMany({
+                orderBy: { name: 'asc' },
+                include: { regions: true }
+            }),
+            prisma.body_worm.findMany({
+                orderBy: { name: 'asc' },
+                include: { regions: true }
+            }),
+            prisma.helmet.findMany({
+                orderBy: { name: 'asc' },
+                include: { regions: true }
+            }),
+        ]);
 
         const allDevices = [
             ...cctvData.map(item => ({ ...item, type: 'cctv' })),
@@ -32,9 +34,10 @@ export async function GET(request: Request) {
             ...helmetData.map(item => ({ ...item, type: 'helmet' })),
         ];
 
-        
+
         const mergedData = allDevices.map(device => {
             const cctvItem = cctvList.find((item: any) => item.name === device.path_slug);
+
             return {
                 ...device,
                 status: cctvItem?.ready || false,
