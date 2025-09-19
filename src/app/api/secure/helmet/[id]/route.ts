@@ -13,7 +13,7 @@ export async function GET(
   const prisma = getPrismaClient();
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/paths/list`, { cache: "no-store" });
     const body = await response.json();
     const cctvList = body.items || [];
 
@@ -90,6 +90,7 @@ export async function PUT(
 
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_MEDIAMTX_API}/v3/config/paths/patch/helmet_${path_slug}`, {
+      cache: "no-store",
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -8,7 +8,7 @@ const config: Config = {
     "node_modules/daisyui/dist/**/*.js",
     "node_modules/react-daisyui/dist/**/*.js",
   ],
-  
+
   theme: {
     extend: {
       fontFamily: {
@@ -87,6 +87,9 @@ const config: Config = {
       }
     }
   },
+  daisyui: {
+		themes: ["light"]
+	},
   plugins: [
     require("daisyui"),
     require('tailwindcss-animate'),
@@ -116,29 +119,29 @@ const config: Config = {
           '--ring': 'oklch(87.1% 0.006 286.286)',
           '--radius': '0.5rem',
         },
-        '.dark': {
-          '--background': 'oklch(14.1% 0.005 285.823)',
-          '--foreground': 'oklch(98.5% 0 0)',
-          '--card': 'oklch(14.1% 0.005 285.823)',
-          '--card-foreground': 'oklch(98.5% 0 0)',
-          '--popover': 'oklch(14.1% 0.005 285.823)',
-          '--popover-foreground': 'oklch(98.5% 0 0)',
-          '--primary': '#1379f0',
-          '--primary-foreground': 'oklch(1 0 0)',
-          '--secondary': 'oklch(27.4% 0.006 286.033)',
-          '--secondary-foreground': 'oklch(70.5% 0.015 286.067)',
-          '--muted': 'oklch(21% 0.006 285.885)',
-          '--muted-foreground': 'oklch(55.2% 0.016 285.938)',
-          '--accent': 'oklch(21% 0.006 285.885)',
-          '--accent-foreground': 'oklch(98.5% 0 0)',
-          '--destructive': 'oklch(57.7% 0.245 27.325)',
-          '--destructive-foreground': 'oklch(1 0 0)',
-          '--mono': 'oklch(87.1% 0.006 286.286)',
-          '--mono-foreground': 'oklch(0 0 0)',
-          '--border': 'oklch(27.4% 0.006 286.033)',
-          '--input': 'oklch(27.4% 0.006 286.033)',
-          '--ring': 'oklch(27.4% 0.006 286.033)',
-        },
+        // '.dark': {
+        //   '--background': 'oklch(14.1% 0.005 285.823)',
+        //   '--foreground': 'oklch(98.5% 0 0)',
+        //   '--card': 'oklch(14.1% 0.005 285.823)',
+        //   '--card-foreground': 'oklch(98.5% 0 0)',
+        //   '--popover': 'oklch(14.1% 0.005 285.823)',
+        //   '--popover-foreground': 'oklch(98.5% 0 0)',
+        //   '--primary': '#1379f0',
+        //   '--primary-foreground': 'oklch(1 0 0)',
+        //   '--secondary': 'oklch(27.4% 0.006 286.033)',
+        //   '--secondary-foreground': 'oklch(70.5% 0.015 286.067)',
+        //   '--muted': 'oklch(21% 0.006 285.885)',
+        //   '--muted-foreground': 'oklch(55.2% 0.016 285.938)',
+        //   '--accent': 'oklch(21% 0.006 285.885)',
+        //   '--accent-foreground': 'oklch(98.5% 0 0)',
+        //   '--destructive': 'oklch(57.7% 0.245 27.325)',
+        //   '--destructive-foreground': 'oklch(1 0 0)',
+        //   '--mono': 'oklch(87.1% 0.006 286.286)',
+        //   '--mono-foreground': 'oklch(0 0 0)',
+        //   '--border': 'oklch(27.4% 0.006 286.033)',
+        //   '--input': 'oklch(27.4% 0.006 286.033)',
+        //   '--ring': 'oklch(27.4% 0.006 286.033)',
+        // },
       });
     }),
   ],
