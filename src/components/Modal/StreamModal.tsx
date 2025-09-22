@@ -6,7 +6,7 @@ export default function StreamFullScreenModal() {
                 <div className="flex flex-col items-center p-6">
                     <h3 className="font-bold text-2xl mb-4" id="modal-title">Live Stream</h3>
                     <div className="w-full flex justify-center mb-4">
-                        <div className="relative w-full" style={{ aspectRatio: '16/9', maxHeight: '80vh' }}>
+                        <div className="relative w-full" style={{ aspectRatio: '16/9', maxHeight: '80vh' }} id="stream-container">
                             <iframe
                                 id="modal-iframe"
                                 title="Stream Player"

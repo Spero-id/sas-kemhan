@@ -73,17 +73,49 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
       <button
         className=" absolute top-4 left-2 px-4 py-1 rounded text-white  z-20 cursor-pointer pointer-events-auto"
         onClick={() => {
+
+
+          // stream-container
+
+
+          const modalContainer = document.getElementById('stream-container');
+          if (active) {
+            modalContainer!.innerHTML = `
+            <iframe
+                src="${MEDIAMTX_URL}/${path_slug}"
+                allow="fullscreen; autoplay; encrypted-media"
+                class="w-full h-full pointer-events-auto border-none"
+                title="${path_slug}">
+              </iframe>
+            `;
+          } else {
+            modalContainer!.innerHTML = `
+               <div class="inset-0 flex flex-col items-center justify-center w-full h-full bg-gray-300 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V8a2 2 0 00-2-2H4z" />
+                    <line x1="4" y1="20" x2="20" y2="4" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  <span class="text-gray-500 text-sm">Camera Offline</span>
+                </div>
+            `;
+          }
+
+
+
+
           const dialog = document.getElementById('my_modal_1') as HTMLDialogElement | null;
           const modalTitle = document.getElementById('modal-title');
-          const modalIframe = document.getElementById('modal-iframe') as HTMLIFrameElement | null;
-          if (modalIframe) {
-            modalIframe.src = `${MEDIAMTX_URL}/${path_slug}`;
-          }
+          // const modalIframe = document.getElementById('modal-iframe') as HTMLIFrameElement | null;
+          // if (modalIframe) {
+          //   modalIframe.src = `${MEDIAMTX_URL}/${path_slug}`;
+          // }
           if (modalTitle) {
             modalTitle.innerText = name;
           }
           dialog?.showModal();
         }}
+
+
       >
         <FaExpandArrowsAlt />
       </button>
@@ -104,7 +136,7 @@ const StreamCard = ({ path_slug, name, redirect, active, pin = false, type, star
           <FaEye className="text-white" />
         </Link>
       </div>
-    </div>
+    </div >
   );
 };
 

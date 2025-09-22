@@ -73,3 +73,8 @@ paths:
     source: rtsp://65654356
   body_worm_123wad:
     source: rtsp://123123123123
+  body_worm_123wadt:
+    source: rtsp://10.100.255.93:8553/live
+
+
+    
