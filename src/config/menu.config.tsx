@@ -69,7 +69,7 @@ export const MENU_SIDEBAR: MenuConfig = [
     title: 'Manage',
     icon: Settings,
     children: [
-      { title: 'Dashboard', path: '/' },
+      { title: 'Dashboard', path: '/manage/dashboard' },
       { title: 'CCTV', path: '/manage/cctv' },
       { title: 'Helmet', path: '/manage/helmet' },
       { title: 'Body Worm', path: '/manage/body-worm' },
@@ -466,7 +466,7 @@ export const MENU_SIDEBAR_COMPACT: MenuConfig = [
   {
     title: 'DASHBOARD',
     icon: LayoutGrid,
-    path: '/',
+    path: '/manage/dashboard',
     sidebar: true
 
   },
