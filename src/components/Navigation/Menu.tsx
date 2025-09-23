@@ -49,7 +49,7 @@ export default function MenuNavigation() {
       )}
       {hasPermission(data?.user, "dashboard.helmet.view") && (
         <Link
-          href="/helmet"
+          href={buildHrefWithQuery("/helmet")}
           className={`bg-deep-teal text-white px-4 py-2 rounded flex gap-1 items-center justify-center text-lg md:text-lg text-sm border w-auto ${pathname?.includes("helmet")
             ? "border-cyan-neon"
             : "border-transparent opacity-50"
