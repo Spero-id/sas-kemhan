@@ -39,7 +39,7 @@ export default function TableHelmet() {
                   status={info.row.original.status}
                   rtsp={info.row.original.rtsp_url}
                   type={3}
-                  audio={true}
+                  audio={false}
                 />
               );
             } else {
